@@ -31,23 +31,23 @@ const HeroSection = () => {
 
   return (
     <div className={`${playfair.variable} ${inter.variable} w-full`}>
-      <div className="bg-[#212121] min-h-screen flex items-center">
-        <div className="container mx-auto px-6 md:px-12 py-12 flex flex-col md:flex-row items-start justify-between">
+      <div className="bg-[#212121] min-h-screen flex items-center py-12">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12 flex flex-col md:flex-row items-center md:items-start justify-between">
           {/* Left Column */}
           <motion.div 
-            className="md:w-1/2 mb-12 md:mb-0"
+            className="w-full md:w-1/2 mb-8 md:mb-0 text-center md:text-left"
             initial="hidden"
             animate="visible"
           >
             <motion.h1 
-              className="font-playfair text-7xl md:text-8xl text-white italic font-medium leading-tight"
+              className="font-playfair text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white italic font-medium leading-tight"
               custom={0}
               variants={textVariants}
             >
               Welcome
             </motion.h1>
             <motion.h1 
-              className="font-playfair text-7xl md:text-8xl text-yellow-500 italic font-medium leading-tight mt-2"
+              className="font-playfair text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-yellow-500 italic font-medium leading-tight mt-2"
               custom={1}
               variants={textVariants}
             >
@@ -57,12 +57,12 @@ const HeroSection = () => {
 
           {/* Right Column */}
           <motion.div 
-            className="md:w-1/2 md:pl-12"
+            className="w-full md:w-1/2 md:pl-12"
             initial="hidden"
             animate="visible"
           >
             <motion.h2 
-              className="text-yellow-500 text-2xl md:text-3xl font-playfair font-bold mb-6"
+              className="text-yellow-500 text-xl sm:text-2xl md:text-3xl font-playfair font-bold mb-4 md:mb-6 text-center md:text-left"
               custom={2}
               variants={textVariants}
             >
@@ -70,7 +70,7 @@ const HeroSection = () => {
             </motion.h2>
 
             <motion.p 
-              className="text-white/80 text-lg leading-relaxed font-inter mb-8"
+              className="text-white/80 text-base sm:text-lg leading-relaxed font-inter mb-6 md:mb-8 text-center md:text-left"
               custom={3}
               variants={textVariants}
             >
@@ -84,15 +84,17 @@ const HeroSection = () => {
               at its best.
             </motion.p>
 
-            <motion.button
-              className="text-white bg-transparent border-2 border-white px-8 py-3 text-lg uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300"
-              custom={4}
-              variants={textVariants}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              explore more
-            </motion.button>
+            <motion.div className="flex justify-center md:justify-start">
+              <motion.button
+                className="text-white bg-transparent border-2 border-white px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300"
+                custom={4}
+                variants={textVariants}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                explore more
+              </motion.button>
+            </motion.div>
           </motion.div>
         </div>
       </div>

@@ -55,30 +55,30 @@ const HeroBanner = () => {
     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
-  // Advanced animation variants
+  // Advanced animation variants with smoother transitions
   const imageVariants = {
     enter: (direction) => ({
-      scale: 1.2,
+      scale: 1.1,
       opacity: 0,
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 500 : -500,
     }),
     center: {
       scale: 1,
       opacity: 1,
       x: 0,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.5 },
-        scale: { duration: 1.2, ease: "easeOut" }
+        x: { type: "spring", stiffness: 200, damping: 25 },
+        opacity: { duration: 0.8 },
+        scale: { duration: 1.5, ease: "easeOut" }
       }
     },
     exit: (direction) => ({
-      scale: 0.8,
+      scale: 0.9,
       opacity: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 500 : -500,
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.5 }
+        x: { type: "spring", stiffness: 200, damping: 25 },
+        opacity: { duration: 0.8 }
       }
     })
   };
@@ -195,8 +195,8 @@ const HeroBanner = () => {
         ))}
       </div>
 
-      {/* Main slider */}
-      <AnimatePresence initial={false} custom={direction}>
+      {/* Main slider with improved transitions */}
+      <AnimatePresence initial={false} custom={direction} mode="crossfade">
         <motion.div
           key={page}
           custom={direction}
@@ -205,6 +205,7 @@ const HeroBanner = () => {
           animate="center"
           exit="exit"
           className="absolute inset-0"
+          transition={{ duration: 0.8 }}
         >
           <div className="relative w-full h-full">
             {/* Image with parallax effect */}
