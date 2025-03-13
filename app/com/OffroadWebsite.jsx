@@ -71,6 +71,7 @@ const OffroadWebsite = () => {
         <meta name="description" content="Off-road vehicle website" />
         <link rel="icon" href="/favicon.ico" />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
       <style jsx global>{`
@@ -79,6 +80,17 @@ const OffroadWebsite = () => {
           padding: 0;
           font-family: 'Montserrat', sans-serif;
           overflow-x: hidden;
+        }
+
+        @media (max-width: 640px) {
+          .text-3d {
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+          }
+          
+          .text-3d:hover {
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+          }
         }
 
         .logo-container {
@@ -121,9 +133,9 @@ const OffroadWebsite = () => {
         <>
           <header className="w-full px-4 md:px-8 py-2 md:py-4 flex justify-between items-center bg-white">
             <div className="flex-1"></div>
-            <div className="flex items-center justify-center space-x-2 md:space-x-4">
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2 md:space-x-4">
               <motion.h1 
-                className="text-2xl md:text-4xl font-bold text-3d text-gold cursor-pointer"
+                className="text-xl sm:text-2xl md:text-4xl font-bold text-3d text-gold cursor-pointer"
                 initial="hidden"
                 animate="visible"
                 custom={0}
@@ -136,7 +148,7 @@ const OffroadWebsite = () => {
                 GOLDEN
               </motion.h1>
               <motion.div 
-                className="logo-container relative w-24 md:w-40 h-12 md:h-20 mx-2 md:mx-4"
+                className="logo-container relative w-16 sm:w-24 md:w-40 h-8 sm:h-12 md:h-20 mx-1 sm:mx-2 md:mx-4"
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -160,7 +172,7 @@ const OffroadWebsite = () => {
                       alt="Logo Glow"
                       width={160}
                       height={80}
-                      className="object-contain"
+                      className="object-contain w-full h-full"
                       priority
                     />
                   </motion.div>
@@ -169,13 +181,13 @@ const OffroadWebsite = () => {
                     alt="Golden Extreme Logo"
                     width={160}
                     height={80}
-                    className={`object-contain ${!isLogoHovered ? 'logo-animation' : ''}`}
+                    className={`object-contain w-full h-full ${!isLogoHovered ? 'logo-animation' : ''}`}
                     priority
                   />
                 </motion.div>
               </motion.div>
               <motion.h1 
-                className="text-2xl md:text-4xl font-bold text-3d text-gold cursor-pointer"
+                className="text-xl sm:text-2xl md:text-4xl font-bold text-3d text-gold cursor-pointer"
                 initial="hidden"
                 animate="visible"
                 custom={1}
@@ -191,12 +203,14 @@ const OffroadWebsite = () => {
             <div className="flex-1"></div>
           </header>
           <Navbar />
-          <HeroBanner />
-          <HeroSection />
-          <TireAdvertisement />
-          <EventsSection />
-          <BrandSection />
-          <FaqSection />
+          <main className="flex-grow">
+            <HeroBanner />
+            <HeroSection />
+            <TireAdvertisement />
+            <EventsSection />
+            <BrandSection />
+            <FaqSection />
+          </main>
           <Footer />
         </>
       )}

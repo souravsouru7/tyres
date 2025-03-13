@@ -163,7 +163,7 @@ const HeroBanner = () => {
   }, [currentSlide]);
 
   return (
-    <div className="relative w-full h-96 md:h-screen overflow-hidden">
+    <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[80vh] lg:h-screen overflow-hidden">
       {/* Decorative particles */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -238,7 +238,7 @@ const HeroBanner = () => {
                 variants={titleVariants}
                 initial="hidden"
                 animate="visible"
-                className="text-xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 tracking-wider"
+                className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 tracking-wider"
               >
                 {slides[currentSlide].title.split("").map((char, index) => (
                   <motion.span
@@ -257,11 +257,12 @@ const HeroBanner = () => {
               {/* Animated line divider */}
               <motion.div 
                 className="w-0 h-0.5 md:h-1 bg-red-600 mb-3 md:mb-6"
-                animate={{ width: "120px" }}
+                animate={{ width: ["0px", "80px", "120px"] }}
                 transition={{ 
                   delay: 0.6,
                   duration: 0.8,
-                  ease: "easeOut"
+                  ease: "easeOut",
+                  times: [0, 0.6, 1]
                 }}
               />
               
@@ -270,7 +271,7 @@ const HeroBanner = () => {
                 variants={subtitleVariants}
                 initial="hidden"
                 animate="visible"
-                className="text-sm md:text-lg lg:text-xl mb-4 md:mb-8 max-w-xs md:max-w-2xl px-4"
+                className="text-xs sm:text-sm md:text-lg lg:text-xl mb-4 md:mb-8 max-w-[280px] sm:max-w-xs md:max-w-2xl px-2 sm:px-4"
               >
                 {slides[currentSlide].subtitle}
               </motion.p>
@@ -282,7 +283,7 @@ const HeroBanner = () => {
                 animate="visible"
                 whileHover="hover"
                 whileTap="tap"
-                className="bg-red-600 text-white font-bold py-2 md:py-3 px-6 md:px-8 text-sm md:text-base rounded-full transition-all duration-300 relative overflow-hidden group"
+                className="bg-red-600 text-white font-bold py-1.5 sm:py-2 md:py-3 px-4 sm:px-6 md:px-8 text-xs sm:text-sm md:text-base rounded-full transition-all duration-300 relative overflow-hidden group"
               >
                 <span className="relative z-10">{slides[currentSlide].cta}</span>
                 <motion.span 
@@ -300,35 +301,35 @@ const HeroBanner = () => {
       {/* Navigation arrows with enhanced animation */}
       <motion.button
         onClick={prevSlide}
-        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-red-600 text-white rounded-full p-2 md:p-3 z-10 transition-all duration-300"
+        className="absolute left-1 sm:left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-red-600 text-white rounded-full p-1.5 sm:p-2 md:p-3 z-10 transition-all duration-300"
         whileHover={{ scale: 1.2, x: -5 }}
         whileTap={{ scale: 0.9 }}
         aria-label="Previous slide"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </motion.button>
       <motion.button
         onClick={nextSlide}
-        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-red-600 text-white rounded-full p-2 md:p-3 z-10 transition-all duration-300"
+        className="absolute right-1 sm:right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-red-600 text-white rounded-full p-1.5 sm:p-2 md:p-3 z-10 transition-all duration-300"
         whileHover={{ scale: 1.2, x: 5 }}
         whileTap={{ scale: 0.9 }}
         aria-label="Next slide"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </motion.button>
 
       {/* Enhanced indicators */}
-      <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 md:space-x-3 z-10">
+      <div className="absolute bottom-2 sm:bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-1 sm:space-x-2 md:space-x-3 z-10">
         {slides.map((_, index) => (
           <motion.button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-red-600 w-10' : 'bg-white/50 w-3 hover:bg-white/70'
+            className={`h-2 sm:h-2.5 md:h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide ? 'bg-red-600 w-6 sm:w-8 md:w-10' : 'bg-white/50 w-2 sm:w-2.5 md:w-3 hover:bg-white/70'
             }`}
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}

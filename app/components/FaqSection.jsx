@@ -55,11 +55,11 @@ const FaqSection = () => {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-24 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-200 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-300 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
+        <div className="absolute top-0 left-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-yellow-200 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-yellow-300 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
       </div>
 
       <motion.div
@@ -67,21 +67,21 @@ const FaqSection = () => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
-        className="container mx-auto px-6 relative z-10"
+        className="container mx-auto px-4 sm:px-6 relative z-10"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <span className="px-4 py-1 bg-yellow-400 text-black text-sm font-bold rounded-full inline-block mb-4">
+          <span className="px-3 sm:px-4 py-1 bg-yellow-400 text-black text-xs sm:text-sm font-bold rounded-full inline-block mb-3 sm:mb-4">
             FAQ
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-800">
             Frequently Asked Questions
           </h2>
-          <div className="w-24 h-1 bg-yellow-400 mx-auto"></div>
+          <div className="w-16 sm:w-20 md:w-24 h-1 bg-yellow-400 mx-auto"></div>
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
@@ -89,25 +89,25 @@ const FaqSection = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="mb-4"
+              className="mb-3 sm:mb-4"
             >
               <motion.button
                 onClick={() => setActiveIndex(activeIndex === index ? null : index)}
-                className="w-full text-left p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="w-full text-left p-4 sm:p-5 md:p-6 bg-white rounded-xl shadow-md sm:shadow-lg hover:shadow-xl transition-shadow duration-300"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >
                 <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 pr-4">
                     {faq.question}
                   </h3>
                   <motion.div
                     animate={{ rotate: activeIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className="ml-4"
+                    className="flex-shrink-0 ml-2 sm:ml-4"
                   >
                     <svg
-                      className="w-6 h-6 text-yellow-500"
+                      className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -129,13 +129,13 @@ const FaqSection = () => {
                       initial="hidden"
                       animate="visible"
                       exit="hidden"
-                      className="mt-4"
+                      className="mt-3 sm:mt-4"
                     >
                       <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="text-gray-600 leading-relaxed"
+                        className="text-sm sm:text-base text-gray-600 leading-relaxed"
                       >
                         {faq.answer}
                       </motion.p>
@@ -152,15 +152,15 @@ const FaqSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-center mt-12"
+          className="text-center mt-8 sm:mt-10 md:mt-12"
         >
-          <p className="text-gray-600 mb-4">
+          <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
             Still have questions? We're here to help!
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-500 transition-colors duration-300"
+            className="px-6 sm:px-7 md:px-8 py-2 sm:py-2.5 md:py-3 bg-yellow-400 text-black text-sm sm:text-base font-semibold rounded-full hover:bg-yellow-500 transition-colors duration-300"
           >
             Contact Support
           </motion.button>

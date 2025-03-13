@@ -43,13 +43,7 @@ const LoadingScreen = () => {
             transition: { duration: 0.8 }
           }}
         >
-          <Image 
-            src="/logo.png"
-            alt="Golden Extreme Logo"
-            fill
-            className="object-contain"
-            priority
-          />
+       
         </motion.div>
       </div>
       

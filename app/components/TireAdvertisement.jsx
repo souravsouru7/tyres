@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const TireAdvertisement = () => {
@@ -33,191 +34,92 @@ const TireAdvertisement = () => {
     }
   ];
 
-  // Animation effect for elements
-  useEffect(() => {
-    const animateElements = () => {
-      const header = document.querySelector('.main-header');
-      const subheader = document.querySelector('.sub-header');
-      const divider = document.querySelector('.divider');
-      const products = document.querySelectorAll('.product-card');
-
-      // Animate header
-      setTimeout(() => {
-        header.classList.add('animate-header');
-      }, 300);
-
-      // Animate subheader
-      setTimeout(() => {
-        subheader.classList.add('animate-subheader');
-      }, 600);
-
-      // Animate divider
-      setTimeout(() => {
-        divider.classList.add('animate-divider');
-      }, 900);
-
-      // Animate products
-      products.forEach((product, index) => {
-        setTimeout(() => {
-          product.classList.add('animate-product');
-        }, 1200 + (index * 200));
-      });
-    };
-
-    animateElements();
-  }, []);
-
   return (
-    <section className="py-16 bg-white">
-      <style jsx>{`
-        .main-header {
-          opacity: 0;
-          transform: translateY(-20px);
-          transition: all 0.8s ease;
-        }
-        .animate-header {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .sub-header {
-          opacity: 0;
-          transform: translateY(-10px);
-          transition: all 0.8s ease;
-        }
-        .animate-subheader {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .divider {
-          width: 0;
-          transition: all 0.8s ease;
-        }
-        .animate-divider {
-          width: 100px;
-        }
-        .product-card {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.5s ease;
-          background: white;
-          border-radius: 20px;
-          position: relative;
-          overflow: hidden;
-          border: 2px solid transparent;
-        }
-        .animate-product {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .product-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, #FFD700, #FFA500);
-          transform: scaleX(0);
-          transition: transform 0.3s ease;
-        }
-        .product-card:hover::before {
-          transform: scaleX(1);
-        }
-        .product-card:hover {
-          transform: translateY(-8px);
-          border-color: #f0f0f0;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .product-image {
-          transition: transform 0.6s ease;
-        }
-        .product-card:hover .product-image {
-          transform: scale(1.08) rotate(2deg);
-        }
-        .product-image-container {
-          position: relative;
-          height: 250px;
-          background: linear-gradient(145deg, #ffffff, #f8f9fa);
-          padding: 1.5rem;
-          margin: 1rem;
-          border-radius: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-        }
-        .product-brand {
-          position: relative;
-          display: inline-block;
-          padding: 0.5rem 1rem;
-          background: linear-gradient(145deg, #ffffff, #f3f4f6);
-          border-radius: 12px;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          margin-bottom: 1rem;
-        }
-        .product-model {
-          color: #4a5568;
-          font-weight: 600;
-          letter-spacing: 0.5px;
-        }
-        .view-details-btn {
-          background: linear-gradient(90deg, #FFD700, #FFA500);
-          border: none;
-          padding: 0.75rem 1.5rem;
-          border-radius: 12px;
-          font-weight: 600;
-          transform: translateY(0);
-          transition: all 0.3s ease;
-        }
-        .view-details-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
-        }
-      `}</style>
-
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="main-header text-5xl font-bold text-gray-800 mb-2">HOT SELLING PRODUCTS</h2>
-          <p className="sub-header text-2xl text-gray-400">AMAZING NEW TYRES AT AMAZING PRICES</p>
-          <div className="divider h-1 bg-yellow-400 mx-auto mt-6"></div>
+    <section className="relative py-12 sm:py-16 md:py-24 overflow-hidden bg-white">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        {/* Tire Products Grid */}
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">
+            Featured <span className="text-yellow-500">Tire Brands</span>
+          </h2>
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
+            Explore our selection of premium tire brands, designed for performance, durability, and safety.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {tireProducts.map((product) => (
-            <div 
-              key={product.id} 
-              className="product-card"
+            <motion.div
+              key={product.id}
+              className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200"
+              whileHover={{ y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true, margin: "-50px" }}
             >
-              <div className="p-4">
-                <div className="text-center">
-                  <span className="product-brand">
-                    <h3 className="text-xl font-bold text-gray-800">
-                      {product.brand}
-                    </h3>
-                  </span>
-                </div>
-                <div className="product-image-container">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={product.image}
-                      alt={product.alt}
-                      fill
-                      style={{ objectFit: 'contain' }}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="product-image"
-                      priority
-                    />
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <p className="product-model mb-4">{product.model}</p>
-                  <button className="view-details-btn text-white">
-                    View Details
-                  </button>
-                </div>
+              <div className="relative h-48 sm:h-56 md:h-64 bg-gray-100">
+                <Image
+                  src={product.image || "https://via.placeholder.com/400x300?text=Tire+Image"}
+                  alt={product.alt}
+                  layout="fill"
+                  objectFit="cover"
+                  className="transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-4 sm:p-5">
+                <h3 className="text-yellow-500 font-bold text-sm sm:text-base md:text-lg tracking-wider">
+                  {product.brand}
+                </h3>
+                <p className="text-gray-800 text-base sm:text-lg font-medium mt-1">
+                  {product.model}
+                </p>
+                <motion.button
+                  className="mt-3 sm:mt-4 w-full py-2 sm:py-2.5 bg-yellow-500 text-black text-xs sm:text-sm font-bold rounded hover:bg-yellow-400 transition-colors duration-300"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  View Details
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Promotional Banner */}
+        <div className="mt-12 sm:mt-16 md:mt-20">
+          <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl overflow-hidden shadow-lg border border-yellow-200">
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-10">
+                <span className="inline-block px-3 py-1 bg-yellow-500 text-black text-xs sm:text-sm font-bold rounded-full mb-3 sm:mb-4">
+                  SPECIAL OFFER
+                </span>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+                  Get 15% Off on All Off-Road Tires
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6">
+                  Limited time offer on our premium selection of off-road tires. 
+                  Perfect for adventure enthusiasts and off-road vehicles.
+                </p>
+                <motion.button
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-yellow-500 text-black text-sm sm:text-base font-bold rounded-lg hover:bg-yellow-400 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Shop Now
+                </motion.button>
+              </div>
+              <div className="w-full md:w-1/2 relative h-56 sm:h-64 md:h-72 lg:h-80">
+                <Image
+                  src="/images/offroad-tire.jpg" 
+                  alt="Off-road tire special offer"
+                  layout="fill"
+                  objectFit="cover"
+                  className="md:rounded-r-xl"
+                />
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

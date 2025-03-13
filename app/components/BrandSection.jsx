@@ -25,7 +25,7 @@ const BrandSection = () => {
   const lineVariants = {
     hidden: { width: 0 },
     visible: {
-      width: '80px',
+      width: ['0px', '40px', '80px'],
       transition: {
         duration: 2,
         ease: "easeOut",
@@ -65,12 +65,12 @@ const BrandSection = () => {
 
   return (
     <div className={`${orbitron.variable} w-full`}>
-      <div className="bg-gray-600 py-24 relative overflow-hidden">
+      <div className="bg-gray-600 py-12 sm:py-16 md:py-24 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center">
           {/* Main Title with Typewriter Effect */}
-          <div className="relative inline-block mb-8">
+          <div className="relative inline-block mb-4 sm:mb-6 md:mb-8">
             <motion.h1 
-              className="text-6xl md:text-8xl font-orbitron font-bold tracking-wider text-yellow-300 whitespace-nowrap overflow-hidden"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-orbitron font-bold tracking-wider text-yellow-300 whitespace-nowrap overflow-hidden"
               variants={typewriterVariants}
               initial="hidden"
               animate="visible"
@@ -78,7 +78,7 @@ const BrandSection = () => {
               GOLDENEXTREME
             </motion.h1>
             <motion.div
-              className="absolute top-0 right-0 h-full w-[4px] bg-yellow-300"
+              className="absolute top-0 right-0 h-full w-[2px] sm:w-[3px] md:w-[4px] bg-yellow-300"
               animate={{
                 opacity: [1, 0],
               }}
@@ -92,7 +92,7 @@ const BrandSection = () => {
 
           {/* Subtitle */}
           <motion.h2 
-            className="text-yellow-300 text-xl md:text-2xl font-orbitron mb-12"
+            className="text-yellow-300 text-sm sm:text-lg md:text-xl lg:text-2xl font-orbitron mb-6 sm:mb-8 md:mb-12 px-2"
             variants={floatingVariants}
             animate="animate"
           >
@@ -101,7 +101,7 @@ const BrandSection = () => {
 
           {/* Updated line animation */}
           <motion.div 
-            className="h-1 bg-yellow-300 mx-auto"
+            className="h-[2px] sm:h-[3px] md:h-1 bg-yellow-300 mx-auto"
             initial="hidden"
             animate="visible"
             variants={lineVariants}
@@ -124,11 +124,33 @@ const BrandSection = () => {
             }}
           />
 
-          {/* Animated Particles */}
-          {[...Array(20)].map((_, i) => (
+          {/* Animated Particles - Reduced count on mobile */}
+          {[...Array(10)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-yellow-400 rounded-full"
+              className="absolute w-[1px] h-[1px] sm:w-[2px] sm:h-[2px] md:w-1 md:h-1 bg-yellow-400 rounded-full"
+              initial={{
+                x: `${Math.random() * 100}%`,
+                y: `${Math.random() * 100}%`,
+                opacity: 0,
+              }}
+              animate={{
+                y: [null, -20],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+          
+          {/* Additional particles only visible on larger screens */}
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={i + 10}
+              className="hidden sm:block absolute w-[2px] h-[2px] md:w-1 md:h-1 bg-yellow-400 rounded-full"
               initial={{
                 x: `${Math.random() * 100}%`,
                 y: `${Math.random() * 100}%`,
