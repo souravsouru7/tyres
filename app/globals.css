@@ -66,6 +66,38 @@ body {
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+  }
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-fadeIn {
   animation: fadeIn 1s ease-out;
 }
@@ -103,6 +135,26 @@ body {
   animation: scaleIn 0.5s ease-out forwards;
 }
 
+.text-glow {
+  animation: textGlow 3s ease-in-out infinite;
+}
+
+.gradient-text {
+  background-size: 200% auto;
+  animation: gradientText 5s ease infinite;
+}
+
+.text-shadow-glow {
+  text-shadow: 
+    0 0 10px rgba(234, 179, 8, 0.3),
+    0 0 20px rgba(234, 179, 8, 0.2),
+    0 0 30px rgba(234, 179, 8, 0.1);
+}
+
+.text-shadow-lg {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .shadow-glow {
   box-shadow: 0 0 25px rgba(252, 211, 77, 0.3),
               0 0 15px rgba(252, 211, 77, 0.2),
@@ -119,4 +171,16 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-5px);
+}
+
+.hover-3d {
+  transition: transform 0.3s ease;
+}
+
+.hover-3d:hover {
+  transform: perspective(1000px) rotateY(10deg);
+}
+
+.slide-animation {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
