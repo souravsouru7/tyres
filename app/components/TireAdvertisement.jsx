@@ -8,28 +8,28 @@ const TireAdvertisement = () => {
       id: 1,
       brand: "MICHELIN",
       model: "Pilot Sport 4",
-      image: "/images/img1.jpg",
+      image: "https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=800",
       alt: "Michelin Pilot Sport 4 Tire"
     },
     {
       id: 2,
       brand: "BRIDGESTONE",
       model: "Potenza Sport",
-      image: "/images/img2.jpg",
+      image: "https://images.pexels.com/photos/244553/pexels-photo-244553.jpeg?auto=compress&cs=tinysrgb&w=800",
       alt: "Bridgestone Potenza Sport Tire"
     },
     {
       id: 3,
       brand: "GOODYEAR",
       model: "Eagle F1",
-      image: "/images/img3.jpg",
+      image: "https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=800",
       alt: "Goodyear Eagle F1 Tire"
     },
     {
       id: 4,
       brand: "CONTINENTAL",
       model: "SportContact",
-      image: "/images/img4.jpg",
+      image: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=800",
       alt: "Continental SportContact Tire"
     }
   ];
@@ -60,10 +60,11 @@ const TireAdvertisement = () => {
             >
               <div className="relative h-48 sm:h-56 md:h-64 bg-gray-100">
                 <Image
-                  src={product.image || "https://via.placeholder.com/400x300?text=Tire+Image"}
+                  src={product.image}
                   alt={product.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  style={{ objectFit: "cover" }}
                   className="transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
@@ -111,10 +112,11 @@ const TireAdvertisement = () => {
               </div>
               <div className="w-full md:w-1/2 relative h-56 sm:h-64 md:h-72 lg:h-80">
                 <Image
-                  src="/images/offroad-tire.jpg" 
+                  src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=1200" 
                   alt="Off-road tire special offer"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "cover" }}
                   className="md:rounded-r-xl"
                 />
               </div>
