@@ -86,7 +86,11 @@ const Navbar = () => {
               { href: '/', label: 'HOME' },
               { href: '/about-us', label: 'ABOUT US' },
               { href: '/our-brands', label: 'OUR BRANDS' },
-              { href: '/products', label: 'PRODUCTS' },
+              { 
+                href: '/products', 
+                label: 'PRODUCTS',
+                className: 'relative group' // Add special styling for Products link
+              },
               { href: '/events', label: 'EVENTS/NEWS' },
               { href: '/ConductUs', label: 'CONTACT US' }
             ].map((link) => (
@@ -95,7 +99,7 @@ const Navbar = () => {
                   href={link.href} 
                   className={`relative text-black font-medium text-sm sm:text-base hover:text-yellow-800 transition-colors ${
                     pathname === link.href ? 'font-bold' : ''
-                  }`}
+                  } ${link.className || ''}`}
                 >
                   {link.label}
                   {pathname === link.href && (
@@ -106,6 +110,10 @@ const Navbar = () => {
                       animate={{ width: '100%' }}
                       transition={{ duration: 0.3 }}
                     />
+                  )}
+                  {/* Add hover effect specifically for Products */}
+                  {link.href === '/products' && (
+                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                   )}
                 </Link>
               </motion.li>
