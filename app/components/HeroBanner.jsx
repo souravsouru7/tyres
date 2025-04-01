@@ -1,43 +1,71 @@
+"use client";
+
 // components/HeroBanner.jsx
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { FiArrowRight, FiPlay } from 'react-icons/fi';
 
 const HeroBanner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
-  
+  const [direction, setDirection] = useState(1);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   // Using local images with more dynamic content
   const slides = [
     {
       id: 1,
       image: "https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=1200",
       alt: 'Premium Performance Tires',
-      title: 'ENGINEERED FOR PERFORMANCE',
+      title: 'ENGINEERED FOR\nPERFORMANCE',
       subtitle: 'Discover our range of high-performance tires for ultimate road grip and control',
-      cta: 'Shop Now'
+      cta: 'Shop Now',
+      color: 'from-blue-600/20 to-purple-600/20'
     },
     {
       id: 2,
       image: "https://images.pexels.com/photos/244553/pexels-photo-244553.jpeg?auto=compress&cs=tinysrgb&w=1200",
       alt: 'All-Season Tires',
-      title: 'ALL-SEASON RELIABILITY',
+      title: 'ALL-SEASON\nRELIABILITY',
       subtitle: 'Drive confidently in any weather condition with our versatile tire collection',
-      cta: 'Learn More'
+      cta: 'Learn More',
+      color: 'from-emerald-600/20 to-teal-600/20'
     },
     {
       id: 3,
       image: "https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=1200",
       alt: 'Off-Road Tires',
-      title: 'CONQUER ANY TERRAIN',
+      title: 'CONQUER ANY\nTERRAIN',
       subtitle: 'Built tough for your off-road adventures with superior traction and durability',
-      cta: 'Explore Series'
+      cta: 'Explore Series',
+      color: 'from-orange-600/20 to-red-600/20'
     }
   ];
 
   // Wait for client-side hydration before showing animations
   useEffect(() => {
     setIsMounted(true);
+    const handleMouseMove = (e) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: ((e.clientX - rect.left) / rect.width) * 100,
+          y: ((e.clientY - rect.top) / rect.height) * 100
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   // Auto-slide functionality with progressive timing
@@ -45,58 +73,53 @@ const HeroBanner = () => {
     if (!isMounted) return;
     
     const interval = setInterval(() => {
+      setDirection(1);
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 6000); // Longer duration to appreciate animations
+    }, 5000); // Shorter duration for more dynamic feel
+
     return () => clearInterval(interval);
   }, [slides.length, isMounted]);
-
-  // Manual navigation
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
 
   // Advanced animation variants with smoother transitions
   const imageVariants = {
     enter: (direction) => ({
       scale: 1.1,
       opacity: 0,
-      x: direction > 0 ? 500 : -500,
+      x: direction > 0 ? 1000 : -1000,
+      rotateY: direction > 0 ? 45 : -45,
     }),
     center: {
       scale: 1,
       opacity: 1,
       x: 0,
+      rotateY: 0,
       transition: {
-        x: { type: "spring", stiffness: 200, damping: 25 },
+        x: { type: "spring", stiffness: 300, damping: 30 },
         opacity: { duration: 0.8 },
-        scale: { duration: 1.5, ease: "easeOut" }
+        scale: { duration: 1.5, ease: "easeOut" },
+        rotateY: { duration: 1, ease: "easeOut" }
       }
     },
     exit: (direction) => ({
       scale: 0.9,
       opacity: 0,
-      x: direction > 0 ? -500 : 500,
+      x: direction > 0 ? -1000 : 1000,
+      rotateY: direction > 0 ? -45 : 45,
       transition: {
-        x: { type: "spring", stiffness: 200, damping: 25 },
-        opacity: { duration: 0.8 }
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.8 },
+        rotateY: { duration: 1, ease: "easeOut" }
       }
     })
   };
 
   // Text animation variants
   const titleVariants = {
-    hidden: { opacity: 0, y: -50 },
+    hidden: { opacity: 0, y: -50, rotateX: -90 },
     visible: {
       opacity: 1,
       y: 0,
+      rotateX: 0,
       transition: {
         duration: 0.8,
         delay: 0.3,
@@ -106,10 +129,11 @@ const HeroBanner = () => {
   };
 
   const subtitleVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 30, rotateX: 90 },
     visible: {
       opacity: 1,
       y: 0,
+      rotateX: 0,
       transition: {
         duration: 0.6,
         delay: 0.5,
@@ -119,10 +143,11 @@ const HeroBanner = () => {
   };
 
   const buttonVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, scale: 0.8, rotateY: -90 },
     visible: {
       opacity: 1,
       scale: 1,
+      rotateY: 0,
       transition: {
         duration: 0.5,
         delay: 0.7,
@@ -165,47 +190,38 @@ const HeroBanner = () => {
   ]).current;
 
   return (
-    <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
-      {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/30 z-[1]"></div>
-      
-      {/* Animated background particles - only shown when client-side mounted */}
-      {isMounted && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          {particlePositions.map((particle, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 rounded-full bg-white opacity-70"
-              initial={{ 
-                x: `${particle.x}%`, 
-                y: `${particle.y}%`, 
-                opacity: 0 
-              }}
-              animate={{
-                y: [null, -20],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Infinity,
-                delay: particle.delay,
-              }}
-              style={{
-                left: `${particle.x}%`,
-                width: `${(particle.x % 8) + 2}px`,
-                height: `${(particle.y % 8) + 2}px`,
-                opacity: 0
-              }}
-            />
-          ))}
-        </div>
-      )}
+    <motion.div 
+      ref={containerRef}
+      className="relative w-full h-[600px] sm:h-[700px] md:h-[800px] overflow-hidden"
+      style={{ y, opacity }}
+    >
+      {/* Animated gradient background */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70"
+        animate={{
+          background: [
+            `linear-gradient(45deg, ${slides[currentSlide].color})`,
+            `linear-gradient(135deg, ${slides[currentSlide].color})`,
+            `linear-gradient(45deg, ${slides[currentSlide].color})`
+          ]
+        }}
+        transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
+      />
+
+      {/* Interactive mesh background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_50%)]"
+          style={{
+            transform: `translate(${(mousePosition.x - 50) * 0.1}%, ${(mousePosition.y - 50) * 0.1}%)`
+          }}
+        />
+      </div>
 
       {/* Slides */}
-      <AnimatePresence initial={false} custom={currentSlide}>
+      <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={slides[currentSlide].id}
-          custom={currentSlide}
+          custom={direction}
           variants={imageVariants}
           initial="enter"
           animate="center"
@@ -224,91 +240,113 @@ const HeroBanner = () => {
             />
             
             {/* Content overlay */}
-            <div className="absolute inset-0 flex items-center justify-center z-[2] text-white text-center">
-              <div className="px-4 sm:px-6 max-w-4xl">
-                {/* Title */}
+            <div className="absolute inset-0 flex items-center justify-center z-[2] text-white text-center px-4">
+              <div className="max-w-4xl">
+                {/* Title with 3D effect */}
                 <motion.h2
-                  variants={titleVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 tracking-wider"
+                  initial={{ opacity: 0, y: 50, rotateX: -90 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-wider"
                 >
-                  {slides[currentSlide].title}
+                  <span className="inline-block transform hover:scale-105 transition-transform duration-300">
+                    {slides[currentSlide].title.split('\n').map((line, i) => (
+                      <span key={i} className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400">
+                        {line}
+                      </span>
+                    ))}
+                  </span>
                 </motion.h2>
                 
-                {/* Subtitle */}
+                {/* Subtitle with fade effect */}
                 <motion.p
-                  variants={subtitleVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="text-xs sm:text-sm md:text-lg lg:text-xl mb-4 md:mb-8 max-w-[280px] sm:max-w-xs md:max-w-2xl px-2 sm:px-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-lg sm:text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-200"
                 >
                   {slides[currentSlide].subtitle}
                 </motion.p>
                 
-                {/* CTA Button */}
-                <motion.button
-                  variants={buttonVariants}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover="hover"
-                  whileTap="tap"
-                  className="bg-red-600 text-white font-bold py-1.5 sm:py-2 md:py-3 px-4 sm:px-6 md:px-8 text-xs sm:text-sm md:text-base rounded-full transition-all duration-300 relative overflow-hidden group"
+                {/* CTA Buttons */}
+                <motion.div 
+                  className="flex items-center justify-center space-x-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  <span className="relative z-10">{slides[currentSlide].cta}</span>
-                  <motion.span 
-                    className="absolute inset-0 bg-red-700 -z-0"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: "0%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group relative px-8 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold rounded-full overflow-hidden shadow-lg hover:shadow-yellow-500/30 transition-all duration-300"
+                  >
+                    <span className="relative z-10 flex items-center">
+                      {slides[currentSlide].cta}
+                      <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
+                    </span>
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: "0%" }}
+                    />
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                  >
+                    <FiPlay className="w-6 h-6 text-white transform group-hover:scale-110 transition-transform duration-300" />
+                  </motion.button>
+                </motion.div>
               </div>
             </div>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation arrows with enhanced animation */}
-      <motion.button
-        onClick={prevSlide}
-        className="absolute left-1 sm:left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-red-600 text-white rounded-full p-1.5 sm:p-2 md:p-3 z-10 transition-all duration-300"
-        whileHover={{ scale: 1.2, x: -5 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Previous slide"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </motion.button>
-      <motion.button
-        onClick={nextSlide}
-        className="absolute right-1 sm:right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-red-600 text-white rounded-full p-1.5 sm:p-2 md:p-3 z-10 transition-all duration-300"
-        whileHover={{ scale: 1.2, x: 5 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Next slide"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </motion.button>
-
-      {/* Enhanced indicators */}
-      <div className="absolute bottom-2 sm:bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-1 sm:space-x-2 md:space-x-3 z-10">
+      {/* Modern progress indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
         {slides.map((_, index) => (
           <motion.button
             key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 sm:h-2.5 md:h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-red-600 w-6 sm:w-8 md:w-10' : 'bg-white/50 w-2 sm:w-2.5 md:w-3 hover:bg-white/70'
-            }`}
+            onClick={() => {
+              setDirection(index > currentSlide ? 1 : -1);
+              setCurrentSlide(index);
+            }}
+            className="relative group"
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
-            aria-label={`Go to slide ${index + 1}`}
-          />
+          >
+            <div className="w-2 h-2 rounded-full bg-white/30 overflow-hidden">
+              <motion.div
+                className="absolute inset-0 bg-yellow-500"
+                initial={{ width: 0 }}
+                animate={{ 
+                  width: index === currentSlide ? "100%" : "0%",
+                  transition: { duration: 5, repeat: Infinity }
+                }}
+              />
+            </div>
+            <div className="absolute -inset-2 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </motion.button>
         ))}
       </div>
-    </div>
+
+      {/* Scroll indicator */}
+      <motion.div 
+        className="absolute bottom-4 left-1/2 -translate-x-1/2"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        <div className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center p-1">
+          <motion.div 
+            className="w-1.5 h-1.5 rounded-full bg-white/50"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

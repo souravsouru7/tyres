@@ -1,51 +1,19 @@
 "use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { motion, useAnimation } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 export default function Layout({ children }) {
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
-  const logoControls = useAnimation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
   
-  // Function to handle logo hover animation
-  const handleLogoHover = () => {
-    setIsLogoHovered(true);
-    logoControls.start({
-      rotateY: [0, 180, 360],
-      scale: [1, 1.2, 1.1],
-      transition: { 
-        duration: 1.2,
-        times: [0, 0.5, 1],
-        ease: "easeInOut"
-      }
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setIsScrolled(latest > 50);
     });
-  };
-
-  const handleLogoHoverEnd = () => {
-    setIsLogoHovered(false);
-    logoControls.start({
-      rotateY: 0,
-      scale: 1,
-      transition: { duration: 0.5 }
-    });
-  };
-
-  // Text animation variants
-  const textVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (index) => ({
-      opacity: 1,
-      y: 0,
-      transition: { 
-        duration: 0.8,
-        delay: index * 0.2,
-        ease: "easeOut"
-      }
-    })
-  };
+  }, [scrollY]);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -53,127 +21,114 @@ export default function Layout({ children }) {
         body {
           margin: 0;
           padding: 0;
-          font-family: 'Montserrat', sans-serif;
+          font-family: 'Poppins', sans-serif;
           overflow-x: hidden;
-        }
-
-        @media (max-width: 640px) {
-          .text-3d {
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-          }
-          
-          .text-3d:hover {
-            text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
-            transform: translateY(-2px);
-          }
-        }
-
-        .logo-container {
-          perspective: 1000px;
-        }
-
-        .logo-shadow {
-          filter: drop-shadow(0 0 15px rgba(234, 179, 8, 0.6));
-        }
-
-        .text-3d {
-          text-shadow: 
-            1px 1px 1px rgba(0,0,0,0.3),
-            2px 2px 2px rgba(0,0,0,0.2),
-            3px 3px 3px rgba(0,0,0,0.1);
-          transition: all 0.3s ease;
-        }
-
-        .text-3d:hover {
-          text-shadow: 
-            2px 2px 2px rgba(0,0,0,0.4),
-            4px 4px 4px rgba(0,0,0,0.3),
-            6px 6px 6px rgba(0,0,0,0.2);
-          transform: translateY(-5px);
+          background: #fff;
         }
 
         .text-gold {
-          background: linear-gradient(45deg, #ffd700, #b8860b, #ffd700);
+          background: linear-gradient(45deg, #FFD700, #DAA520, #FFD700);
           -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           background-clip: text;
           color: transparent;
+          font-weight: 700;
+        }
+
+        .header-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          transition: all 0.3s ease;
+        }
+
+        .header-container.scrolled {
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+          margin-top: 80px;
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: linear-gradient(45deg, #FFD700, #DAA520);
+          border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(45deg, #DAA520, #FFD700);
+        }
+
+        /* Selection Color */
+        ::selection {
+          background: rgba(234, 179, 8, 0.2);
+          color: #000;
         }
       `}</style>
 
-      <header className="w-full px-4 md:px-8 py-2 md:py-4 flex justify-between items-center bg-white">
-        <div className="flex-1"></div>
-        <div className="flex items-center justify-center space-x-1 sm:space-x-2 md:space-x-4">
-          <motion.h1 
-            className="text-xl sm:text-2xl md:text-4xl font-bold text-3d text-gold cursor-pointer"
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            variants={textVariants}
-            whileHover={{ 
-              scale: 1.1,
-              transition: { duration: 0.3 }
-            }}
-          >
-            GOLDEN
-          </motion.h1>
-          <motion.div 
-            className="logo-container relative w-16 sm:w-24 md:w-40 h-8 sm:h-12 md:h-20 mx-1 sm:mx-2 md:mx-4"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            onHoverStart={handleLogoHover}
-            onHoverEnd={handleLogoHoverEnd}
-          >
-            <motion.div
-              animate={logoControls}
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <motion.div
-                className={`absolute inset-0 ${isLogoHovered ? 'logo-shadow' : ''}`}
-                animate={isLogoHovered ? {
-                  opacity: [0, 0.8, 0],
-                  scale: [1, 1.3, 1],
-                  transition: { duration: 1.2, repeat: Infinity, repeatType: "loop" }
-                } : { opacity: 0 }}
-              >
-                <Image
-                  src="/logo.png"
-                  alt="Logo Glow"
-                  width={160}
-                  height={80}
-                  className="object-contain w-full h-full"
-                  priority
-                />
-              </motion.div>
-              <Image 
-                src="/logo.png"
-                alt="Golden Extreme Logo"
-                width={160}
-                height={80}
-                className={`object-contain w-full h-full ${!isLogoHovered ? 'logo-animation' : ''}`}
-                priority
-              />
-            </motion.div>
-          </motion.div>
-          <motion.h1 
-            className="text-xl sm:text-2xl md:text-4xl font-bold text-3d text-gold cursor-pointer"
-            initial="hidden"
-            animate="visible"
-            custom={1}
-            variants={textVariants}
-            whileHover={{ 
-              scale: 1.1,
-              transition: { duration: 0.3 }
-            }}
-          >
-            EXTREME
-          </motion.h1>
-        </div>
-        <div className="flex-1"></div>
-      </header>
-      <Navbar />
+      <div className={`header-container ${isScrolled ? 'scrolled' : ''}`}>
+        <Navbar isScrolled={isScrolled} />
+      </div>
+
+      {/* Background Decorative Elements */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <motion.div
+          className="absolute top-0 left-0 w-full h-full opacity-10"
+          style={{
+            background: `
+              radial-gradient(circle at 20% 20%, rgba(234, 179, 8, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(234, 179, 8, 0.15) 0%, transparent 50%)
+            `
+          }}
+        />
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(234,179,8,0.05) 0%, transparent 70%)',
+            filter: 'blur(40px)'
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(234,179,8,0.05) 0%, transparent 70%)',
+            filter: 'blur(40px)'
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        />
+      </div>
       
-      <main className="flex-grow">
+      <main className="main-content flex-grow">
         {children}
       </main>
       

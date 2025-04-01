@@ -1,186 +1,136 @@
-// components/Navbar.js
-import React from 'react';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+"use client";
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+// components/Navbar.js
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi';
+
+const Navbar = ({ isScrolled }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const navItems = [
+    { id: 'home', label: 'HOME', href: '/' },
+    { id: 'products', label: 'PRODUCTS', href: '/products' },
+    { id: 'brands', label: 'OUR BRANDS', href: '/our-brands' },
+    { id: 'events', label: 'EVENTS', href: '/events' },
+    { id: 'contact', label: 'CONTACT US', href: '/ConductUs' },
+  ];
+
+  const isActive = (href) => {
+    if (href === '/') {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
+  // Close mobile menu when route changes
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const navbarVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.5,
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { opacity: 1, y: 0 }
-  };
-
-  const mobileMenuVariants = {
-    hidden: { height: 0, opacity: 0 },
-    visible: { 
-      height: "auto", 
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-        delayChildren: 0.1
-      }
-    },
-    exit: { 
-      height: 0, 
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-        staggerDirection: -1
-      }
-    }
-  };
-
-  const mobileItemVariants = {
-    hidden: { x: -20, opacity: 0 },
-    visible: { x: 0, opacity: 1 },
-    exit: { x: -20, opacity: 0 }
-  };
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <motion.nav 
-      initial="hidden"
-      animate="visible"
-      variants={navbarVariants}
-      className={`${scrolled ? 'py-2 shadow-md bg-yellow-500' : 'py-2 sm:py-3 md:py-4 bg-yellow-400'} sticky top-0 z-50 transition-all duration-300`}
+      className={`w-full transition-all duration-500 ${
+        isScrolled 
+          ? 'bg-white shadow-lg' 
+          : 'bg-white'
+      }`}
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4 sm:px-6">
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex justify-center items-center">
-          <ul className="flex space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-8">
-            {[
-              { href: '/', label: 'HOME' },
-              { href: '/about-us', label: 'ABOUT US' },
-              { href: '/our-brands', label: 'OUR BRANDS' },
-              { 
-                href: '/products', 
-                label: 'PRODUCTS',
-                className: 'relative group' // Add special styling for Products link
-              },
-              { href: '/events', label: 'EVENTS/NEWS' },
-              { href: '/ConductUs', label: 'CONTACT US' }
-            ].map((link) => (
-              <motion.li key={link.href} variants={itemVariants}>
-                <Link 
-                  href={link.href} 
-                  className={`relative text-black font-medium text-sm sm:text-base hover:text-yellow-800 transition-colors ${
-                    pathname === link.href ? 'font-bold' : ''
-                  } ${link.className || ''}`}
-                >
-                  {link.label}
-                  {pathname === link.href && (
-                    <motion.div
-                      layoutId="underline"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-black"
-                      initial={{ width: 0 }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-                  {/* Add hover effect specifically for Products */}
-                  {link.href === '/products' && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-yellow-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
-                  )}
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo Section */}
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="flex items-center">
+              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
+                GOLDEN
+              </span>
+              <Image
+                src="/logo.png"
+                alt="Extreme Logo"
+                width={60}
+                height={30}
+                className="mx-2 md:w-[80px] md:h-[40px]"
+              />
+              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
+                EXTREME
+              </span>
+            </div>
+          </Link>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden">
-          <div className="flex justify-end">
-            <motion.button 
-              onClick={toggleMenu}
-              className="text-black p-2"
-              aria-label="Toggle menu"
-              whileTap={{ scale: 0.9 }}
-              whileHover={{ scale: 1.1 }}
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-6 w-6" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
+          >
+            {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
+
+          {/* Main Navigation */}
+          <div className={`lg:flex items-center justify-center flex-1 px-8 ${
+            isMobileMenuOpen 
+              ? 'absolute top-20 left-0 right-0 bg-white shadow-lg py-4 flex-col space-y-4' 
+              : 'hidden'
+          }`}>
+            {navItems.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`px-4 py-2 mx-2 text-sm font-medium transition-all duration-300 relative group ${
+                  isActive(item.href) 
+                    ? 'text-yellow-600' 
+                    : 'text-gray-700 hover:text-yellow-600'
+                }`}
               >
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </motion.button>
+                {item.label}
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300 ${
+                  isActive(item.href) 
+                    ? 'bg-yellow-500 scale-x-100' 
+                    : 'bg-yellow-500 scale-x-0 group-hover:scale-x-100'
+                }`} />
+              </Link>
+            ))}
           </div>
 
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                variants={mobileMenuVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="overflow-hidden"
+          {/* Right Side Actions */}
+          <div className="flex items-center space-x-6">
+            {/* Search Bar */}
+            <div className="relative hidden md:block">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                className="w-48 px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-yellow-500/50 transition-all duration-300"
+              />
+              <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+
+            {/* Icons */}
+            <div className="flex items-center space-x-4">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
               >
-                <ul className="flex flex-col mt-2 space-y-1">
-                  {[
-                    { href: '/', label: 'HOME' },
-                    { href: '/about-us', label: 'ABOUT US' },
-                    { href: '/our-brands', label: 'OUR BRANDS' },
-                    { href: '/products', label: 'PRODUCTS' },
-                    { href: '/events', label: 'EVENTS/NEWS' },
-                    { href: '/ConductUs', label: 'CONTACT US' }
-                  ].map((link) => (
-                    <motion.li key={link.href} variants={mobileItemVariants}>
-                      <Link 
-                        href={link.href} 
-                        className={`block py-2 px-4 text-black font-medium hover:bg-yellow-500 transition-colors ${
-                          pathname === link.href ? 'bg-yellow-500 font-bold' : ''
-                        }`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <FiShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
+              >
+                <FiUser className="w-5 h-5 md:w-6 md:h-6" />
+              </motion.button>
+            </div>
+          </div>
         </div>
       </div>
     </motion.nav>

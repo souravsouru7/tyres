@@ -1,76 +1,31 @@
-import React from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+'use client';
 
-const productsData = [
-  // PCR Tires
-  {
-    id: 1,
-    name: 'Premium PCR Tire',
-    category: 'pcr-tires',
-    image: 'https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&q=80',
-    description: 'High-performance passenger car tire with excellent grip',
-  },
-  // OTR Tires
-  {
-    id: 2,
-    name: 'Heavy Duty OTR Tire',
-    category: 'otr-tires',
-    image: 'https://images.unsplash.com/photo-1586803840911-d5a5dd0a2ea7?auto=format&fit=crop&q=80',
-    description: 'Durable off-the-road tire for construction equipment',
-  },
-  // TBR Tires
-  {
-    id: 3,
-    name: 'Commercial TBR Tire',
-    category: 'tbr-tires',
-    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80',
-    description: 'Truck and bus radial tire for commercial vehicles',
-  },
-  // LTR Tires
-  {
-    id: 4,
-    name: 'Light Truck Tire',
-    category: 'ltr-tires',
-    image: 'https://images.unsplash.com/photo-1568708167243-438efa4363ad?auto=format&fit=crop&q=80',
-    description: 'Light truck radial tire for enhanced durability',
-  },
-  // PCR Wheels
-  {
-    id: 5,
-    name: 'Sport Alloy PCR Wheel',
-    category: 'pcr-wheels',
-    image: 'https://images.unsplash.com/photo-1611821064430-0d40291d0f0b?auto=format&fit=crop&q=80',
-    description: 'Lightweight alloy wheel for passenger vehicles',
-  },
-  // TBR Wheels
-  {
-    id: 6,
-    name: 'Heavy Duty TBR Wheel',
-    category: 'tbr-wheels',
-    image: 'https://images.unsplash.com/photo-1600706432502-77a0e2e32790?auto=format&fit=crop&q=80',
-    description: 'Durable wheel for trucks and buses',
-  },
-  // Bike Batteries
-  {
-    id: 7,
-    name: 'Performance Bike Battery',
-    category: 'bike-batteries',
-    image: 'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?auto=format&fit=crop&q=80',
-    description: 'High-performance motorcycle battery',
-  },
-  // UPS Batteries
-  {
-    id: 8,
-    name: 'UPS Battery System',
-    category: 'ups-batteries',
-    image: 'https://images.unsplash.com/photo-1601984646117-4e0c51ca2de3?auto=format&fit=crop&q=80',
-    description: 'Reliable battery system for uninterrupted power supply',
-  },
-];
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { getProducts } from '../../src/utils/api';
+import ProductCard from './ProductCard';
 
 const ProductGrid = ({ activeCategory, searchQuery }) => {
-  const filteredProducts = productsData.filter(product => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const filteredProducts = products.filter(product => {
     const matchesCategory = activeCategory === 'all' || 
                           product.category === activeCategory ||
                           (activeCategory === 'tires' && product.category.includes('tires')) ||
@@ -81,42 +36,111 @@ const ProductGrid = ({ activeCategory, searchQuery }) => {
     return matchesCategory && matchesSearch;
   });
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {filteredProducts.map((product) => (
-        <motion.div
-          key={product.id}
-          className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          whileHover={{ y: -5 }}
-          transition={{ duration: 0.3 }}
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const loadingVariants = {
+    animate: {
+      scale: [1, 1.1, 1],
+      opacity: [0.5, 0.8, 0.5],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <motion.div 
+          className="flex flex-col items-center space-y-4"
+          variants={loadingVariants}
+          animate="animate"
         >
-          <div className="relative h-64 overflow-hidden">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover transform group-hover:scale-110 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-          <div className="p-6">
-            <h3 className="text-2xl font-bold mb-2 text-gray-800">{product.name}</h3>
-            <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-500 bg-clip-text text-transparent">
-                ${product.price}
-              </span>
-              <button className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white px-6 py-3 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-500 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl">
-                View Details
-              </button>
-            </div>
-          </div>
+          <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-gray-600 text-lg font-medium">Loading products...</p>
         </motion.div>
-      ))}
-    </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.div 
+        className="flex items-center justify-center min-h-[400px]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="text-center p-8 bg-red-50 rounded-2xl shadow-lg">
+          <p className="text-red-600 font-semibold text-lg mb-4">Error: {error}</p>
+          <motion.button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors font-semibold"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Try Again
+          </motion.button>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (filteredProducts.length === 0) {
+    return (
+      <motion.div 
+        className="flex items-center justify-center min-h-[400px]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="text-center p-8 bg-gray-50 rounded-2xl shadow-lg">
+          <p className="text-gray-800 text-xl font-semibold mb-2">No products found</p>
+          <p className="text-gray-600">Try adjusting your filters or search terms</p>
+        </div>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div 
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      layout
+    >
+      <AnimatePresence mode="popLayout">
+        {filteredProducts.map((product) => (
+          <motion.div
+            key={product._id}
+            layout
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ 
+              duration: 0.3,
+              type: "spring",
+              stiffness: 200,
+              damping: 20
+            }}
+          >
+            <ProductCard product={product} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 

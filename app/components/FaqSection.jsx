@@ -1,29 +1,38 @@
+'use client';
+
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiPlus, FiMinus } from 'react-icons/fi';
 
 const FaqSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const faqs = [
     {
       question: "What types of tires do you offer?",
-      answer: "We offer a comprehensive range of tires including performance, all-season, off-road, and commercial vehicle tires from premium brands."
+      answer: "We offer a comprehensive range of tires including performance, all-season, off-road, and commercial vehicle tires from premium brands.",
+      icon: "🚗"
     },
     {
       question: "Do you provide tire installation services?",
-      answer: "Yes, we provide professional tire installation services with state-of-the-art equipment and experienced technicians."
+      answer: "Yes, we provide professional tire installation services with state-of-the-art equipment and experienced technicians.",
+      icon: "🔧"
     },
     {
       question: "What is your warranty policy?",
-      answer: "Our tires come with manufacturer warranties, and we offer additional coverage options. Specific warranty terms vary by product."
+      answer: "Our tires come with manufacturer warranties, and we offer additional coverage options. Specific warranty terms vary by product.",
+      icon: "📜"
     },
     {
       question: "How often should I rotate my tires?",
-      answer: "We recommend rotating your tires every 5,000-8,000 kilometers to ensure even wear and optimal performance."
+      answer: "We recommend rotating your tires every 5,000-8,000 kilometers to ensure even wear and optimal performance.",
+      icon: "🔄"
     },
     {
       question: "Do you offer international shipping?",
-      answer: "Yes, we provide international shipping services to select countries. Contact us for specific shipping details and rates."
+      answer: "Yes, we provide international shipping services to select countries. Contact us for specific shipping details and rates.",
+      icon: "🌍"
     }
   ];
 
@@ -39,86 +48,159 @@ const FaqSection = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100
+      }
+    }
   };
 
   const contentVariants = {
-    hidden: { opacity: 0, height: 0 },
+    hidden: { 
+      opacity: 0, 
+      height: 0,
+      scale: 0.95
+    },
     visible: { 
       opacity: 1, 
       height: "auto",
+      scale: 1,
       transition: {
-        duration: 0.3,
+        duration: 0.4,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    }
+  };
+
+  const glowVariants = {
+    animate: {
+      boxShadow: [
+        '0 0 20px rgba(234, 179, 8, 0)',
+        '0 0 40px rgba(234, 179, 8, 0.3)',
+        '0 0 20px rgba(234, 179, 8, 0)'
+      ],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
         ease: "easeInOut"
       }
     }
   };
 
   return (
-    <section className="py-12 sm:py-16 md:py-24 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-yellow-200 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-yellow-300 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
+    <section className="py-24 bg-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(circle at 4px 4px, black 1px, transparent 0)',
+          backgroundSize: '48px 48px'
+        }} />
       </div>
+
+      {/* Animated Background Elements */}
+      <motion.div
+        className="absolute inset-0 overflow-hidden"
+        style={{
+          background: `
+            radial-gradient(circle at 20% 20%, rgba(234, 179, 8, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(234, 179, 8, 0.1) 0%, transparent 50%)
+          `
+        }}
+      >
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(234,179,8,0.05) 0%, transparent 70%)',
+            filter: 'blur(40px)'
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+        />
+      </motion.div>
 
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true }}
         variants={containerVariants}
-        className="container mx-auto px-4 sm:px-6 relative z-10"
+        className="container mx-auto px-4 relative z-10"
       >
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 sm:mb-12 md:mb-16"
+          className="text-center mb-16"
+          variants={itemVariants}
         >
-          <span className="px-3 sm:px-4 py-1 bg-yellow-400 text-black text-xs sm:text-sm font-bold rounded-full inline-block mb-3 sm:mb-4">
-            FAQ
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-800">
-            Frequently Asked Questions
-          </h2>
-          <div className="w-16 sm:w-20 md:w-24 h-1 bg-yellow-400 mx-auto"></div>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-block"
+          >
+            <span className="px-4 py-2 rounded-full bg-yellow-100 text-yellow-800 text-sm font-semibold tracking-wide">
+              FAQ
+            </span>
+          </motion.div>
+          
+          <motion.h2 
+            className="mt-6 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-700">
+              Frequently Asked
+            </span>
+            <br />
+            <span className="text-gray-900">Questions</span>
+          </motion.h2>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="mb-3 sm:mb-4"
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+              className="group"
             >
               <motion.button
                 onClick={() => setActiveIndex(activeIndex === index ? null : index)}
-                className="w-full text-left p-4 sm:p-5 md:p-6 bg-white rounded-xl shadow-md sm:shadow-lg hover:shadow-xl transition-shadow duration-300"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
+                className="w-full text-left p-6 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                whileHover={{ y: -4 }}
+                variants={glowVariants}
+                animate={hoveredIndex === index ? "animate" : ""}
               >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 pr-4">
-                    {faq.question}
-                  </h3>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="relative flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <span className="text-2xl">{faq.icon}</span>
+                    <h3 className="text-xl font-semibold text-gray-900 group-hover:text-yellow-600 transition-colors duration-300">
+                      {faq.question}
+                    </h3>
+                  </div>
                   <motion.div
                     animate={{ rotate: activeIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
-                    className="flex-shrink-0 ml-2 sm:ml-4"
+                    className="flex-shrink-0 ml-4"
                   >
-                    <svg
-                      className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
+                    {activeIndex === index ? (
+                      <FiMinus className="w-6 h-6 text-yellow-500" />
+                    ) : (
+                      <FiPlus className="w-6 h-6 text-yellow-500" />
+                    )}
                   </motion.div>
                 </div>
 
@@ -129,16 +211,19 @@ const FaqSection = () => {
                       initial="hidden"
                       animate="visible"
                       exit="hidden"
-                      className="mt-3 sm:mt-4"
+                      className="mt-4"
                     >
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.3 }}
+                        className="pl-12 border-l-2 border-yellow-500"
                       >
-                        {faq.answer}
-                      </motion.p>
+                        <p className="text-gray-600 leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </motion.div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -147,22 +232,32 @@ const FaqSection = () => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Contact CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-center mt-8 sm:mt-10 md:mt-12"
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-16"
         >
-          <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+          <p className="text-gray-600 mb-6">
             Still have questions? We're here to help!
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 sm:px-7 md:px-8 py-2 sm:py-2.5 md:py-3 bg-yellow-400 text-black text-sm sm:text-base font-semibold rounded-full hover:bg-yellow-500 transition-colors duration-300"
+            className="px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold inline-flex items-center group"
           >
-            Contact Support
+            <span>Contact Support</span>
+            <motion.div
+              className="ml-2"
+              animate={{
+                x: hoveredIndex === 'button' ? 5 : 0,
+              }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              →
+            </motion.div>
           </motion.button>
         </motion.div>
       </motion.div>
