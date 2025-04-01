@@ -35,7 +35,7 @@ const Navbar = ({ isScrolled }) => {
 
   return (
     <motion.nav 
-      className={`w-full transition-all duration-500 ${
+      className={`w-full transition-all duration-500 fixed top-0 left-0 right-0 z-50 ${
         isScrolled 
           ? 'bg-white shadow-lg' 
           : 'bg-white'
@@ -45,21 +45,21 @@ const Navbar = ({ isScrolled }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center">
             <div className="flex items-center">
-              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
+              <span className="text-sm md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
                 GOLDEN
               </span>
               <Image
                 src="/logo.png"
                 alt="Extreme Logo"
-                width={60}
-                height={30}
-                className="mx-2 md:w-[80px] md:h-[40px]"
+                width={40}
+                height={20}
+                className="mx-1 md:mx-2 md:w-[80px] md:h-[40px]"
               />
-              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
+              <span className="text-sm md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
                 EXTREME
               </span>
             </div>
@@ -68,17 +68,13 @@ const Navbar = ({ isScrolled }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
+            className="md:hidden p-1 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
           >
-            {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
 
-          {/* Main Navigation */}
-          <div className={`lg:flex items-center justify-center flex-1 px-8 ${
-            isMobileMenuOpen 
-              ? 'absolute top-20 left-0 right-0 bg-white shadow-lg py-4 flex-col space-y-4' 
-              : 'hidden'
-          }`}>
+          {/* Main Navigation - Desktop */}
+          <div className="hidden md:flex items-center justify-center flex-1 px-8">
             {navItems.map((item) => (
               <Link
                 key={item.id}
@@ -99,10 +95,10 @@ const Navbar = ({ isScrolled }) => {
             ))}
           </div>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center space-x-6">
+          {/* Right Side Actions - Desktop */}
+          <div className="hidden md:flex items-center space-x-6">
             {/* Search Bar */}
-            <div className="relative hidden md:block">
+            <div className="relative">
               <input
                 type="text"
                 value={searchQuery}
@@ -120,19 +116,50 @@ const Navbar = ({ isScrolled }) => {
                 whileTap={{ scale: 0.9 }}
                 className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
               >
-                <FiShoppingCart className="w-5 h-5 md:w-6 md:h-6" />
+                <FiShoppingCart className="w-6 h-6" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
               >
-                <FiUser className="w-5 h-5 md:w-6 md:h-6" />
+                <FiUser className="w-6 h-6" />
               </motion.button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white shadow-lg">
+          <div className="px-4 py-2">
+            <div className="relative mb-4">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                className="w-full px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-yellow-500/50 transition-all duration-300"
+              />
+              <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+            {navItems.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`block px-4 py-2 text-sm font-medium ${
+                  isActive(item.href)
+                    ? 'text-yellow-600'
+                    : 'text-gray-700'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </motion.nav>
   );
 };
