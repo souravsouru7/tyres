@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi';
+import { FiSearch, FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = ({ isScrolled }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -96,7 +96,7 @@ const Navbar = ({ isScrolled }) => {
           </div>
 
           {/* Right Side Actions - Desktop */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center">
             {/* Search Bar */}
             <div className="relative">
               <input
@@ -107,24 +107,6 @@ const Navbar = ({ isScrolled }) => {
                 className="w-48 px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-yellow-500/50 transition-all duration-300"
               />
               <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
-
-            {/* Icons */}
-            <div className="flex items-center space-x-4">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
-              >
-                <FiShoppingCart className="w-6 h-6" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
-              >
-                <FiUser className="w-6 h-6" />
-              </motion.button>
             </div>
           </div>
         </div>

@@ -20,11 +20,11 @@ const HeroBanner = () => {
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  // Using local images with more dynamic content
+
   const slides = [
     {
       id: 1,
-      image: "https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: "/new/ADM_4614.JPG",
       alt: 'Premium Performance Tires',
       title: 'ENGINEERED FOR\nPERFORMANCE',
       subtitle: 'Discover our range of high-performance tires for ultimate road grip and control',
@@ -33,7 +33,7 @@ const HeroBanner = () => {
     },
     {
       id: 2,
-      image: "https://images.pexels.com/photos/244553/pexels-photo-244553.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: "/new/ADM_4501.JPG",
       alt: 'All-Season Tires',
       title: 'ALL-SEASON\nRELIABILITY',
       subtitle: 'Drive confidently in any weather condition with our versatile tire collection',
@@ -42,7 +42,7 @@ const HeroBanner = () => {
     },
     {
       id: 3,
-      image: "https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: "/new/ADM_4620.JPG",
       alt: 'Off-Road Tires',
       title: 'CONQUER ANY\nTERRAIN',
       subtitle: 'Built tough for your off-road adventures with superior traction and durability',
@@ -74,70 +74,85 @@ const HeroBanner = () => {
     
     const interval = setInterval(() => {
       setDirection(1);
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 5000); // Shorter duration for more dynamic feel
+      setCurrentSlide((prev) => {
+        const nextSlide = prev === slides.length - 1 ? 0 : prev + 1;
+        return nextSlide;
+      });
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [slides.length, isMounted]);
 
-  // Advanced animation variants with smoother transitions
+  // Handle manual slide change
+  const handleSlideChange = (index) => {
+    setDirection(index > currentSlide ? 1 : -1);
+    setCurrentSlide(index);
+  };
+
+  // Enhanced animation variants with unique transitions for each slide
   const imageVariants = {
     enter: (direction) => ({
-      scale: 1.1,
+      scale: 1.2,
       opacity: 0,
       x: direction > 0 ? 1000 : -1000,
       rotateY: direction > 0 ? 45 : -45,
+      filter: "blur(10px)",
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
+      }
     }),
     center: {
       scale: 1,
       opacity: 1,
       x: 0,
       rotateY: 0,
+      filter: "blur(0px)",
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.8 },
-        scale: { duration: 1.5, ease: "easeOut" },
-        rotateY: { duration: 1, ease: "easeOut" }
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
       }
     },
     exit: (direction) => ({
-      scale: 0.9,
+      scale: 0.8,
       opacity: 0,
       x: direction > 0 ? -1000 : 1000,
       rotateY: direction > 0 ? -45 : 45,
+      filter: "blur(10px)",
       transition: {
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.8 },
-        rotateY: { duration: 1, ease: "easeOut" }
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
       }
     })
   };
 
-  // Text animation variants
+  // Enhanced text animation variants with staggered effects
   const titleVariants = {
-    hidden: { opacity: 0, y: -50, rotateX: -90 },
+    hidden: { opacity: 0, y: -50, rotateX: -90, scale: 0.8 },
     visible: {
       opacity: 1,
       y: 0,
       rotateX: 0,
+      scale: 1,
       transition: {
         duration: 0.8,
         delay: 0.3,
-        ease: "easeOut"
+        ease: [0.16, 1, 0.3, 1]
       }
     }
   };
 
   const subtitleVariants = {
-    hidden: { opacity: 0, y: 30, rotateX: 90 },
+    hidden: { opacity: 0, y: 30, rotateX: 90, scale: 0.9 },
     visible: {
       opacity: 1,
       y: 0,
       rotateX: 0,
+      scale: 1,
       transition: {
         duration: 0.6,
         delay: 0.5,
-        ease: "easeOut"
+        ease: [0.16, 1, 0.3, 1]
       }
     }
   };
@@ -151,17 +166,22 @@ const HeroBanner = () => {
       transition: {
         duration: 0.5,
         delay: 0.7,
-        ease: "easeOut"
+        ease: [0.16, 1, 0.3, 1]
       }
     },
     hover: {
       scale: 1.05,
       transition: {
-        duration: 0.2
+        duration: 0.2,
+        ease: "easeOut"
       }
     },
     tap: {
-      scale: 0.95
+      scale: 0.95,
+      transition: {
+        duration: 0.1,
+        ease: "easeOut"
+      }
     }
   };
 
@@ -309,10 +329,7 @@ const HeroBanner = () => {
         {slides.map((_, index) => (
           <motion.button
             key={index}
-            onClick={() => {
-              setDirection(index > currentSlide ? 1 : -1);
-              setCurrentSlide(index);
-            }}
+            onClick={() => handleSlideChange(index)}
             className="relative group"
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}

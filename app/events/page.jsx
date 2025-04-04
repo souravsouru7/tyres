@@ -1,185 +1,277 @@
-import EventsSection from '../components/EventsSection';
-import { Metadata } from 'next';
-import Layout from '../components/Layout';
+"use client";
 
-export const metadata = {
-  title: 'Events & News | Desert Tires',
-  description: 'Stay updated with the latest events, races, and news from Desert Tires. Join us for exciting off-road adventures and industry expos.',
-};
+import React from 'react';
+import Layout from '../components/Layout';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
+import { FiArrowRight, FiCalendar, FiMapPin, FiClock } from 'react-icons/fi';
 
 export default function EventsPage() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 300], [0, -50]);
+  const opacity = useTransform(scrollY, [0, 200], [1, 0]);
+
+  const events = [
+    {
+      id: 1,
+      title: "Dubai International Motor Show",
+      date: "March 15, 2025",
+      location: "Dubai World Trade Centre",
+      time: "10:00 AM - 8:00 PM",
+      image: "/new/ADM_4614.JPG",
+      category: "EXHIBITION"
+    },
+    {
+      id: 2,
+      title: "Off-Road Adventure Expo",
+      date: "April 20, 2025",
+      location: "Dubai Autodrome",
+      time: "9:00 AM - 6:00 PM",
+      image: "/new/ADM_4501.JPG",
+      category: "EXPO"
+    },
+    {
+      id: 3,
+      title: "Desert Racing Championship",
+      date: "May 5, 2025",
+      location: "Dubai Desert Conservation Reserve",
+      time: "7:00 AM - 5:00 PM",
+      image: "/new/ADM_4620.JPG",
+      category: "RACING"
+    }
+  ];
+
+  const news = [
+    {
+      id: 1,
+      title: "New All-Terrain Tire Series Announced",
+      date: "March 15, 2025",
+      category: "PRODUCT LAUNCH",
+      image: "/new/ADM_4614.JPG",
+      excerpt: "Desert Tires unveils its latest innovation in all-terrain technology, designed for extreme conditions."
+    },
+    {
+      id: 2,
+      title: "Partnership with Racing Team",
+      date: "February 28, 2025",
+      category: "PARTNERSHIP",
+      image: "/new/ADM_4501.JPG",
+      excerpt: "Exciting new partnership announced with the champion off-road racing team for the upcoming season."
+    },
+    {
+      id: 3,
+      title: "Eco-Friendly Manufacturing Initiative",
+      date: "January 10, 2025",
+      category: "SUSTAINABILITY",
+      image: "/new/ADM_4620.JPG",
+      excerpt: "Desert Tires commits to reducing carbon footprint with new sustainable manufacturing processes."
+    }
+  ];
+
   return (
     <Layout>
-      <main className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 bg-gray-900 overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[url('/images/tire-pattern.png')] bg-repeat opacity-5"></div>
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-yellow-500/10 to-transparent"></div>
-          </div>
-          
-          <div className="container mx-auto px-4 sm:px-6 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Events & <span className="text-yellow-400">News</span>
-              </h1>
-              <div className="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
-              <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto">
-                Stay connected with the latest happenings in the off-road community and join us for exclusive events designed for enthusiasts and professionals.
-              </p>
-            </div>
-          </div>
-          
-          {/* Decorative bottom curve */}
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full h-auto fill-white">
-              <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
-            </svg>
-          </div>
-        </section>
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+        {/* Background Pattern */}
+        <div className="fixed inset-0 z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#f0f0f0_2px,transparent_0)] bg-[size:40px_40px]" />
+        </div>
 
-        {/* Events Section (imported component) */}
-        <EventsSection />
-        
-        {/* Latest News Section */}
-        <section className="py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6">
-            <div className="text-center mb-12">
-              <span className="px-4 py-1 bg-yellow-500 text-gray-900 text-sm font-bold rounded-full inline-block mb-3">
-                STAY INFORMED
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-800">
-                Latest <span className="text-yellow-500">News</span>
-              </h2>
-              <div className="h-1 w-20 bg-yellow-500 mx-auto mb-6"></div>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Keep up with the latest developments in the off-road industry and updates from Desert Tires
+        {/* Floating Elements */}
+        <div className="fixed inset-0 z-0 overflow-hidden">
+          <motion.div
+            className="absolute w-[800px] h-[800px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,200,0,0.03) 0%, rgba(255,140,0,0.02) 100%)',
+              top: '10%',
+              left: '20%',
+              filter: 'blur(60px)',
+            }}
+            animate={{
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
+          />
+        </div>
+
+        {/* Hero Section */}
+        <div className="relative pt-32 pb-16 z-10">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200/20 text-amber-700 text-sm font-medium mb-8"
+              >
+                Stay Updated
+              </motion.div>
+              <h1 className="text-7xl md:text-8xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+                Events & News
+              </h1>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Join us for exciting events and stay informed about the latest developments
               </p>
-            </div>
-            
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Events Section */}
+        <div className="relative py-16 z-10">
+          <div className="container mx-auto px-4">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl font-bold text-gray-800 text-center mb-12"
+            >
+              Upcoming Events
+            </motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* News Card 1 */}
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2">
-                <div className="h-48 bg-gray-300 relative">
-                  <div className="absolute inset-0 bg-cover bg-center" 
-                       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf')" }}>
+              {events.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute top-4 left-4 px-3 py-1 bg-amber-500 text-white text-sm font-semibold rounded-full">
+                      {event.category}
+                    </div>
                   </div>
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-yellow-500 text-xs font-bold text-gray-900 rounded-full">
-                    PRODUCT LAUNCH
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">{event.title}</h3>
+                    <div className="space-y-2 text-gray-600">
+                      <div className="flex items-center">
+                        <FiCalendar className="w-4 h-4 mr-2 text-amber-500" />
+                        <span>{event.date}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <FiMapPin className="w-4 h-4 mr-2 text-amber-500" />
+                        <span>{event.location}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <FiClock className="w-4 h-4 mr-2 text-amber-500" />
+                        <span>{event.time}</span>
+                      </div>
+                    </div>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="mt-6 w-full px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg flex items-center justify-center group"
+                    >
+                      Register Now
+                      <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </motion.button>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">New All-Terrain Tire Series Announced</h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    Desert Tires unveils its latest innovation in all-terrain technology, designed for extreme conditions.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">March 15, 2025</span>
-                    <button className="text-yellow-500 font-medium text-sm hover:text-yellow-600 transition-colors">
-                      Read More →
-                    </button>
-                  </div>
-                </div>
-              </div>
-              
-              {/* News Card 2 */}
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2">
-                <div className="h-48 bg-gray-300 relative">
-                  <div className="absolute inset-0 bg-cover bg-center" 
-                       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7')" }}>
-                  </div>
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-blue-500 text-xs font-bold text-white rounded-full">
-                    PARTNERSHIP
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Desert Tires Partners with Racing Team</h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    Exciting new partnership announced with the champion off-road racing team for the upcoming season.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">February 28, 2025</span>
-                    <button className="text-yellow-500 font-medium text-sm hover:text-yellow-600 transition-colors">
-                      Read More →
-                    </button>
-                  </div>
-                </div>
-              </div>
-              
-              {/* News Card 3 */}
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-2">
-                <div className="h-48 bg-gray-300 relative">
-                  <div className="absolute inset-0 bg-cover bg-center" 
-                       style={{ backgroundImage: "url('https://images.unsplash.com/photo-1582559240473-7303f8de0c25')" }}>
-                  </div>
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-green-500 text-xs font-bold text-white rounded-full">
-                    SUSTAINABILITY
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">Eco-Friendly Manufacturing Initiative</h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    Desert Tires commits to reducing carbon footprint with new sustainable manufacturing processes.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">January 10, 2025</span>
-                    <button className="text-yellow-500 font-medium text-sm hover:text-yellow-600 transition-colors">
-                      Read More →
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="text-center mt-12">
-              <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 rounded-lg font-bold transition-colors shadow-md hover:shadow-lg">
-                View All News
-              </button>
+                </motion.div>
+              ))}
             </div>
           </div>
-        </section>
-        
+        </div>
+
+        {/* News Section */}
+        <div className="relative py-16 z-10">
+          <div className="container mx-auto px-4">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl font-bold text-gray-800 text-center mb-12"
+            >
+              Latest News
+            </motion.h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {news.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute top-4 left-4 px-3 py-1 bg-amber-500 text-white text-sm font-semibold rounded-full">
+                      {item.category}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">{item.title}</h3>
+                    <p className="text-gray-600 mb-4">{item.excerpt}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">{item.date}</span>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="text-amber-500 font-medium flex items-center group"
+                      >
+                        Read More
+                        <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Newsletter Section */}
-        <section className="py-16 bg-gray-900 relative overflow-hidden">
-          {/* Background elements */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-400 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
-          </div>
-          
-          <div className="container mx-auto px-4 sm:px-6 relative z-10">
-            <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/20">
+        <div className="relative py-16 z-10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto bg-gradient-to-r from-amber-500/10 to-orange-500/10 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-amber-200/20">
               <div className="text-center mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
                   Stay Updated with Our Newsletter
                 </h2>
-                <p className="text-gray-300">
+                <p className="text-gray-600">
                   Subscribe to receive the latest news, event announcements, and exclusive offers
                 </p>
               </div>
-              
               <form className="space-y-4 md:space-y-0 md:flex md:gap-4">
                 <input 
                   type="email" 
                   placeholder="Your email address" 
-                  className="w-full md:flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full md:flex-1 px-4 py-3 rounded-lg bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
-                <button 
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit" 
-                  className="w-full md:w-auto px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 rounded-lg font-bold transition-colors"
+                  className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-bold transition-all duration-300"
                 >
                   Subscribe
-                </button>
+                </motion.button>
               </form>
-              
-              <p className="text-xs text-gray-400 mt-4 text-center">
-                By subscribing, you agree to our Privacy Policy and consent to receive updates from Desert Tires.
-              </p>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </div>
     </Layout>
   );
 }

@@ -2,283 +2,226 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Layout from '../components/Layout';
-import { motion } from 'framer-motion';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaArrowRight } from 'react-icons/fa';
 
 const ContactUs = () => {
   const [formStatus, setFormStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 300], [0, -50]);
+  const opacity = useTransform(scrollY, [0, 200], [1, 0]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
     setFormStatus('Thank you for your message! We will get back to you soon.');
     setIsSubmitting(false);
   };
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  };
-  
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
   return (
     <Layout>
-      <div className="w-full">
-        {/* Modern Hero Section with Parallax Effect */}
-        <div className="relative w-full h-[60vh] overflow-hidden bg-gray-900">
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-900/70 to-gray-900/50 z-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+        {/* Background Pattern */}
+        <div className="fixed inset-0 z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#f0f0f0_2px,transparent_0)] bg-[size:40px_40px]" />
+        </div>
+
+        {/* Floating Elements */}
+        <div className="fixed inset-0 z-0 overflow-hidden">
+          <motion.div
+            className="absolute w-[800px] h-[800px] rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,200,0,0.03) 0%, rgba(255,140,0,0.02) 100%)',
+              top: '10%',
+              left: '20%',
+              filter: 'blur(60px)',
+            }}
+            animate={{
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+            }}
           />
-          <div className="absolute inset-0">
-            <Image 
-              src="/conductus.jpg" 
-              alt="Contact Us Banner" 
-              fill
-              className="object-cover transform scale-105"
-              priority
-            />
-          </div>
-          <div className="relative z-20 h-full flex items-center justify-center text-center px-4">
+        </div>
+
+        {/* Hero Section */}
+        <div className="relative pt-32 pb-16 z-10">
+          <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="max-w-4xl"
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
             >
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-                Let's <span className="text-yellow-500">Connect</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-300 mb-8 font-light">
-                We're here to transform your automotive experience
-              </p>
-              <motion.a
-                href="#contact-form"
-                className="inline-block bg-yellow-500 text-gray-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-400 transition-all duration-300 shadow-lg hover:shadow-yellow-500/30"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200/20 text-amber-700 text-sm font-medium mb-8"
               >
                 Get in Touch
-              </motion.a>
+              </motion.div>
+              <h1 className="text-7xl md:text-8xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+                Contact Us
+              </h1>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                We're here to help transform your automotive experience
+              </p>
             </motion.div>
           </div>
         </div>
 
-        {/* Contact Information Cards */}
-        <div className="bg-white py-20 px-4">
-          <div className="container mx-auto max-w-6xl">
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              {/* Phone Card */}
-              <motion.div 
-                className="bg-white p-8 rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
-                variants={fadeIn}
-                whileHover={{ y: -5, scale: 1.02 }}
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mr-4">
-                    <FaPhone className="w-7 h-7 text-yellow-500" />
+        {/* Contact Cards Section */}
+        <div className="relative py-16 z-10">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+              {[
+                {
+                  icon: <FaPhone className="w-6 h-6" />,
+                  title: "Phone",
+                  content: "+971 586 498 398",
+                  link: "tel:+971586498398"
+                },
+                {
+                  icon: <FaEnvelope className="w-6 h-6" />,
+                  title: "Email",
+                  content: "info@goldenextreme.com",
+                  link: "mailto:info@goldenextreme.com"
+                },
+                {
+                  icon: <FaMapMarkerAlt className="w-6 h-6" />,
+                  title: "Location",
+                  content: "Dubai, UAE"
+                },
+                {
+                  icon: <FaClock className="w-6 h-6" />,
+                  title: "Hours",
+                  content: "Mon - Fri: 9:00 AM - 6:00 PM"
+                }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 p-8"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10">
+                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center mb-6 text-white transform group-hover:scale-110 transition-transform duration-300">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                    {item.link ? (
+                      <a href={item.link} className="text-gray-600 hover:text-amber-500 transition-colors">
+                        {item.content}
+                      </a>
+                    ) : (
+                      <p className="text-gray-600">{item.content}</p>
+                    )}
                   </div>
-                  <h3 className="text-2xl font-semibold text-gray-900">Phone</h3>
-                </div>
-                <a href="tel:+971586498398" className="text-gray-600 hover:text-yellow-500 transition-colors text-lg">
-                  +971 586 498 398
-                </a>
-              </motion.div>
-
-              {/* Email Card */}
-              <motion.div 
-                className="bg-white p-8 rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
-                variants={fadeIn}
-                whileHover={{ y: -5, scale: 1.02 }}
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mr-4">
-                    <FaEnvelope className="w-7 h-7 text-yellow-500" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900">Email</h3>
-                </div>
-                <a href="mailto:info@goldenextreme.com" className="text-gray-600 hover:text-yellow-500 transition-colors text-lg">
-                  info@goldenextreme.com
-                </a>
-              </motion.div>
-
-              {/* Address Card */}
-              <motion.div 
-                className="bg-white p-8 rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
-                variants={fadeIn}
-                whileHover={{ y: -5, scale: 1.02 }}
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mr-4">
-                    <FaMapMarkerAlt className="w-7 h-7 text-yellow-500" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900">Address</h3>
-                </div>
-                <p className="text-gray-600 text-lg">
-                  Dubai, UAE
-                </p>
-              </motion.div>
-
-              {/* Hours Card */}
-              <motion.div 
-                className="bg-white p-8 rounded-2xl border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
-                variants={fadeIn}
-                whileHover={{ y: -5, scale: 1.02 }}
-              >
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mr-4">
-                    <FaClock className="w-7 h-7 text-yellow-500" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900">Hours</h3>
-                </div>
-                <p className="text-gray-600 text-lg">
-                  Mon - Fri: 9:00 AM - 6:00 PM
-                </p>
-              </motion.div>
-            </motion.div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Contact Form Section */}
-        <div id="contact-form" className="bg-gray-50 py-20 px-4">
-          <div className="container mx-auto max-w-4xl">
-            <motion.div 
-              className="bg-white p-12 rounded-3xl border border-gray-100 shadow-xl"
+        <div className="relative py-16 z-10">
+          <div className="container mx-auto px-4">
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12"
             >
-              <motion.h3 
-                className="text-4xl font-bold mb-8 text-gray-900 text-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                Send us a <span className="text-yellow-500">Message</span>
-              </motion.h3>
-              
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                  Send us a <span className="text-amber-500">Message</span>
+                </h2>
+                <p className="text-gray-600">We'd love to hear from you</p>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-8">
-                <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                  variants={staggerContainer}
-                  initial="hidden"
-                  animate="visible"
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {["First Name", "Last Name"].map((label, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                    >
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {label} {index === 0 && <span className="text-amber-500">*</span>}
+                      </label>
+                      <input
+                        type="text"
+                        required={index === 0}
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
+                        placeholder={`Your ${label.toLowerCase()}`}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  <motion.div 
-                    className="relative"
-                    variants={fadeIn}
-                  >
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                      First name <span className="text-yellow-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      required
-                      className="w-full bg-white border border-gray-200 rounded-xl px-6 py-3 text-gray-900 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-300 placeholder-gray-400"
-                      placeholder="Your first name"
-                    />
-                  </motion.div>
-                  <motion.div 
-                    className="relative"
-                    variants={fadeIn}
-                  >
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                      Last name
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      className="w-full bg-white border border-gray-200 rounded-xl px-6 py-3 text-gray-900 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-300 placeholder-gray-400"
-                      placeholder="Your last name"
-                    />
-                  </motion.div>
-                </motion.div>
-                
-                <motion.div 
-                  className="relative"
-                  variants={fadeIn}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 0.4 }}
-                >
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email <span className="text-yellow-500">*</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email <span className="text-amber-500">*</span>
                   </label>
                   <input
                     type="email"
-                    id="email"
                     required
-                    className="w-full bg-white border border-gray-200 rounded-xl px-6 py-3 text-gray-900 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-300 placeholder-gray-400"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
                     placeholder="Your email address"
                   />
                 </motion.div>
-                
-                <motion.div 
-                  className="relative"
-                  variants={fadeIn}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 0.6 }}
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message <span className="text-yellow-500">*</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Message <span className="text-amber-500">*</span>
                   </label>
                   <textarea
-                    id="message"
                     required
                     rows="6"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-6 py-3 text-gray-900 focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all duration-300 placeholder-gray-400 resize-none"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 resize-none"
                     placeholder="Your message"
                   />
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-yellow-500 text-gray-900 py-4 rounded-xl font-semibold hover:bg-yellow-400 transition-all duration-300 shadow-lg hover:shadow-yellow-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 flex items-center justify-center group"
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
+                    <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </motion.div>
 
                 {formStatus && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center text-green-600 font-medium"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-green-600 font-medium bg-green-50 p-4 rounded-xl"
                   >
                     {formStatus}
                   </motion.div>
