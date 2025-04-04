@@ -45,24 +45,17 @@ const Navbar = ({ isScrolled }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo Section */}
           <Link href="/" className="flex items-center">
-            <div className="flex items-center">
-              <span className="text-sm md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
-                GOLDEN
-              </span>
-              <Image
-                src="/logo.png"
-                alt="Extreme Logo"
-                width={40}
-                height={20}
-                className="mx-1 md:mx-2 md:w-[80px] md:h-[40px]"
-              />
-              <span className="text-sm md:text-2xl font-bold bg-gradient-to-r from-yellow-500 to-yellow-700 bg-clip-text text-transparent">
-                EXTREME
-              </span>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Golden Extreme Logo"
+              width={160}
+              height={120}
+              className="h-16 w-auto"
+              priority
+            />
           </Link>
 
           {/* Mobile Menu Button */}
