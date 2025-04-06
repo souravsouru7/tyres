@@ -30,12 +30,7 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
-  // Enable if you need to disable image optimization
-  // experimental: {
-  //   images: {
-  //     unoptimized: true,
-  //   },
-  // },
+
 }
 
 module.exports = nextConfig
