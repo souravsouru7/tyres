@@ -1,32 +1,37 @@
-import React, { useEffect } from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { getProducts } from '../../src/utils/api';
+import Link from 'next/link';
 
 const TireAdvertisement = () => {
-  const tireProducts = [
-    {
-      id: 1,
-      brand: "MICHELIN",
-      model: "Pilot Sport 4",
-      image: "/images/tires/michelin.png"
-    },
-    {
-      id: 2,
-      brand: "BRIDGESTONE",
-      model: "Turanza",
-      image: "/images/tires/bridgestone.png"
-    },
-    {
-      id: 3,
-      brand: "GOODYEAR",
-      model: "Eagle F1",
-      image: "/images/tires/goodyear.png"
-    },
-    {
-      id: 4,
-      brand: "APOLLO",
-      model: "Apterra",
-      image: "/images/tires/apollo.png"
-    }
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getProducts();
+        if (response.success) {
+          // Get the first 4 products
+          const featuredProducts = response.data
+            .filter(product => product.category === 'tyre')
+            .slice(0, 4);
+          setProducts(featuredProducts);
+        } else {
+          setError('Failed to fetch products');
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Animation effect for elements
   useEffect(() => {
@@ -38,17 +43,17 @@ const TireAdvertisement = () => {
 
       // Animate header
       setTimeout(() => {
-        header.classList.add('animate-header');
+        header?.classList.add('animate-header');
       }, 300);
 
       // Animate subheader
       setTimeout(() => {
-        subheader.classList.add('animate-subheader');
+        subheader?.classList.add('animate-subheader');
       }, 600);
 
       // Animate divider
       setTimeout(() => {
-        divider.classList.add('animate-divider');
+        divider?.classList.add('animate-divider');
       }, 900);
 
       // Animate products
@@ -60,7 +65,7 @@ const TireAdvertisement = () => {
     };
 
     animateElements();
-  }, []);
+  }, [products]);
 
   return (
     <section className="py-16 bg-white">
@@ -118,25 +123,50 @@ const TireAdvertisement = () => {
           <div className="divider h-1 bg-yellow-400 mx-auto mt-6"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {tireProducts.map((product) => (
-            <div key={product.id} className="product-card bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300">
-              <div className="p-4">
-                <h3 className="text-xl font-medium text-center text-gray-800 mb-4">
-                  {product.brand}
-                </h3>
-                <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
-                  <img 
-                    src={product.image}
-                    alt={`${product.brand} ${product.model} tire`}
-                    className="product-image object-contain w-full h-full transition-transform duration-300"
-                  />
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((index) => (
+              <div key={index} className="animate-pulse bg-gray-100 rounded-lg p-4 h-64"></div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-600">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products.map((product) => (
+              <Link 
+                href={`/products/${product._id}`}
+                key={product._id} 
+                className="product-card bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300 cursor-pointer"
+              >
+                <div className="p-4">
+                  <h3 className="text-xl font-medium text-center text-gray-800 mb-4">
+                    {product.name}
+                  </h3>
+                  <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
+                    <img 
+                      src={product.image}
+                      alt={product.name}
+                      className="product-image object-contain w-full h-full transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/placeholder-image.jpg';
+                      }}
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <p className="text-center text-gray-600 line-clamp-2">{product.description}</p>
+                    <div className="flex justify-center mt-3">
+                      <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-800 rounded-full text-xs font-medium">
+                        {product.subcategory}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-center mt-3 text-gray-600">{product.model}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

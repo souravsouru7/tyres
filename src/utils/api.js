@@ -46,8 +46,7 @@ export const getProducts = async () => {
     const response = await fetch(`${BASE_URL}/products`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error);
-    return data.data;
-    
+    return data;
   } catch (error) {
     throw new Error(error.message || 'Failed to fetch products');
   }
@@ -56,13 +55,24 @@ export const getProducts = async () => {
 export const updateProduct = async (id, formData) => {
   const token = localStorage.getItem('adminToken');
   try {
+    // Check if formData is already FormData object or needs conversion
+    const isFormDataObject = formData instanceof FormData;
+    let requestBody = formData;
+    
+    // If not FormData, we need to create the right headers
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+    };
+    
+    if (!isFormDataObject) {
+      headers['Content-Type'] = 'application/json';
+      requestBody = JSON.stringify(formData);
+    }
+    
     const response = await fetch(`${BASE_URL}/products/${id}`, {
       method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
+      headers,
+      body: requestBody,
     });
 
     const data = await response.json();
@@ -96,7 +106,7 @@ export const getProductById = async (id) => {
     const response = await fetch(`${BASE_URL}/products/${id}`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error);
-    return data.data;
+    return data; // Return the full response object which includes 'success' and 'data' fields
   } catch (error) {
     throw new Error(error.message || 'Failed to fetch product');
   }

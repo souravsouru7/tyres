@@ -16,28 +16,71 @@ export default function ProductsPage() {
   
   const [activeCategory, setActiveCategory] = useState(categoryParam);
   const [searchQuery, setSearchQuery] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0);
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
 
   useEffect(() => {
+    const handleRouteChange = () => {
+      console.log("Route changed - refreshing products");
+      setRefreshKey(prevKey => prevKey + 1);
+    };
+    
+    window.addEventListener('popstate', handleRouteChange);
+    
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  }, []);
+
+  useEffect(() => {
     setActiveCategory(categoryParam);
+    console.log("Category param updated:", categoryParam);
+    
+    if (categoryParam !== 'all') {
+      setTimeout(() => {
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 200);
+    }
   }, [categoryParam]);
 
   const handleCategoryClick = (category) => {
-    const categoryValue = category.toLowerCase();
-    setActiveCategory(categoryValue);
-    router.push(`/products?category=${categoryValue}`, { scroll: false });
+    // Redirect to dedicated category pages instead of filtering on the same page
+    switch(category) {
+      case 'TYRES':
+        router.push('/products/tyres');
+        break;
+      case 'WHEELS':
+        router.push('/products/wheels');
+        break;
+      case 'BATTERIES':
+        router.push('/products/batteries');
+        break;
+      default:
+        router.push('/products');
+    }
+  };
+
+  const isCategoryActive = (displayCategory) => {
+    const categoryMapping = {
+      'TYRES': 'tyres',
+      'WHEELS': 'wheels', 
+      'BATTERIES': 'batteries'
+    };
+    
+    return activeCategory === categoryMapping[displayCategory];
   };
 
   return (
     <Layout>
       <div className="relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white">
-        {/* Background Pattern */}
         <div className="fixed inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#f0f0f0_2px,transparent_0)] bg-[size:40px_40px]" />
         </div>
 
-        {/* Floating Elements */}
         <div className="fixed inset-0 z-0 overflow-hidden">
           <motion.div
             className="absolute w-[800px] h-[800px] rounded-full"
@@ -77,7 +120,6 @@ export default function ProductsPage() {
           />
         </div>
 
-        {/* Hero Image Section */}
         <motion.div 
           className="relative mb-20"
           initial={{ opacity: 0 }}
@@ -93,7 +135,6 @@ export default function ProductsPage() {
               style={{ objectPosition: '50% 30%' }}
             />
             
-            {/* 3D Tire Element */}
             <motion.div 
               className="absolute bottom-[-80px] right-[10%] z-20 hidden md:block"
               initial={{ opacity: 0, y: 100, rotate: -20 }}
@@ -151,7 +192,6 @@ export default function ProductsPage() {
               </div>
             </motion.div>
             
-            {/* Scroll Indicator */}
             <motion.div
               className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
               style={{ opacity }}
@@ -169,7 +209,6 @@ export default function ProductsPage() {
           </div>
         </motion.div>
 
-        {/* Category Navigation */}
         <motion.div 
           className="relative z-20 container mx-auto px-4 mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -190,11 +229,7 @@ export default function ProductsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: category === 'TYRES' ? 0.1 : category === 'WHEELS' ? 0.2 : 0.3 }}
                 >
-                  <div className={`rounded-xl px-8 py-5 w-40 text-center font-bold shadow-lg transition-all duration-300 ${
-                    activeCategory === category.toLowerCase() 
-                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white' 
-                      : 'bg-white text-gray-800 hover:shadow-xl'
-                  }`}>
+                  <div className="rounded-xl px-8 py-5 w-40 text-center font-bold shadow-lg transition-all duration-300 bg-white text-gray-800 hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white hover:shadow-xl">
                     {category}
                   </div>
                 </motion.div>
@@ -203,9 +238,8 @@ export default function ProductsPage() {
           </div>
         </motion.div>
 
-        {/* Company Description */}
         <motion.div 
-          className="container mx-auto px-4 mb-20"
+          className="relative z-20 container mx-auto px-4 mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -240,7 +274,6 @@ export default function ProductsPage() {
           </div>
         </motion.div>
 
-        {/* Falcon Batteries Section */}
         <motion.div 
           className="py-24 px-4 mb-20 relative overflow-hidden"
           initial={{ opacity: 0 }}
@@ -250,7 +283,6 @@ export default function ProductsPage() {
         >
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100 via-amber-50 to-amber-50/50 z-0" />
           
-          {/* Decorative Circles */}
           <div className="absolute top-1/4 left-10 w-20 h-20 rounded-full bg-blue-500/10 blur-xl"></div>
           <div className="absolute bottom-1/4 right-10 w-40 h-40 rounded-full bg-blue-500/10 blur-xl"></div>
           
@@ -323,38 +355,6 @@ export default function ProductsPage() {
           </div>
         </motion.div>
 
-        {/* Main Content */}
-        <div id="products" className="container mx-auto px-4 py-16 mb-24 relative z-10">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
-              BROWSE OUR PRODUCTS
-            </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8 rounded-full" />
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover high-quality automotive solutions tailored to your vehicle's needs
-            </p>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <ProductGrid 
-              activeCategory={activeCategory}
-              searchQuery={searchQuery}
-            />
-          </motion.div>
-        </div>
-
-        {/* Wheels Section */}
         <motion.div 
           className="py-24 px-4 mb-24 relative overflow-hidden"
           initial={{ opacity: 0 }}
@@ -364,7 +364,6 @@ export default function ProductsPage() {
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white z-0" />
           
-          {/* 3D Wheel Element */}
           <motion.div
             className="absolute -right-20 top-0 w-full md:w-1/2 h-full z-10"
             initial={{ opacity: 0, scale: 0.8, x: 50 }}
@@ -472,7 +471,6 @@ export default function ProductsPage() {
               </motion.div>
             </div>
 
-            {/* Added Wheel Showcase */}
             <motion.div 
               className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8"
               initial={{ opacity: 0, y: 30 }}
@@ -534,10 +532,6 @@ export default function ProductsPage() {
           </div>
         </motion.div>
 
-        {/* Branded Partners Section */}
-      
-
-        {/* Premium Partners Section */}
         <motion.div 
           className="py-24 px-4 relative overflow-hidden"
           initial={{ opacity: 0 }}
@@ -565,7 +559,6 @@ export default function ProductsPage() {
               transition={{ duration: 0.8, delay: 0.2, staggerChildren: 0.1 }}
               viewport={{ once: true }}
             >
-              {/* Tier 1 Card */}
               <motion.div 
                 className="bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden shadow-xl border border-gray-800 h-full"
                 whileHover={{ translateY: -8, transition: { duration: 0.3 } }}
@@ -599,7 +592,6 @@ export default function ProductsPage() {
                 </div>
               </motion.div>
               
-              {/* Tier 2 Card */}
               <motion.div 
                 className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl overflow-hidden shadow-xl border border-gray-200 h-full"
                 whileHover={{ translateY: -8, transition: { duration: 0.3 } }}
@@ -633,7 +625,6 @@ export default function ProductsPage() {
                 </div>
               </motion.div>
               
-              {/* Tier 3 Card */}
               <motion.div 
                 className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-3xl overflow-hidden shadow-xl border border-amber-200 h-full"
                 whileHover={{ translateY: -8, transition: { duration: 0.3 } }}
@@ -688,7 +679,6 @@ export default function ProductsPage() {
           </div>
         </motion.div>
         
-        {/* Premium Performance Banner */}
         <motion.div 
           className="relative py-24"
           initial={{ opacity: 0 }}
@@ -754,9 +744,51 @@ export default function ProductsPage() {
           </div>
         </motion.div>
 
+        <div id="products" className="container mx-auto px-4 py-16 relative z-10">
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Our Products
+            </h2>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Browse our collection of premium {activeCategory !== 'all' ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : 'products'} 
+              designed to provide optimal performance and reliability.
+            </p>
+          </motion.div>
+
+          <div className="mb-8">
+            <div className="max-w-md mx-auto">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent shadow-sm"
+                />
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ProductGrid 
+            key={refreshKey}
+            activeCategory={activeCategory} 
+            searchQuery={searchQuery} 
+          />
+        </div>
+
       </div>
 
-      {/* Add CSS for marquee animation */}
       <style jsx global>{`
         @keyframes marquee {
           0% {

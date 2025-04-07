@@ -9,7 +9,9 @@ export default function EditProductModal({ product, onClose, onProductUpdated })
     name: product.name,
     description: product.description,
     category: product.category,
+    subcategory: product.subcategory || '',
   });
+  const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -19,8 +21,22 @@ export default function EditProductModal({ product, onClose, onProductUpdated })
     setLoading(true);
 
     try {
-      const response = await updateProduct(product._id, formData);
-      onProductUpdated(response.data);
+      // If there's a new image, use FormData
+      if (selectedImage) {
+        const data = new FormData();
+        data.append('name', formData.name);
+        data.append('description', formData.description);
+        data.append('category', formData.category);
+        data.append('subcategory', formData.subcategory);
+        data.append('image', selectedImage);
+        
+        const response = await updateProduct(product._id, data);
+        onProductUpdated(response.data);
+      } else {
+        // Otherwise, just send the JSON data
+        const response = await updateProduct(product._id, formData);
+        onProductUpdated(response.data);
+      }
     } catch (error) {
       setError(error.message);
     } finally {
@@ -82,19 +98,60 @@ export default function EditProductModal({ product, onClose, onProductUpdated })
                 required
               >
                 <option value="">Select a category</option>
-                <option value="pcr-tires">PCR Tires</option>
-                <option value="otr-tires">OTR Tires</option>
-                <option value="tbr-tires">TBR Tires</option>
-                <option value="ltr-tires">LTR Tires</option>
-                <option value="pcr-wheels">PCR Wheels</option>
-                <option value="tbr-wheels">TBR Wheels</option>
-                <option value="bike-batteries">Bike Batteries</option>
-                <option value="ups-batteries">UPS Batteries</option>
+                <option value="battery">Battery</option>
+                <option value="tyre">Tyre</option>
+                <option value="wheel">Wheel</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Subcategory</label>
+            <input
+              type="text"
+              value={formData.subcategory}
+              onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+              className="block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none transition-colors"
+              required
+              placeholder="Enter subcategory (e.g. PCR, OTR, UPS)"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Change Product Image</label>
+            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-yellow-500 transition-colors">
+              <div className="space-y-1 text-center">
+                <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div className="flex text-sm text-gray-600">
+                  <label className="relative cursor-pointer bg-white rounded-md font-medium text-yellow-600 hover:text-yellow-700 focus-within:outline-none">
+                    <span>Upload a file</span>
+                    <input 
+                      type="file" 
+                      className="sr-only" 
+                      onChange={(e) => setSelectedImage(e.target.files[0])}
+                      accept="image/*"
+                    />
+                  </label>
+                  <p className="pl-1">or drag and drop</p>
+                </div>
+                <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                {selectedImage && (
+                  <p className="text-sm text-green-600 font-medium">
+                    {selectedImage.name} selected
+                  </p>
+                )}
+                {!selectedImage && (
+                  <p className="text-xs text-gray-500 italic">
+                    Current image will be kept if no new image is selected
+                  </p>
+                )}
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const LoadingScreen = () => {
   return (
@@ -13,11 +14,18 @@ const LoadingScreen = () => {
       transition={{ duration: 0.3 }}
     >
       <motion.div 
-        className="w-12 h-12 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mb-4"
+        className="relative w-32 h-32 mb-4"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
-      />
+      >
+        <Image
+          src="/logo.png"
+          alt="Golden Extreme Logo"
+          fill
+          className="object-contain animate-pulse"
+        />
+      </motion.div>
       <motion.h1 
         className="text-[#FFD700] text-xl font-bold mb-2"
         initial={{ y: 10, opacity: 0 }}

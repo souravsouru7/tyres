@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -20,11 +21,16 @@ export default function AdminLayout({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-t-4 border-yellow-500 border-solid rounded-full animate-spin"></div>
-          <div className="text-white mt-4 font-medium">Initializing dashboard...</div>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
+        <div className="relative w-32 h-32 mb-4">
+          <Image
+            src="/logo.png"
+            alt="Golden Extreme Logo"
+            fill
+            className="object-contain animate-pulse"
+          />
         </div>
+        <div className="text-white mt-4 font-medium">Initializing dashboard...</div>
       </div>
     );
   }

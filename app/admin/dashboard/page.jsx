@@ -10,10 +10,15 @@ import EditProductModal from '../components/EditProductModal';
 // Helper function to format category names for display
 const formatCategoryName = (category) => {
   if (!category) return '';
-  return category
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  
+  // Direct mapping for main categories
+  const categoryMap = {
+    'battery': 'Battery',
+    'tyre': 'Tyre',
+    'wheel': 'Wheel'
+  };
+  
+  return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
 };
 
 export default function AdminDashboard() {
@@ -231,10 +236,15 @@ export default function AdminDashboard() {
                       e.target.src = '/placeholder-image.jpg';
                     }}
                   />
-                  <div className="absolute top-0 right-0 m-2">
+                  <div className="absolute top-0 right-0 m-2 flex flex-col gap-1">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-sm">
                       {formatCategoryName(product.category)}
                     </span>
+                    {product.subcategory && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 shadow-sm">
+                        {product.subcategory}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="p-5">

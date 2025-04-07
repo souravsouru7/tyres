@@ -9,6 +9,7 @@ export default function AddProductModal({ onClose, onProductAdded }) {
     name: '',
     description: '',
     category: '',
+    subcategory: '',
   });
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ export default function AddProductModal({ onClose, onProductAdded }) {
       data.append('name', formData.name);
       data.append('description', formData.description);
       data.append('category', formData.category);
+      data.append('subcategory', formData.subcategory);
       if (selectedImage) {
         data.append('image', selectedImage);
       }
@@ -93,14 +95,9 @@ export default function AddProductModal({ onClose, onProductAdded }) {
                 required
               >
                 <option value="">Select a category</option>
-                <option value="pcr-tires">PCR Tires</option>
-                <option value="otr-tires">OTR Tires</option>
-                <option value="tbr-tires">TBR Tires</option>
-                <option value="ltr-tires">LTR Tires</option>
-                <option value="pcr-wheels">PCR Wheels</option>
-                <option value="tbr-wheels">TBR Wheels</option>
-                <option value="bike-batteries">Bike Batteries</option>
-                <option value="ups-batteries">UPS Batteries</option>
+                <option value="battery">Battery</option>
+                <option value="tyre">Tyre</option>
+                <option value="wheel">Wheel</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -108,6 +105,18 @@ export default function AddProductModal({ onClose, onProductAdded }) {
                 </svg>
               </div>
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Subcategory</label>
+            <input
+              type="text"
+              value={formData.subcategory}
+              onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+              className="block w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none transition-colors"
+              required
+              placeholder="Enter subcategory (e.g. PCR, OTR, UPS)"
+            />
           </div>
 
           <div>
