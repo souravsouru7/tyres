@@ -4,11 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { getProducts } from '../../src/utils/api';
 import Link from 'next/link';
+import ProductModal from './ProductModal';
 
 const TireAdvertisement = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -66,6 +69,11 @@ const TireAdvertisement = () => {
 
     animateElements();
   }, [products]);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
 
   return (
     <section className="py-16 bg-white">
@@ -134,9 +142,9 @@ const TireAdvertisement = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product) => (
-              <Link 
-                href={`/products/${product._id}`}
-                key={product._id} 
+              <div
+                key={product._id}
+                onClick={() => handleProductClick(product)}
                 className="product-card bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300 cursor-pointer"
               >
                 <div className="p-4">
@@ -144,7 +152,7 @@ const TireAdvertisement = () => {
                     {product.name}
                   </h3>
                   <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
-                    <img 
+                    <img
                       src={product.image}
                       alt={product.name}
                       className="product-image object-contain w-full h-full transition-transform duration-300"
@@ -163,11 +171,18 @@ const TireAdvertisement = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Product Modal */}
+      <ProductModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 };
