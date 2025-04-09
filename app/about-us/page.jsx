@@ -69,7 +69,7 @@ export default function AboutUs() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="relative h-screen overflow-hidden"
+          className="relative h-[60vh] md:h-screen overflow-hidden"
         >
           <motion.div
             style={{ y }}
@@ -81,7 +81,7 @@ export default function AboutUs() {
               fill
               style={{ objectFit: 'cover' }}
               priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
           </motion.div>
@@ -90,13 +90,13 @@ export default function AboutUs() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="max-w-4xl"
+              className="max-w-4xl w-full"
             >
               <motion.h1
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.8 }}
-                className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 md:mb-6"
               >
                 Welcome to <span className="text-amber-500">Golden Extreme</span>
               </motion.h1>
@@ -104,7 +104,7 @@ export default function AboutUs() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-xl sm:text-2xl text-gray-300"
+                className="text-lg sm:text-xl md:text-2xl text-gray-300 px-4 md:px-0"
               >
                 A distinguished division of the Taleb Group, shaping the future of the tire industry
               </motion.p>
@@ -113,28 +113,28 @@ export default function AboutUs() {
         </motion.div>
 
         {/* Company History Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
           >
-            <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl">
               <Image
                 src="/new/DSC00923.jpg"
                 alt="Premium Tires Collection"
                 fill
                 style={{ objectFit: 'cover' }}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            <div className="space-y-4 md:space-y-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
                 Our <span className="text-amber-600">Legacy</span>
               </h2>
-              <div className="space-y-4 text-gray-700">
+              <div className="space-y-3 md:space-y-4 text-gray-700 text-sm md:text-base">
                 <p>
                   Welcome to Golden Extreme Auto Spare Parts, a distinguished division of the Taleb Group, established with a vision to provide top-tier auto spare parts across the Middle East and Africa. The Taleb Group, founded in 1974, has built a reputable legacy through successful ventures in various industries.
                 </p>
@@ -150,20 +150,20 @@ export default function AboutUs() {
         </div>
 
         {/* Image Gallery Section */}
-        <div className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="text-center mb-8 md:mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                 Our <span className="text-amber-600">Showroom</span>
               </h2>
             </motion.div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
               {[
                 '/new/ADM_4501.JPG',
                 '/new/ADM_4502.JPG',
@@ -179,7 +179,7 @@ export default function AboutUs() {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                   viewport={{ once: true }}
-                  className="relative aspect-square rounded-3xl overflow-hidden shadow-xl group"
+                  className="relative aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-lg md:shadow-xl group"
                 >
                   <Image
                     src={src}
@@ -189,9 +189,9 @@ export default function AboutUs() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-xl font-bold text-white">Showroom View {index + 1}</h3>
-                      <p className="text-gray-300">Explore our premium tire collection</p>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                      <h3 className="text-lg md:text-xl font-bold text-white">Showroom View {index + 1}</h3>
+                      <p className="text-sm md:text-base text-gray-300">Explore our premium tire collection</p>
                     </div>
                   </div>
                 </motion.div>
@@ -201,15 +201,15 @@ export default function AboutUs() {
         </div>
 
         {/* Video Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
               Experience Our <span className="text-amber-600">Showroom</span>
             </h2>
           </motion.div>
@@ -218,7 +218,7 @@ export default function AboutUs() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl group"
+            className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl group"
           >
             <video
               className="w-full h-full object-cover"
@@ -232,91 +232,55 @@ export default function AboutUs() {
               <source src="/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent z-20">
-              <h3 className="text-2xl font-bold text-white mb-2">Golden Extreme Tire Showroom</h3>
-              <p className="text-gray-300">Your trusted partner for premium tire wholesale in Dubai</p>
+            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 bg-gradient-to-t from-black/80 to-transparent z-20">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">Golden Extreme Tire Showroom</h3>
+              <p className="text-sm md:text-base text-gray-300">Your trusted partner for premium tire wholesale in Dubai</p>
             </div>
           </motion.div>
         </div>
 
         {/* Feature Cards */}
-        <div className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="py-12 md:py-20 bg-gradient-to-b from-white to-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="text-center mb-8 md:mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose <span className="text-amber-600">Our Showroom</span>?
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
+                Why Choose <span className="text-amber-600">Us</span>
               </h2>
             </motion.div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
-                  title: "Vast Inventory",
-                  description: "Extensive selection of tires for passenger cars, trucks, agricultural machinery, and industrial equipment.",
-                  icon: "📦",
-                  color: "from-blue-50 to-blue-100"
+                  icon: <FiAward className="w-6 h-6 md:w-8 md:h-8" />,
+                  title: "Premium Quality",
+                  description: "We maintain the highest standards in all our products"
                 },
                 {
-                  title: "Competitive Pricing",
-                  description: "Competitive wholesale pricing with bulk purchase discounts and flexible pricing models.",
-                  icon: "💰",
-                  color: "from-green-50 to-green-100"
+                  icon: <FiUsers className="w-6 h-6 md:w-8 md:h-8" />,
+                  title: "Expert Team",
+                  description: "Our experienced professionals ensure the best service"
                 },
                 {
-                  title: "Dedicated Support",
-                  description: "Experienced account managers committed to understanding your business needs.",
-                  icon: "👥",
-                  color: "from-purple-50 to-purple-100"
-                },
-                {
-                  title: "Efficient Logistics",
-                  description: "Robust supply chain and dependable logistics for timely delivery.",
-                  icon: "🚚",
-                  color: "from-red-50 to-red-100"
-                },
-                {
-                  title: "Industry Expertise",
-                  description: "Exclusive access to industry insights and professional training seminars.",
-                  icon: "📚",
-                  color: "from-yellow-50 to-yellow-100"
-                },
-                {
-                  title: "Quality Assurance",
-                  description: "Premium tire solutions backed by expert technical support.",
-                  icon: "✅",
-                  color: "from-indigo-50 to-indigo-100"
+                  icon: <FiTarget className="w-6 h-6 md:w-8 md:h-8" />,
+                  title: "Customer Focus",
+                  description: "Your satisfaction is our top priority"
                 }
               ].map((feature, index) => (
                 <motion.div
-                  key={feature.title}
+                  key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.3 }}
-                  viewport={{ once: true }}
-                  className={`bg-gradient-to-br ${feature.color} rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 group`}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-5xl mb-6 text-amber-600"
-                  >
-                    {feature.icon}
-                  </motion.div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-700">
-                    {feature.description}
-                  </p>
-                  <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="h-1 w-20 bg-amber-500 rounded-full" />
-                  </div>
+                  <div className="text-amber-500 mb-4">{feature.icon}</div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 md:mb-4">{feature.title}</h3>
+                  <p className="text-sm md:text-base text-gray-600">{feature.description}</p>
                 </motion.div>
               ))}
             </div>

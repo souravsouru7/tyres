@@ -132,7 +132,7 @@ export default function BrandsPage() {
                   Discover Our Legacy
                 </motion.div>
                 <motion.h1 
-                  className="text-7xl md:text-9xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500"
+                  className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
@@ -145,9 +145,9 @@ export default function BrandsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col items-center justify-center mb-12"
+                  className="flex flex-col items-center justify-center mb-8 md:mb-12"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 max-w-5xl mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 lg:gap-16 max-w-5xl mx-auto w-full px-4 md:px-0">
                     {[
                       { src: '/new iamges/golden-2.jpg', alt: 'Falcon Tyre', title: 'Falcon Tyre', description: 'Premium Quality Tires' },
                       { src: '/new iamges/golden-3.jpg', alt: 'Falcon Wheels', title: 'Falcon Wheels', description: 'Innovative Designs' },
@@ -155,7 +155,7 @@ export default function BrandsPage() {
                     ].map((logo, index) => (
                       <motion.div
                         key={index}
-                        className="relative h-64 w-full group"
+                        className="relative h-48 sm:h-56 md:h-64 w-full group"
                         whileHover={{ scale: 1.05 }}
                         transition={{ type: "spring", stiffness: 400 }}
                       >
@@ -167,9 +167,9 @@ export default function BrandsPage() {
                           className="object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
                           priority
                         />
-                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                          <h3 className="text-2xl font-bold mb-2">{logo.title}</h3>
-                          <p className="text-white/90">{logo.description}</p>
+                        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+                          <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">{logo.title}</h3>
+                          <p className="text-sm md:text-base text-white/90">{logo.description}</p>
                         </div>
                         <motion.div
                           className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -179,7 +179,7 @@ export default function BrandsPage() {
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-6 py-3 rounded-full bg-amber-500 text-white font-medium flex items-center gap-2 shadow-lg shadow-amber-500/30"
+                            className="px-4 md:px-6 py-2 md:py-3 rounded-full bg-amber-500 text-white text-sm md:text-base font-medium flex items-center gap-2 shadow-lg shadow-amber-500/30"
                           >
                             Explore <FiChevronRight />
                           </motion.button>
@@ -190,7 +190,7 @@ export default function BrandsPage() {
                 </motion.div>
 
                 <motion.p 
-                  className="text-xl text-gray-600 max-w-2xl mx-auto"
+                  className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-4 md:px-0"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
@@ -211,13 +211,13 @@ export default function BrandsPage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-20"
             >
-              <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
                 Our Legacy
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
+              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
             </motion.div>
 
-            <div className="max-w-4xl mx-auto space-y-20">
+            <div className="max-w-4xl mx-auto space-y-12 md:space-y-20 px-4 md:px-0">
               {storyContent.map((story, index) => (
                 <motion.div
                   key={index}
@@ -226,17 +226,17 @@ export default function BrandsPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="relative group"
                 >
-                  <div className="absolute left-0 top-0 w-12 h-12 -translate-x-6 flex items-center justify-center">
-                    <div className="w-3 h-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
+                  <div className="absolute left-0 top-0 w-8 md:w-12 h-8 md:h-12 -translate-x-4 md:-translate-x-6 flex items-center justify-center">
+                    <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
                   </div>
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    className="bg-white rounded-2xl p-8 md:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden backdrop-blur-sm"
+                    className="bg-white rounded-2xl p-4 md:p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden backdrop-blur-sm"
                   >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                      <div className="relative h-64 rounded-xl overflow-hidden group">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center">
+                      <div className="relative h-48 md:h-64 rounded-xl overflow-hidden group">
                         <Image
                           src={story.image}
                           alt={story.title}
@@ -246,27 +246,23 @@ export default function BrandsPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                       <div>
-                        <div className="grid grid-cols-3 gap-6 mb-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
                           {story.stats.map((stat, statIndex) => (
                             <motion.div
                               key={statIndex}
                               initial={{ opacity: 0, y: 20 }}
                               whileInView={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.5, delay: 0.2 + statIndex * 0.1 }}
-                              className="bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-xl text-center group hover:shadow-lg transition-all duration-300"
+                              className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-xl text-center group hover:shadow-lg transition-all duration-300"
                             >
                               <div className="text-amber-500 mb-2">{stat.icon}</div>
-                              <div className="text-3xl font-bold text-amber-600 mb-2">{stat.value}</div>
-                              <div className="text-sm text-gray-600">{stat.label}</div>
+                              <div className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">{stat.value}</div>
+                              <div className="text-sm md:text-base text-gray-600">{stat.label}</div>
                             </motion.div>
                           ))}
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-                          {story.title}
-                        </h3>
-                        <p className="text-lg text-gray-600 leading-relaxed">
-                          {story.content}
-                        </p>
+                        <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{story.title}</h3>
+                        <p className="text-base md:text-lg text-gray-600 leading-relaxed">{story.content}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -352,6 +348,87 @@ export default function BrandsPage() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Enhanced Features Section */}
+        <div className="relative py-16 md:py-24 z-10">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-12 md:mb-20"
+            >
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+                Why Choose Us
+              </h2>
+              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+              {[
+                {
+                  icon: <FiStar className="w-6 h-6 md:w-8 md:h-8" />,
+                  title: "Premium Quality",
+                  description: "We maintain the highest standards in all our products"
+                },
+                {
+                  icon: <FiAward className="w-6 h-6 md:w-8 md:h-8" />,
+                  title: "Industry Expertise",
+                  description: "Years of experience in the automotive sector"
+                },
+                {
+                  icon: <FiShield className="w-6 h-6 md:w-8 md:h-8" />,
+                  title: "Reliable Service",
+                  description: "Dedicated support for all your needs"
+                }
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="text-amber-500 mb-4">{feature.icon}</div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 md:mb-4">{feature.title}</h3>
+                  <p className="text-sm md:text-base text-gray-600">{feature.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced CTA Section */}
+        <div className="relative py-16 md:py-24 z-10">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-8 text-gray-800">
+                Ready to Experience Excellence?
+              </h2>
+              <p className="text-base md:text-lg text-gray-600 mb-8 md:mb-12">
+                Join us in our journey to provide the best automotive solutions
+              </p>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2"
+              >
+                <a
+                  href="/contact"
+                  className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  Get in Touch
+                </a>
+                <FiArrowRight className="w-5 h-5 md:w-6 md:h-6 text-amber-500" />
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -131,7 +131,7 @@ export default function ProductsPage() {
             <img 
               src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
               alt="Tire workshop" 
-              className="w-full h-[600px] object-cover rounded-3xl mx-auto max-w-7xl shadow-2xl brightness-[0.85]"
+              className="w-full h-[300px] md:h-[600px] object-cover rounded-3xl mx-auto max-w-7xl shadow-2xl brightness-[0.85]"
               style={{ objectPosition: '50% 30%' }}
             />
             
@@ -149,16 +149,16 @@ export default function ProductsPage() {
             </motion.div>
           </div>
           
-          <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-16 rounded-3xl mx-auto max-w-7xl z-20">
+          <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-4 md:px-16 rounded-3xl mx-auto max-w-7xl z-20">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="max-w-xl"
+              className="max-w-xl w-full"
             >
-              <div className="bg-black/30 backdrop-blur-sm p-8 rounded-3xl border border-white/10">
+              <div className="bg-black/30 backdrop-blur-sm p-4 md:p-8 rounded-3xl border border-white/10">
                 <motion.h1 
-                  className="text-6xl md:text-8xl font-bold mb-6"
+                  className="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -168,7 +168,7 @@ export default function ProductsPage() {
                   </span>
                 </motion.h1>
                 <motion.p 
-                  className="text-2xl md:text-3xl max-w-3xl text-white/90"
+                  className="text-xl md:text-2xl lg:text-3xl max-w-3xl text-white/90"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -180,11 +180,11 @@ export default function ProductsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="mt-8"
+                  className="mt-6 md:mt-8"
                 >
-                  <Link href="#products" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group">
+                  <Link href="#products" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group text-sm md:text-base">
                     Explore Products
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </Link>
@@ -216,12 +216,12 @@ export default function ProductsPage() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-xl border border-amber-100/50">
-            <div className="flex justify-center items-center space-x-6 md:space-x-12">
+          <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-4 md:p-8 shadow-xl border border-amber-100/50">
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 lg:space-x-12">
               {['TYRES', 'WHEELS', 'BATTERIES'].map((category) => (
                 <motion.div
                   key={category}
-                  className="cursor-pointer"
+                  className="cursor-pointer w-full md:w-auto"
                   onClick={() => handleCategoryClick(category)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -229,7 +229,7 @@ export default function ProductsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: category === 'TYRES' ? 0.1 : category === 'WHEELS' ? 0.2 : 0.3 }}
                 >
-                  <div className="rounded-xl px-8 py-5 w-40 text-center font-bold shadow-lg transition-all duration-300 bg-white text-gray-800 hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white hover:shadow-xl">
+                  <div className="rounded-xl px-6 md:px-8 py-4 md:py-5 w-full md:w-40 text-center font-bold shadow-lg transition-all duration-300 bg-white text-gray-800 hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white hover:shadow-xl">
                     {category}
                   </div>
                 </motion.div>
@@ -245,32 +245,44 @@ export default function ProductsPage() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-10 shadow-xl max-w-5xl mx-auto border border-amber-100">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="md:w-1/3 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full opacity-20 blur-xl"></div>
-                <img 
-                  src="/logo.png" 
-                  alt="Golden Extreme Logo" 
-                  className="w-full h-auto relative z-10"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/200x200?text=Golden+Extreme';
-                  }}
-                />
+          <div className="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-4 md:p-10 shadow-xl max-w-5xl mx-auto border border-amber-100">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+              <div className="w-full md:w-1/3 relative">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 text-gray-800 placeholder-gray-400"
+                  />
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <div className="md:w-2/3">
-                <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">About Golden Extreme</h3>
-                <p className="text-gray-700 text-lg leading-relaxed">
-                  Golden Extreme Trading offers a wide range of high-quality automotive products, including premium
-                  tyres, durable wheels, and reliable batteries. Our tires are designed for optimal performance, safety,
-                  and efficiency, suitable for various vehicle types and driving conditions. We also provide robust
-                  wheels that enhance both the look and functionality of your vehicle. Additionally, our long-lasting
-                  batteries deliver consistent power and reliability. Whether you're looking for better road performance
-                  or dependable power solutions, Golden Extreme Trading has the products you need to keep your
-                  vehicle running smoothly.
-                </p>
+              
+              <div className="w-full md:w-2/3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <ProductFilters />
+                </div>
               </div>
             </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          id="products"
+          className="relative z-20 container mx-auto px-4 mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <ProductGrid key={refreshKey} searchQuery={searchQuery} />
           </div>
         </motion.div>
 
