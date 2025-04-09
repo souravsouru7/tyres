@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { FiArrowDown, FiArrowRight, FiPlus, FiExternalLink } from 'react-icons/fi';
-
-
+import { FiArrowDown, FiArrowRight, FiPlus, FiExternalLink, FiChevronRight, FiStar } from 'react-icons/fi';
 
 export default function BrandsPage() {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -30,26 +28,39 @@ export default function BrandsPage() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const storyContent = [
+  const brandShowcase = [
     {
-      title: "Wings of Innovation: The Falcon Legacy",
-      content: "In the vast, ever-evolving landscape of the Middle East and North Africa, where the scorching sun meets endless highways and the urban sprawls transition into vast deserts, a brand soared high, leaving a trail of innovation and expertise behind. This is the story of Falcon, a beacon of superior quality and specialized engineering, crafted meticulously to cater to the distinct needs of its domain.",
+      name: "Falcon Tyre",
+      description: "Premium quality tires for all terrains",
+      image: "/new iamges/golden-2.jpg",
+      features: ["All-Weather Performance", "Durability", "Fuel Efficiency"],
+      stats: [
+        { label: "Years of Excellence", value: "25+" },
+        { label: "Global Presence", value: "50+" },
+        { label: "Products", value: "1000+" }
+      ]
     },
     {
-      title: "The Spirit of the Falcon",
-      content: "Founded on the ideals of precision and resilience, Falcon was named in homage to the national bird of the UAE. The falcon, with its sharp vision, swiftness, and majestic flight, symbolized what the brand aspired to be: powerful, agile, and ahead of its competitors.",
+      name: "Falcon Wheels",
+      description: "Innovative wheel designs for modern vehicles",
+      image: "/new iamges/golden-3.jpg",
+      features: ["Lightweight Design", "Enhanced Performance", "Custom Options"],
+      stats: [
+        { label: "Innovation Rate", value: "95%" },
+        { label: "Customer Satisfaction", value: "98%" },
+        { label: "Market Share", value: "30%" }
+      ]
     },
     {
-      title: "The Tyre Trail: Precision and Perception",
-      content: "Falcon's journey began with a singular goal: to design and manufacture tyres that could withstand the diverse terrains and climate of the region. The company ventured into crafting PCR (Passenger Car Radial), TBR (Truck and Bus Radial), and LTR (Light Truck Radial) tyres. Each variant was a masterpiece of advanced technology and understanding of the regional demands.",
-    },
-    {
-      title: "Wheels of Steel: A Revolution in Motion",
-      content: "As roads interlinked distant lands and connected people, Falcon expanded its horizons to encompass specialized wheels, including both PCR and TBR. These wheels, crafted with the same precision and passion, became synonymous with strength and stability. Falcon wheels were not just components; they became the backbone of vehicles, offering the steadfastness needed in both urban environments and across desert voyages.",
-    },
-    {
-      title: "Power Unleashed: The Battery Breakthrough",
-      content: "Not content with conquering roads, Falcon took a groundbreaking leap into the energy sector, innovating UPS batteries and Bike Batteries. Here, Falcon's ingenuity shined yet again, offering unmatched energy solutions that powered everything from emergency backup systems in towering skyscrapers to motorbike adventures under the open sky.",
+      name: "Falcon Battery",
+      description: "Advanced power solutions for all needs",
+      image: "/new iamges/golden-4.jpg",
+      features: ["Long Life", "Quick Charge", "Environment Friendly"],
+      stats: [
+        { label: "Tyre Types", value: "15+" },
+        { label: "Production Capacity", value: "1M+" },
+        { label: "Quality Tests", value: "50+" }
+      ]
     }
   ];
 
@@ -123,141 +134,114 @@ export default function BrandsPage() {
                   Our Brands
                 </h1>
 
-                {/* Brand Logos Section */}
+                {/* Brand Showcase Section */}
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col items-center justify-center mb-12"
+                  className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 max-w-5xl mx-auto">
-                    {[
-                      { src: '/brands/falcon-tyre.png', alt: 'Falcon Tyre' },
-                      { src: '/brands/falcon-wheels.png', alt: 'Falcon Wheels' },
-                      { src: '/brands/falcon-battery.png', alt: 'Falcon Battery' }
-                    ].map((logo, index) => (
-                      <motion.div
-                        key={index}
-                        className="relative h-32 w-full"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
+                  {brandShowcase.map((brand, index) => (
+                    <motion.div
+                      key={index}
+                      className="relative group overflow-hidden rounded-2xl bg-white shadow-xl hover:shadow-2xl transition-all duration-300"
+                      whileHover={{ y: -10 }}
+                    >
+                      <div className="relative h-64 overflow-hidden">
                         <Image
-                          src={logo.src}
-                          alt={logo.alt}
+                          src={brand.image}
+                          alt={brand.name}
                           fill
-                          className="object-contain"
-                          priority
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
-                      </motion.div>
-                    ))}
-                  </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <h3 className="text-2xl font-bold text-white mb-2">{brand.name}</h3>
+                          <p className="text-white/90">{brand.description}</p>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {brand.features.map((feature, featureIndex) => (
+                            <span
+                              key={featureIndex}
+                              className="px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-sm"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          {brand.stats.map((stat, statIndex) => (
+                            <div
+                              key={statIndex}
+                              className="text-center"
+                            >
+                              <div className="text-2xl font-bold text-amber-600">{stat.value}</div>
+                              <div className="text-xs text-gray-500">{stat.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
                 </motion.div>
 
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-12">
                   Experience excellence through our diverse portfolio of premium automotive solutions
                 </p>
-              </motion.div>
-
-              {/* Scroll Indicator */}
-              <motion.div
-                className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-                style={{ opacity }}
-                animate={{
-                  y: [0, 10, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              >
-                <FiArrowDown className="w-6 h-6 text-amber-500" />
               </motion.div>
             </div>
           </div>
         </div>
 
-        {/* Screenshot Image */}
-        <div className="relative w-full max-w-7xl mx-auto px-4 mb-32">
-          <Image
-            src="/new/Screenshot 2025-04-04 222331.png"
-            alt="Falcon Brands"
-            width={1920}
-            height={1080}
-         
-            priority
-          />
-        </div>
-        
-      </div>
-
-      {/* Story Section */}
-      <div className="relative py-24 z-10">
-        <div className="container mx-auto px-4">
-          {/* Story Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
-              Our Legacy
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
-          </motion.div>
-
-          {/* Story Content */}
-          <div className="max-w-4xl mx-auto space-y-20">
-            {storyContent.map((story, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
-              >
-                <div className="absolute left-0 top-0 w-12 h-12 -translate-x-6 flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
-                </div>
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="bg-white rounded-2xl p-8 md:p-12 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-                >
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-                    {story.title}
-                  </h3>
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    {story.content}
-                  </p>
-                </motion.div>
-              </motion.div>
-            ))}
-
-            {/* Legacy Statement */}
+        {/* Product Gallery Section */}
+        <div className="relative py-24 z-10">
+          <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative mt-32"
+              className="text-center mb-20"
             >
-              <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl p-12 backdrop-blur-sm border border-amber-200/20">
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-                  Flight of the Falcon: A Unified Legacy
-                </h3>
-                <div className="space-y-6">
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    Today, Falcon stands not just as a brand but as a legacy, embodying the United Arab Emirates' values — blending tradition with cutting-edge technology. Like the falcon that inspired its name, the brand continues to glide effortlessly across the landscape, a symbol of what's possible when vision meets expertise.
-                  </p>
-                  <p className="text-lg text-gray-600 leading-relaxed italic text-center">
-                    Thus, Falcon's story continues to unfurl, crafting pathways, energizing engines, and connecting worlds, one revolutionary product at a time.
-                  </p>
-                </div>
-              </div>
+              <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+                Our Products
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
             </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {[
+                "/new iamges/golden-2.jpg",
+                "/new iamges/golden-3.jpg",
+                "/new iamges/golden-4.jpg",
+                "/new iamges/golden-6.jpg",
+                "/new iamges/5Y8A1218.JPG",
+                "/new iamges/5Y8A1223.JPG"
+              ].map((image, index) => (
+                <motion.div
+                  key={index}
+                  className="relative group overflow-hidden rounded-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Image
+                    src={image}
+                    alt={`Product ${index + 1}`}
+                    width={600}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <h3 className="text-xl font-bold text-white mb-2">Premium Product {index + 1}</h3>
+                      <p className="text-white/90 text-sm">Discover our latest innovation in automotive excellence</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
