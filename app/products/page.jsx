@@ -131,7 +131,7 @@ export default function ProductsPage() {
             <img 
               src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
               alt="Tire workshop" 
-              className="w-full h-[300px] md:h-[600px] object-cover rounded-3xl mx-auto max-w-7xl shadow-2xl brightness-[0.85]"
+              className="w-full h-[600px] object-cover rounded-3xl mx-auto max-w-7xl shadow-2xl brightness-[0.85]"
               style={{ objectPosition: '50% 30%' }}
             />
             
@@ -149,16 +149,16 @@ export default function ProductsPage() {
             </motion.div>
           </div>
           
-          <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-4 md:px-16 rounded-3xl mx-auto max-w-7xl z-20">
+          <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-4 sm:px-8 md:px-16 rounded-3xl mx-auto max-w-7xl z-20">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="max-w-xl w-full"
             >
-              <div className="bg-black/30 backdrop-blur-sm p-4 md:p-8 rounded-3xl border border-white/10">
+              <div className="bg-black/30 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-3xl border border-white/10">
                 <motion.h1 
-                  className="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -168,7 +168,7 @@ export default function ProductsPage() {
                   </span>
                 </motion.h1>
                 <motion.p 
-                  className="text-xl md:text-2xl lg:text-3xl max-w-3xl text-white/90"
+                  className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-white/90"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -180,11 +180,11 @@ export default function ProductsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="mt-6 md:mt-8"
+                  className="mt-8"
                 >
-                  <Link href="#products" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group text-sm md:text-base">
+                  <Link href="#products" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group">
                     Explore Products
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </Link>
@@ -210,18 +210,18 @@ export default function ProductsPage() {
         </motion.div>
 
         <motion.div 
-          className="relative z-20 container mx-auto px-4 mb-16"
+          className="relative z-20 container mx-auto px-4 mb-8 sm:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-4 md:p-8 shadow-xl border border-amber-100/50">
-            <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 lg:space-x-12">
+          <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-100/50 overflow-x-auto">
+            <div className="flex flex-wrap sm:flex-nowrap justify-center items-center gap-4 sm:gap-6 md:gap-12">
               {['TYRES', 'WHEELS', 'BATTERIES'].map((category) => (
                 <motion.div
                   key={category}
-                  className="cursor-pointer w-full md:w-auto"
+                  className="cursor-pointer w-full sm:w-auto"
                   onClick={() => handleCategoryClick(category)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -229,7 +229,7 @@ export default function ProductsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: category === 'TYRES' ? 0.1 : category === 'WHEELS' ? 0.2 : 0.3 }}
                 >
-                  <div className="rounded-xl px-6 md:px-8 py-4 md:py-5 w-full md:w-40 text-center font-bold shadow-lg transition-all duration-300 bg-white text-gray-800 hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white hover:shadow-xl">
+                  <div className="rounded-xl px-4 sm:px-8 py-3 sm:py-5 w-full sm:w-40 text-center font-bold shadow-lg transition-all duration-300 bg-white text-gray-800 hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-500 hover:text-white hover:shadow-xl">
                     {category}
                   </div>
                 </motion.div>
@@ -239,50 +239,34 @@ export default function ProductsPage() {
         </motion.div>
 
         <motion.div 
-          className="relative z-20 container mx-auto px-4 mb-20"
+          className="relative z-20 container mx-auto px-4 mb-12 sm:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-4 md:p-10 shadow-xl max-w-5xl mx-auto border border-amber-100">
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+          <div className="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-6 sm:p-10 shadow-xl max-w-5xl mx-auto border border-amber-100">
+            <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
               <div className="w-full md:w-1/3 relative">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 text-gray-800 placeholder-gray-400"
-                  />
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full opacity-20 blur-xl"></div>
+                <img 
+                  src="/logo.png" 
+                  alt="Golden Extreme Logo" 
+                  className="w-full h-auto relative z-10"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/200x200?text=Golden+Extreme';
+                  }}
+                />
               </div>
-              
               <div className="w-full md:w-2/3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <ProductFilters />
-                </div>
+                <h3 className="text-xl sm:text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">About Golden Extreme</h3>
+                <p className="text-base sm:text-lg leading-relaxed text-gray-700">
+                  Golden Extreme Trading offers a wide range of high-quality automotive products, including premium
+                  tyres, durable wheels, and reliable batteries. Our tires are designed for optimal performance, safety,
+                  and efficiency, suitable for various vehicle types and driving conditions.
+                </p>
               </div>
             </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          id="products"
-          className="relative z-20 container mx-auto px-4 mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <ProductGrid key={refreshKey} searchQuery={searchQuery} />
           </div>
         </motion.div>
 
@@ -755,6 +739,184 @@ export default function ProductsPage() {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Product Categories Overview */}
+        <div className="relative z-10 py-12 sm:py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-7xl mx-auto">
+              {/* Wheels Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="mb-16 sm:mb-32"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+                  <div className="relative">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.8 }}
+                      className="relative rounded-3xl overflow-hidden shadow-2xl"
+                    >
+                      <img
+                        src="/new iamges/DSC00941.JPG"
+                        alt="Premium Wheels"
+                        className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">Premium Wheels</h3>
+                        <p className="text-sm sm:text-base text-gray-200">Engineered for excellence, designed for performance</p>
+                      </div>
+                    </motion.div>
+                  </div>
+                  <div>
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8 }}
+                      className="p-4 sm:p-0"
+                    >
+                      <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-[#FF6B00]">Premium Wheels for Superior Performance</h2>
+                      <div className="w-20 h-1 bg-[#FF6B00] mb-6 sm:mb-8" />
+                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-6 sm:mb-8">
+                        At Golden Extreme Trading, we offer a wide selection of high-performance wheels designed to enhance the safety, durability, and style of your vehicle.
+                      </p>
+                      <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8">
+                        {[
+                          "Premium Materials",
+                          "Enhanced Safety",
+                          "Superior Durability",
+                          "Optimal Performance"
+                        ].map((feature, index) => (
+                          <div key={index} className="flex items-center gap-2 sm:gap-3">
+                            <div className="w-2 h-2 rounded-full bg-[#FF6B00]" />
+                            <span className="text-sm sm:text-base text-gray-700">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Falcon Wheels Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="mb-32"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <div className="order-2 lg:order-1">
+                    <motion.div
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8 }}
+                    >
+                      <h2 className="text-4xl font-bold mb-6 text-[#FF6B00]">FALCON WHEELS</h2>
+                      <div className="w-20 h-1 bg-[#FF6B00] mb-8" />
+                      <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+                        Golden Extreme Trading proudly offers Falcon Wheels, renowned for their exceptional quality and performance in both Passenger Car Radial (PCR) and Truck and Bus Radial (TBR) categories.
+                      </p>
+                      <div className="grid grid-cols-1 gap-6 mb-8">
+                        <div className="bg-white rounded-xl p-6 shadow-lg">
+                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">PCR Wheels</h3>
+                          <p className="text-gray-600">
+                            Deliver a smooth, fuel-efficient, and reliable driving experience for everyday vehicles
+                          </p>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 shadow-lg">
+                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">TBR Wheels</h3>
+                          <p className="text-gray-600">
+                            Built for heavy-duty trucks and buses, offering maximum strength, durability, and load-bearing capacity
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                  <div className="order-1 lg:order-2">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.8 }}
+                      className="relative rounded-3xl overflow-hidden shadow-2xl"
+                    >
+                      <img
+                        src="/new iamges/golden-3.jpg"
+                        alt="Falcon Wheels"
+                        className="w-full h-[500px] object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-8">
+                        <h3 className="text-3xl font-bold text-white mb-2">Falcon Wheels</h3>
+                        <p className="text-gray-200">High-Performance PCR and TBR Solutions</p>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Batteries Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="mb-32"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <div className="relative">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.8 }}
+                      className="relative rounded-3xl overflow-hidden shadow-2xl"
+                    >
+                      <img
+                        src="/new/DSC00923.jpg"
+                        alt="Falcon Batteries"
+                        className="w-full h-[500px] object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-8">
+                        <h3 className="text-3xl font-bold text-white mb-2">Falcon Batteries</h3>
+                        <p className="text-gray-200">Reliable Power Solutions</p>
+                      </div>
+                    </motion.div>
+                  </div>
+                  <div>
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8 }}
+                    >
+                      <h2 className="text-4xl font-bold mb-6 text-[#FF6B00]">FALCON BATTERIES</h2>
+                      <div className="w-20 h-1 bg-[#FF6B00] mb-8" />
+                      <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+                        Falcon Batteries are known for their superior performance and reliability. Our range includes high-quality bike batteries and UPS batteries designed to meet your power needs with durability and efficiency.
+                      </p>
+                      <div className="grid grid-cols-1 gap-6 mb-8">
+                        <div className="bg-white rounded-xl p-6 shadow-lg">
+                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">Bike Batteries</h3>
+                          <p className="text-gray-600">
+                            Deliver consistent starting power and long-lasting performance, ensuring a smooth ride in all conditions
+                          </p>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 shadow-lg">
+                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">UPS Batteries</h3>
+                          <p className="text-gray-600">
+                            Designed to offer uninterrupted power supply for critical systems, providing dependable backup during outages
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
 
         <div id="products" className="container mx-auto px-4 py-16 relative z-10">
           <motion.div

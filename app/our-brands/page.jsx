@@ -1,20 +1,26 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, useInView } from 'framer-motion';
 import Image from 'next/image';
-import { FiArrowDown, FiArrowRight, FiPlus, FiExternalLink, FiChevronRight, FiStar, FiAward, FiShield, FiTrendingUp } from 'react-icons/fi';
+import { FiArrowDown, FiArrowRight, FiPlus, FiExternalLink, FiChevronRight, FiStar, FiAward, FiShield, FiTrendingUp, FiPlay, FiPause, FiVolume2, FiVolumeX, FiChevronUp, FiChevronDown, FiClock, FiMapPin, FiCheckCircle, FiPackage, FiTruck, FiBattery, FiRotateCw } from 'react-icons/fi';
 
 export default function BrandsPage() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const videoRef = useRef(null);
   const { scrollY } = useScroll();
   const y = useSpring(useTransform(scrollY, [0, 300], [0, -50]), { stiffness: 100, damping: 30 });
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
   const scale = useTransform(scrollY, [0, 300], [1, 0.9]);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [rotationAngle, setRotationAngle] = useState(0);
+  const [isWheelSpinning, setIsWheelSpinning] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -24,9 +30,52 @@ export default function BrandsPage() {
       });
     };
 
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  useEffect(() => {
+    let animationFrame;
+    if (isWheelSpinning) {
+      const animate = () => {
+        setRotationAngle(prev => (prev + 2) % 360);
+        animationFrame = requestAnimationFrame(animate);
+      };
+      animationFrame = requestAnimationFrame(animate);
+    }
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isWheelSpinning]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const toggleVideoPlayback = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  const toggleVideoMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isVideoMuted;
+      setIsVideoMuted(!isVideoMuted);
+    }
+  };
 
   const storyContent = [
     {
@@ -53,7 +102,7 @@ export default function BrandsPage() {
     },
     {
       title: "The Tyre Trail: Precision and Perception",
-      content: "Falcon's journey began with a singular goal: to design and manufacture tyres that could withstand the diverse terrains and climate of the region. The company ventured into crafting PCR (Passenger Car Radial), TBR (Truck and Bus Radial), and LTR (Light Truck Radial) tyres. Each variant was a masterpiece of advanced technology and understanding of the regional demands.",
+      content: "Falcon's journey began with a singular goal: to design and manufacture tyres that could withstand the diverse terrains and climate of the region. The company ventured into crafting PCR (Passenger Car Radial), TBR (Truck and Bus Radial), and LTR (Light Truck Radial) tyres. Each variant was a masterpiece of advanced technology and understanding of the regional demands. Customers revered Falcon tyres for their durability, reliability, and exceptional performance on both sun-scorched sands and bustling city roads.",
       image: "/new iamges/golden-4.jpg",
       icon: <FiTrendingUp className="w-8 h-8 text-amber-500" />,
       stats: [
@@ -61,149 +110,242 @@ export default function BrandsPage() {
         { label: "Production Capacity", value: "1M+", icon: <FiTrendingUp /> },
         { label: "Quality Tests", value: "50+", icon: <FiShield /> }
       ]
+    },
+    {
+      title: "Wheels of Steel: A Revolution in Motion",
+      content: "As roads interlinked distant lands and connected people, Falcon expanded its horizons to encompass specialized wheels, including both PCR and TBR. These wheels, crafted with the same precision and passion, became synonymous with strength and stability. Falcon wheels were not just components; they became the backbone of vehicles, offering the steadfastness needed in both urban environments and across desert voyages.",
+      image: "/new iamges/golden-5.jpg",
+      icon: <FiTruck className="w-8 h-8 text-amber-500" />,
+      stats: [
+        { label: "Wheel Types", value: "20+", icon: <FiPackage /> },
+        { label: "Durability Rating", value: "A+", icon: <FiCheckCircle /> },
+        { label: "Market Coverage", value: "40+", icon: <FiMapPin /> }
+      ]
+    },
+    {
+      title: "Power Unleashed: The Battery Breakthrough",
+      content: "Not content with conquering roads, Falcon took a groundbreaking leap into the energy sector, innovating UPS batteries and Bike Batteries. Here, Falcon's ingenuity shined yet again, offering unmatched energy solutions that powered everything from emergency backup systems in towering skyscrapers to motorbike adventures under the open sky. Every Falcon battery was a testament to safety, longevity, and consistent power supply, illuminating and energizing lives across the region.",
+      image: "/new iamges/golden-6.jpg",
+      icon: <FiBattery className="w-8 h-8 text-amber-500" />,
+      stats: [
+        { label: "Battery Types", value: "10+", icon: <FiBattery /> },
+        { label: "Life Span", value: "5+", icon: <FiClock /> },
+        { label: "Efficiency", value: "99%", icon: <FiTrendingUp /> }
+      ]
+    },
+    {
+      title: "Flight of the Falcon: A Unified Legacy",
+      content: "From tyres to wheels, to batteries — Falcon became the embodiment of trust and innovation. Their products weren't just about meeting demands; they were about anticipating them, providing solutions that encapsulated the spirit of a region known for its rich heritage and promising future. Today, Falcon stands not just as a brand but as a legacy, embodying the United Arab Emirates' values — blending tradition with cutting-edge technology. Like the falcon that inspired its name, the brand continues to glide effortlessly across the landscape, a symbol of what's possible when vision meets expertise.",
+      image: "/new iamges/golden-7.jpg",
+      icon: <FiStar className="w-8 h-8 text-amber-500" />,
+      stats: [
+        { label: "Brand Value", value: "$500M+", icon: <FiTrendingUp /> },
+        { label: "Future Vision", value: "2030", icon: <FiClock /> },
+        { label: "Legacy", value: "50+", icon: <FiStar /> }
+      ]
+    }
+  ];
+
+  const productCategories = [
+    {
+      title: "Premium Wheels",
+      description: "Experience unmatched quality and performance",
+      image: "/new iamges/golden-4.jpg",
+      icon: <FiTruck className="w-8 h-8" />,
+      features: [
+        "Forged Alloy Wheels",
+        "Flow Formed Wheels",
+        "Custom Finishes",
+        "Performance Series"
+      ],
+      stats: [
+        { label: "Sizes Available", value: "30+" },
+        { label: "Finish Options", value: "20+" },
+        { label: "Warranty", value: "5 Years" }
+      ]
+    },
+    {
+      title: "Commercial Wheels",
+      description: "Built for heavy-duty performance",
+      image: "/new iamges/golden-5.jpg",
+      icon: <FiPackage className="w-8 h-8" />,
+      features: [
+        "Steel Wheels",
+        "Alloy Truck Wheels",
+        "Heavy Duty Series",
+        "Commercial Grade"
+      ],
+      stats: [
+        { label: "Load Rating", value: "4500kg" },
+        { label: "Size Range", value: "15-24\"" },
+        { label: "Durability", value: "10/10" }
+      ]
+    },
+    {
+      title: "Custom Series",
+      description: "Personalized to your style",
+      image: "/new iamges/golden-6.jpg",
+      icon: <FiStar className="w-8 h-8" />,
+      features: [
+        "Custom Designs",
+        "Exclusive Finishes",
+        "Limited Editions",
+        "Bespoke Options"
+      ],
+      stats: [
+        { label: "Design Options", value: "100+" },
+        { label: "Custom Colors", value: "50+" },
+        { label: "Exclusivity", value: "100%" }
+      ]
     }
   ];
 
   return (
     <Layout>
-      <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
-        {/* Enhanced Background Pattern */}
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
+        {/* Dynamic Background Pattern */}
         <div className="fixed inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#f0f0f0_2px,transparent_0)] bg-[size:40px_40px]" />
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,200,0,0.05)_50%,transparent_75%)] bg-[size:20px_20px]" />
-        </div>
-
-        {/* Enhanced Floating Elements */}
-        <div className="fixed inset-0 z-0 overflow-hidden">
-          <motion.div
-            className="absolute w-[800px] h-[800px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,200,0,0.03) 0%, rgba(255,140,0,0.02) 100%)',
-              top: '10%',
-              left: '20%',
-              filter: 'blur(60px)',
-            }}
-            animate={{
-              x: [0, 50, 0],
-              y: [0, 30, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-          <motion.div
-            className="absolute w-[600px] h-[600px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,140,0,0.03) 0%, rgba(255,100,0,0.02) 100%)',
-              bottom: '10%',
-              right: '20%',
-              filter: 'blur(60px)',
-            }}
-            animate={{
-              x: [0, -50, 0],
-              y: [0, -30, 0],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,#00000003_50%,transparent_75%)] bg-[size:20px_20px]" />
         </div>
 
         {/* Enhanced Hero Section */}
-        <div className="relative min-h-screen flex items-center justify-center z-10">
-          <div className="container mx-auto px-4">
+        <div className="relative min-h-screen flex items-center justify-center z-10 overflow-hidden">
+          {/* Animated Wheel Background */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-20">
+            <motion.div
+              className="w-[800px] h-[800px] rounded-full border-[2px] border-amber-500/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute w-[600px] h-[600px] rounded-full border-[2px] border-orange-500/30"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute w-[400px] h-[400px] rounded-full border-[2px] border-yellow-500/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+
+          <div className="container mx-auto px-4 relative">
             <div className="max-w-7xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-center mb-16"
+                className="text-center"
               >
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200/20 text-amber-700 text-sm font-medium mb-8 backdrop-blur-sm"
+                  className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-[#FF6B00]/10 to-orange-500/10 border border-[#FF6B00]/20 text-[#FF6B00] text-sm font-medium mb-8 backdrop-blur-sm"
                 >
-                  Discover Our Legacy
+                  Premium Wheel Solutions
                 </motion.div>
-                <motion.h1 
-                  className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  Our Brands
-                </motion.h1>
 
-                {/* Enhanced Brand Logos Section */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col items-center justify-center mb-8 md:mb-12"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 lg:gap-16 max-w-5xl mx-auto w-full px-4 md:px-0">
-                    {[
-                      { src: '/new iamges/golden-2.jpg', alt: 'Falcon Tyre', title: 'Falcon Tyre', description: 'Premium Quality Tires' },
-                      { src: '/new iamges/golden-3.jpg', alt: 'Falcon Wheels', title: 'Falcon Wheels', description: 'Innovative Designs' },
-                      { src: '/new iamges/golden-4.jpg', alt: 'Falcon Battery', title: 'Falcon Battery', description: 'Advanced Power Solutions' }
-                    ].map((logo, index) => (
-                      <motion.div
-                        key={index}
-                        className="relative h-48 sm:h-56 md:h-64 w-full group"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 rounded-2xl" />
-                        <Image
-                          src={logo.src}
-                          alt={logo.alt}
-                          fill
-                          className="object-cover rounded-2xl transition-transform duration-500 group-hover:scale-110"
-                          priority
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
-                          <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">{logo.title}</h3>
-                          <p className="text-sm md:text-base text-white/90">{logo.description}</p>
-                        </div>
-                        <motion.div
-                          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl" />
-                          <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-4 md:px-6 py-2 md:py-3 rounded-full bg-amber-500 text-white text-sm md:text-base font-medium flex items-center gap-2 shadow-lg shadow-amber-500/30"
-                          >
-                            Explore <FiChevronRight />
-                          </motion.button>
-                        </motion.div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
+                <div className="relative">
+                  <motion.h1 
+                    className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-6 md:mb-8 text-[#FF6B00]"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                  >
+                    Our Brands
+                  </motion.h1>
+                  
+                  {/* Animated Underline */}
+                  <motion.div
+                    className="h-1 bg-[#FF6B00] rounded-full mx-auto"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                  />
+                </div>
 
                 <motion.p 
-                  className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-4 md:px-0"
+                  className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mt-8 px-4 md:px-0 leading-relaxed"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                  Experience excellence through our diverse portfolio of premium automotive solutions
+                  Discover our collection of premium wheels and automotive solutions, crafted with precision and engineered for excellence.
                 </motion.p>
+
+                {/* Interactive 3D Wheel Preview */}
+                <motion.div
+                  className="relative mt-16 mb-12"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                >
+                  <div className="relative w-64 h-64 mx-auto cursor-pointer group"
+                       onMouseEnter={() => setIsWheelSpinning(true)}
+                       onMouseLeave={() => setIsWheelSpinning(false)}>
+                    <motion.div
+                      style={{ rotate: rotationAngle }}
+                      className="relative w-full h-full"
+                    >
+                      <Image
+                        src="/new iamges/golden-4.jpg"
+                        alt="Premium Wheel"
+                        fill
+                        className="object-cover rounded-full"
+                      />
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500/20 to-transparent group-hover:from-amber-500/40 transition-all duration-300" />
+                    </motion.div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <FiRotateCw className="w-12 h-12 text-amber-500 drop-shadow-lg" />
+                    </div>
+                  </div>
+                  <p className="text-gray-500 mt-4 text-sm">Hover to spin</p>
+                </motion.div>
+
+                {/* Enhanced CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-4 rounded-full bg-[#FF6B00] text-white font-medium flex items-center gap-2 shadow-lg shadow-[#FF6B00]/30 group"
+                    onClick={() => {
+                      const element = document.getElementById('brands-section');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    Explore Our Brands
+                    <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-4 rounded-full bg-gray-100 text-gray-700 font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors duration-300"
+                  >
+                    Watch Video
+                    <FiPlay className="w-5 h-5" />
+                  </motion.button>
+                </div>
               </motion.div>
             </div>
           </div>
+
+          {/* Enhanced Scroll Indicator */}
+          <motion.div 
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-gray-500 text-sm">Scroll to explore</p>
+              <FiChevronDown className="w-6 h-6 text-amber-500" />
+            </div>
+          </motion.div>
         </div>
 
         {/* Enhanced Story Section */}
-        <div className="relative py-24 z-10">
+        <div id="story-section" className="relative py-24 z-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -211,10 +353,10 @@ export default function BrandsPage() {
               transition={{ duration: 0.8 }}
               className="text-center mb-20"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 text-[#FF6B00]">
                 Our Legacy
               </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
+              <div className="w-16 md:w-24 h-1 bg-[#FF6B00] mx-auto mb-8" />
             </motion.div>
 
             <div className="max-w-4xl mx-auto space-y-12 md:space-y-20 px-4 md:px-0">
@@ -233,7 +375,7 @@ export default function BrandsPage() {
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    className="bg-white rounded-2xl p-4 md:p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden backdrop-blur-sm"
+                    className="bg-white rounded-2xl p-4 md:p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden"
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center">
                       <div className="relative h-48 md:h-64 rounded-xl overflow-hidden group">
@@ -246,191 +388,367 @@ export default function BrandsPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                       <div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+                        <div className="flex items-center mb-4">
+                          <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+                            {story.icon}
+                          </div>
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-900">{story.title}</h3>
+                        </div>
+                        <p className="text-gray-600 mb-6">{story.content}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           {story.stats.map((stat, statIndex) => (
                             <motion.div
                               key={statIndex}
                               initial={{ opacity: 0, y: 20 }}
                               whileInView={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.5, delay: 0.2 + statIndex * 0.1 }}
-                              className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-xl text-center group hover:shadow-lg transition-all duration-300"
+                              className="bg-gray-50 rounded-xl p-3 text-center"
                             >
-                              <div className="text-amber-500 mb-2">{stat.icon}</div>
-                              <div className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">{stat.value}</div>
-                              <div className="text-sm md:text-base text-gray-600">{stat.label}</div>
+                              <div className="text-amber-500 mb-1">{stat.icon}</div>
+                              <div className="text-xl font-bold text-gray-900">{stat.value}</div>
+                              <div className="text-xs text-gray-600">{stat.label}</div>
                             </motion.div>
                           ))}
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{story.title}</h3>
-                        <p className="text-base md:text-lg text-gray-600 leading-relaxed">{story.content}</p>
                       </div>
                     </div>
                   </motion.div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </div>
 
-              {/* Enhanced Legacy Statement */}
+        {/* Enhanced Video Showcase Section */}
+        <div className="relative py-32 z-10 overflow-hidden bg-gray-50">
+          <div className="container mx-auto px-4 relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-[#FF6B00]">
+                Experience Excellence
+              </h2>
+              <div className="w-24 h-1 bg-[#FF6B00] rounded-full mx-auto mb-8" />
+              <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+                Witness the perfect blend of innovation, craftsmanship, and performance
+              </p>
+            </motion.div>
+
+            <div className="max-w-6xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="relative mt-32"
+                className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl group"
               >
-                <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl p-12 backdrop-blur-sm border border-amber-200/20 shadow-xl">
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-                    Flight of the Falcon: A Unified Legacy
-                  </h3>
-                  <div className="space-y-6">
-                    <p className="text-lg text-gray-600 leading-relaxed">
-                      Today, Falcon stands not just as a brand but as a legacy, embodying the United Arab Emirates' values — blending tradition with cutting-edge technology. Like the falcon that inspired its name, the brand continues to glide effortlessly across the landscape, a symbol of what's possible when vision meets expertise.
-                    </p>
-                    <p className="text-lg text-gray-600 leading-relaxed italic text-center">
-                      Thus, Falcon's story continues to unfurl, crafting pathways, energizing engines, and connecting worlds, one revolutionary product at a time.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-
-        {/* Enhanced Product Gallery Section */}
-        <div className="relative py-24 z-10">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-20"
-            >
-              <h2 className="text-5xl md:text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
-                Our Products
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {[
-                "/new iamges/golden-2.jpg",
-                "/new iamges/golden-3.jpg",
-                "/new iamges/golden-4.jpg",
-                "/new iamges/golden-6.jpg",
-                "/new iamges/5Y8A1218.JPG",
-                "/new iamges/5Y8A1223.JPG"
-              ].map((image, index) => (
-                <motion.div
-                  key={index}
-                  className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Image
-                    src={image}
-                    alt={`Product ${index + 1}`}
-                    width={600}
-                    height={400}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-xl font-bold text-white mb-2">Premium Product {index + 1}</h3>
-                      <p className="text-white/90 text-sm">Discover our latest innovation in automotive excellence</p>
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-4 px-4 py-2 rounded-full bg-amber-500 text-white text-sm font-medium flex items-center gap-2 shadow-lg shadow-amber-500/30"
+                {/* Video Background Glow */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-amber-500 to-orange-500 opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-300" />
+                
+                {/* Main Video Container */}
+                <div className="relative rounded-3xl overflow-hidden border border-gray-200">
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster="/new iamges/golden-2.jpg"
+                  >
+                    <source src="/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Video Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Video Controls */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="text-white">
+                      <h3 className="text-2xl md:text-3xl font-bold mb-2">Crafting Excellence</h3>
+                      <p className="text-gray-200 text-sm md:text-base max-w-xl">
+                        Watch how we craft our premium wheels with precision and passion
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <motion.button 
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={toggleVideoPlayback}
+                        className="w-12 h-12 bg-[#FF6B00] hover:bg-[#FF8533] rounded-full flex items-center justify-center text-white transition-colors duration-300 shadow-lg"
                       >
-                        Learn More <FiChevronRight />
+                        {isVideoPlaying ? 
+                          <FiPause className="w-6 h-6" /> : 
+                          <FiPlay className="w-6 h-6 ml-1" />
+                        }
+                      </motion.button>
+                      <motion.button 
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={toggleVideoMute}
+                        className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-300 backdrop-blur-sm"
+                      >
+                        {isVideoMuted ? 
+                          <FiVolumeX className="w-6 h-6" /> : 
+                          <FiVolume2 className="w-6 h-6" />
+                        }
                       </motion.button>
                     </div>
                   </div>
-                </motion.div>
-              ))}
+                </div>
+              </motion.div>
+
+              {/* Video Features */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                {[
+                  {
+                    icon: <FiAward className="w-6 h-6" />,
+                    title: "Premium Quality",
+                    description: "Every wheel is crafted to perfection"
+                  },
+                  {
+                    icon: <FiShield className="w-6 h-6" />,
+                    title: "Tested & Certified",
+                    description: "Rigorous quality control standards"
+                  },
+                  {
+                    icon: <FiTrendingUp className="w-6 h-6" />,
+                    title: "Performance Driven",
+                    description: "Engineered for optimal performance"
+                  }
+                ].map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                    className="bg-white rounded-xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mb-4">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                    <p className="text-gray-600">{feature.description}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Enhanced Features Section */}
-        <div className="relative py-16 md:py-24 z-10">
+        {/* Enhanced Brands Showcase Section */}
+        <div id="brands-section" className="relative py-24 z-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-12 md:mb-20"
+              className="text-center mb-16"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
-                Why Choose Us
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-[#FF6B00]">
+                Premium Collections
               </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
+              <div className="w-24 h-1 bg-[#FF6B00] rounded-full mx-auto mb-8" />
+              <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+                Explore our exclusive range of premium wheels, designed for performance and crafted for excellence
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-              {[
-                {
-                  icon: <FiStar className="w-6 h-6 md:w-8 md:h-8" />,
-                  title: "Premium Quality",
-                  description: "We maintain the highest standards in all our products"
-                },
-                {
-                  icon: <FiAward className="w-6 h-6 md:w-8 md:h-8" />,
-                  title: "Industry Expertise",
-                  description: "Years of experience in the automotive sector"
-                },
-                {
-                  icon: <FiShield className="w-6 h-6 md:w-8 md:h-8" />,
-                  title: "Reliable Service",
-                  description: "Dedicated support for all your needs"
-                }
-              ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="text-amber-500 mb-4">{feature.icon}</div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 md:mb-4">{feature.title}</h3>
-                  <p className="text-sm md:text-base text-gray-600">{feature.description}</p>
-                </motion.div>
-              ))}
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+                {productCategories.map((category, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                    className="group"
+                  >
+                    <div className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-[#FF6B00]/50 transition-all duration-300 shadow-lg hover:shadow-xl">
+                      <div className="relative h-64 rounded-xl overflow-hidden mb-6 group-hover:shadow-2xl group-hover:shadow-[#FF6B00]/20 transition-all duration-300">
+                        <Image
+                          src={category.image}
+                          alt={category.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">
+                              {category.icon}
+                            </div>
+                            <h3 className="text-2xl font-bold text-white">{category.title}</h3>
+                          </div>
+                          <p className="text-gray-200">{category.description}</p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-4 mb-6">
+                        {category.stats.map((stat, statIndex) => (
+                          <div key={statIndex} className="text-center p-3 rounded-lg bg-gray-50">
+                            <div className="text-xl font-bold text-amber-600">{stat.value}</div>
+                            <div className="text-xs text-gray-600">{stat.label}</div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="space-y-3 mb-6">
+                        {category.features.map((feature, featureIndex) => (
+                          <div key={featureIndex} className="flex items-center gap-2 text-gray-600">
+                            <FiCheckCircle className="w-5 h-5 text-amber-500" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Enhanced CTA Section */}
-        <div className="relative py-16 md:py-24 z-10">
-          <div className="container mx-auto px-4">
+        {/* Enhanced Final CTA Section */}
+        <div className="relative py-32 z-10 bg-gray-50">
+          {/* Background Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#00000005_1px,transparent_0)] bg-[size:20px_20px]" />
+          </div>
+          
+          {/* Animated Background Circles */}
+          <div className="absolute inset-0 overflow-hidden">
+            <motion.div
+              className="absolute w-[500px] h-[500px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(251,191,36,0.1) 0%, rgba(251,191,36,0) 70%)',
+                top: '10%',
+                right: '5%',
+                filter: 'blur(60px)',
+              }}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.2, 0.3],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+            />
+            <motion.div
+              className="absolute w-[300px] h-[300px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(251,191,36,0.1) 0%, rgba(251,191,36,0) 70%)',
+                bottom: '10%',
+                left: '5%',
+                filter: 'blur(60px)',
+              }}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.2, 0.3, 0.2],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+            />
+          </div>
+
+          <div className="container mx-auto px-4 relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto text-center"
+              className="max-w-5xl mx-auto text-center"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-8 text-gray-800">
-                Ready to Experience Excellence?
-              </h2>
-              <p className="text-base md:text-lg text-gray-600 mb-8 md:mb-12">
-                Join us in our journey to provide the best automotive solutions
-              </p>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2"
+              <motion.h2 
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-[#FF6B00]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
               >
-                <a
-                  href="/contact"
-                  className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                Ready to Transform Your Journey?
+              </motion.h2>
+              
+              <motion.p 
+                className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Experience the perfect blend of style, performance, and innovation with our premium wheel collections
+              </motion.p>
+
+              <motion.div 
+                className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <motion.a
+                  href="/products"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group relative px-8 py-4 rounded-xl bg-[#FF6B00] text-white font-medium flex items-center gap-3 shadow-lg shadow-[#FF6B00]/30 overflow-hidden hover:bg-[#FF8533] transition-colors duration-300"
                 >
-                  Get in Touch
-                </a>
-                <FiArrowRight className="w-5 h-5 md:w-6 md:h-6 text-amber-500" />
+                  <span className="relative z-10">View All Collections</span>
+                  <FiArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#FF8533] to-[#FF6B00] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </motion.a>
+                
+                <motion.a
+                  href="/ConductUs"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group px-8 py-4 rounded-xl bg-white text-gray-700 font-medium flex items-center gap-3 border border-gray-200 hover:bg-gray-50 transition-colors duration-300 shadow-lg"
+                >
+                  Contact Sales Team
+                  <FiExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </motion.a>
+              </motion.div>
+
+              {/* Trust Indicators */}
+              <motion.div
+                className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                {[
+                  { value: "10K+", label: "Happy Customers" },
+                  { value: "50+", label: "Countries Served" },
+                  { value: "100%", label: "Quality Assured" },
+                  { value: "24/7", label: "Support Available" }
+                ].map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-amber-600 mb-2">{stat.value}</div>
+                    <div className="text-sm text-gray-600">{stat.label}</div>
+                  </div>
+                ))}
               </motion.div>
             </motion.div>
           </div>
         </div>
+
+        {/* Scroll to Top Button */}
+        <AnimatePresence>
+          {showScrollTop && (
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              onClick={scrollToTop}
+              className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-[#FF6B00] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#FF8533] transition-colors duration-300"
+            >
+              <FiChevronUp className="w-6 h-6" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </Layout>
   );

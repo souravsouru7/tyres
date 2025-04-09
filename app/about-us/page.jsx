@@ -289,11 +289,11 @@ export default function AboutUs() {
         {/* About Section */}
         <section id="about-section" className="py-12 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
               className="text-center mb-12 md:mb-16"
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
@@ -341,11 +341,11 @@ export default function AboutUs() {
                 className="relative"
               >
                 <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl group">
-                  <Image
-                    src="/new/DSC00923.jpg"
-                    alt="Premium Tires Collection"
-                    fill
-                    style={{ objectFit: 'cover' }}
+              <Image
+                src="/new/DSC00923.jpg"
+                alt="Premium Tires Collection"
+                fill
+                style={{ objectFit: 'cover' }}
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -479,12 +479,12 @@ export default function AboutUs() {
                       <div>
                         <h4 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-amber-600 transition-colors duration-300">{item.title}</h4>
                         <p className="text-sm md:text-base text-gray-700">{item.description}</p>
-                      </div>
+              </div>
                     </motion.div>
                   ))}
-                </div>
-              </motion.div>
             </div>
+          </motion.div>
+        </div>
           </div>
         </section>
 
@@ -706,33 +706,33 @@ export default function AboutUs() {
                     initial={{ width: 0 }}
                     whileInView={{ width: "100%" }}
                     transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
+            viewport={{ once: true }}
                   />
                 </span>
-              </h2>
+            </h2>
               <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
                 className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-xl max-w-2xl mx-auto border border-gray-100"
-              >
+            >
                 <div className="space-y-6 md:space-y-8">
-                  <div className="flex items-center justify-center space-x-4">
+                <div className="flex items-center justify-center space-x-4">
                     <FiMapPin className="w-6 h-6 md:w-8 md:h-8 text-amber-600" />
                     <p className="text-base md:text-xl text-gray-700">
-                      Location: DUBAI DEIRA
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-center space-x-4">
+                    Location: DUBAI DEIRA
+                  </p>
+                </div>
+                <div className="flex items-center justify-center space-x-4">
                     <FiClock className="w-6 h-6 md:w-8 md:h-8 text-amber-600" />
                     <p className="text-base md:text-xl text-gray-700">
-                      Opening Hours: EVERYDAY, 9 AM - 7 PM
-                    </p>
-                  </div>
+                    Opening Hours: EVERYDAY, 9 AM - 7 PM
+                  </p>
                 </div>
+              </div>
                 <p className="mt-6 md:mt-8 text-sm md:text-base text-gray-600">
-                  Partner with us for quality, reliability, and exceptional service. Visit us today and experience the unparalleled benefits of our Tire wholesale showroom.
-                </p>
+                Partner with us for quality, reliability, and exceptional service. Visit us today and experience the unparalleled benefits of our Tire wholesale showroom.
+              </p>
                 <div className="mt-8 flex justify-center">
                   <a 
                     href="/contact" 
@@ -742,8 +742,8 @@ export default function AboutUs() {
                   </a>
                 </div>
               </motion.div>
-            </motion.div>
-          </div>
+          </motion.div>
+        </div>
         </section>
 
         {/* Scroll to Top Button */}
