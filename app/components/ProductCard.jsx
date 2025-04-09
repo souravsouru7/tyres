@@ -148,17 +148,6 @@ const ProductCard = ({ product }) => {
           >
             {product.description}
           </motion.p>
-          <div className="flex justify-center items-center">
-            <motion.div
-              className="px-6 py-3 bg-amber-100 text-amber-700 rounded-full font-semibold text-sm flex items-center"
-              whileHover={{ scale: 1.05 }}
-            >
-              <span>View Details</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </motion.div>
-          </div>
         </div>
       </motion.div>
     </Link>

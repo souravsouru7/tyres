@@ -47,22 +47,22 @@ const Navbar = ({ isScrolled }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+      <div className="w-full px-4">
+        <div className="flex flex-col md:flex-row items-center justify-between h-24">
           {/* Logo Section */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center justify-center w-full md:w-auto py-2">
             <Image
               src="/logo.png"
               alt="Golden Extreme Logo"
-              width={160}
-              height={120}
-              className="h-16 w-auto"
+              width={220}
+              height={160}
+              className="h-20 w-auto"
               priority
             />
           </Link>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="absolute right-4 top-8 flex items-center gap-4 md:hidden">
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 text-gray-600 hover:text-yellow-600 transition-colors duration-300"
@@ -78,7 +78,7 @@ const Navbar = ({ isScrolled }) => {
           </div>
 
           {/* Main Navigation - Desktop */}
-          <div className="hidden md:flex items-center justify-center flex-1 px-8">
+          <div className="hidden md:flex items-center justify-center flex-1 px-8 space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.id}
@@ -115,9 +115,78 @@ const Navbar = ({ isScrolled }) => {
         </div>
       </div>
 
-      {/* Mobile Search Bar */}
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {isSearchOpen && (
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 w-full h-screen bg-white z-[100]"
+          >
+            <div className="relative w-full h-full flex flex-col items-center px-4">
+              {/* Close button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="absolute top-8 right-4 p-2 text-gray-600 hover:text-yellow-600"
+              >
+                <FiX size={28} />
+              </button>
+
+              {/* Content Container */}
+              <div className="flex flex-col items-center justify-between h-full w-full py-16">
+                {/* Large Centered Logo */}
+                <div className="mt-8">
+                  <Image
+                    src="/logo.png"
+                    alt="Golden Extreme Logo"
+                    width={300}
+                    height={220}
+                    className="w-auto h-auto"
+                    priority
+                  />
+                </div>
+
+                {/* Menu Items */}
+                <div className="flex flex-col items-center justify-center space-y-6">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`text-xl font-medium transition-all duration-300 ${
+                        isActive(item.href)
+                          ? 'text-yellow-600'
+                          : 'text-gray-700 hover:text-yellow-600'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Search Bar */}
+                <div className="w-full px-4">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search products..."
+                      className="w-full px-6 py-4 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-yellow-500/50 transition-all duration-300"
+                    />
+                    <FiSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Search Bar - Only show when search is open and menu is closed */}
+      <AnimatePresence>
+        {isSearchOpen && !isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -135,34 +204,6 @@ const Navbar = ({ isScrolled }) => {
                 />
                 <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-white border-t border-gray-100"
-          >
-            <div className="container mx-auto px-4 py-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className={`block px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    isActive(item.href)
-                      ? 'text-yellow-600 bg-yellow-50'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
             </div>
           </motion.div>
         )}
