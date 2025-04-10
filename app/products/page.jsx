@@ -294,38 +294,6 @@ export default function ProductsPage() {
         </motion.div>
 
         <motion.div 
-          className="relative z-20 container mx-auto px-4 mb-12 sm:mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="bg-gradient-to-br from-white to-amber-50 rounded-3xl p-6 sm:p-10 shadow-xl max-w-5xl mx-auto border border-amber-100">
-            <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-              <div className="w-full md:w-1/3 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full opacity-20 blur-xl"></div>
-                <img 
-                  src="/logo.png" 
-                  alt="Golden Extreme Logo" 
-                  className="w-full h-auto relative z-10"
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/200x200?text=Golden+Extreme';
-                  }}
-                />
-              </div>
-              <div className="w-full md:w-2/3">
-                <h3 className="text-xl sm:text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">About Golden Extreme</h3>
-                <p className="text-base sm:text-lg leading-relaxed text-gray-700">
-                  Golden Extreme Trading offers a wide range of high-quality automotive products, including premium
-                  tyres, durable wheels, and reliable batteries. Our tires are designed for optimal performance, safety,
-                  and efficiency, suitable for various vehicle types and driving conditions.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div 
           className="py-24 px-4 mb-20 relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -616,14 +584,14 @@ export default function ProductsPage() {
             </motion.h2>
             
             <motion.div 
-              className="grid grid-cols-1 gap-6 sm:gap-8 mb-8 sm:mb-16 px-4 sm:px-6 md:px-8"
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-16 px-4 sm:px-6 md:px-8"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, staggerChildren: 0.1 }}
               viewport={{ once: true }}
             >
               <motion.div 
-                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier1' ? 'col-span-full' : ''}`}
+                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier1' ? 'md:col-span-3' : ''}`}
                 whileHover={{ 
                   scale: expandedCard === 'tier1' ? 1 : 1.02,
                   transition: { duration: 0.3 }
@@ -702,7 +670,7 @@ export default function ProductsPage() {
               </motion.div>
               
               <motion.div 
-                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier2' ? 'col-span-full' : ''}`}
+                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier2' ? 'md:col-span-3' : ''}`}
                 whileHover={{ 
                   scale: expandedCard === 'tier2' ? 1 : 1.02,
                   transition: { duration: 0.3 }
@@ -781,7 +749,7 @@ export default function ProductsPage() {
               </motion.div>
               
               <motion.div 
-                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier3' ? 'col-span-full' : ''}`}
+                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier3' ? 'md:col-span-3' : ''}`}
                 whileHover={{ 
                   scale: expandedCard === 'tier3' ? 1 : 1.02,
                   transition: { duration: 0.3 }

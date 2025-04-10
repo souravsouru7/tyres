@@ -43,12 +43,36 @@ export const createProduct = async (formData) => {
 
 export const getProducts = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/products`);
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
-    return data;
+    const response = await fetch(`${BASE_URL}/products`).catch(error => {
+      console.error('Network error:', error);
+      return { ok: false };
+    });
+
+    if (!response || !response.ok) {
+      return {
+        success: false,
+        error: 'Failed to fetch products',
+        data: []
+      };
+    }
+
+    const data = await response.json().catch(error => {
+      console.error('Parse error:', error);
+      return { error: 'Invalid response format' };
+    });
+    
+    return {
+      success: true,
+      data: data || [],
+      error: null
+    };
   } catch (error) {
-    throw new Error(error.message || 'Failed to fetch products');
+    console.error('Error fetching products:', error);
+    return {
+      success: false,
+      data: [],
+      error: 'Failed to fetch products'
+    };
   }
 };
 
