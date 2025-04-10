@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Playfair_Display, Inter } from 'next/font/google';
 import Image from 'next/image';
 import { FiArrowRight, FiArrowDown, FiStar, FiShield, FiAward } from 'react-icons/fi';
+import Link from 'next/link';
 
 const playfair = Playfair_Display({ 
   subsets: ['latin'],
@@ -138,28 +139,32 @@ const HeroSection = () => {
               custom={3}
               variants={textVariants}
             >
-              <motion.button
-                className="group relative px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-lg uppercase tracking-wider rounded-full overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore Collection
-                  <FiArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "0%" }}
-                />
-              </motion.button>
-              <motion.button
-                className="px-8 py-4 bg-white/10 backdrop-blur-lg text-white text-lg uppercase tracking-wider rounded-full border border-white/20"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Us
-              </motion.button>
+              <Link href="/about-us" passHref>
+                <motion.button
+                  className="group relative px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-lg uppercase tracking-wider rounded-full overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Explore Us
+                    <FiArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "0%" }}
+                  />
+                </motion.button>
+              </Link>
+              <Link href="/ConductUs" passHref>
+                <motion.button
+                  className="px-8 py-4 bg-white/10 backdrop-blur-lg text-white text-lg uppercase tracking-wider rounded-full border border-white/20 hover:bg-white/20 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Contact Us
+                </motion.button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>

@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { getProducts } from '../../src/utils/api';
 import Link from 'next/link';
 import ProductModal from './ProductModal';
+import { useRouter } from 'next/navigation';
 
 const TireAdvertisement = () => {
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +20,6 @@ const TireAdvertisement = () => {
       try {
         const response = await getProducts();
         if (response.success) {
-          // Get the first 4 products
           const featuredProducts = response.data
             .filter(product => product.category === 'tyre')
             .slice(0, 4);
@@ -36,142 +37,312 @@ const TireAdvertisement = () => {
     fetchProducts();
   }, []);
 
-  // Animation effect for elements
-  useEffect(() => {
-    const animateElements = () => {
-      const header = document.querySelector('.main-header');
-      const subheader = document.querySelector('.sub-header');
-      const divider = document.querySelector('.divider');
-      const products = document.querySelectorAll('.product-card');
-
-      // Animate header
-      setTimeout(() => {
-        header?.classList.add('animate-header');
-      }, 300);
-
-      // Animate subheader
-      setTimeout(() => {
-        subheader?.classList.add('animate-subheader');
-      }, 600);
-
-      // Animate divider
-      setTimeout(() => {
-        divider?.classList.add('animate-divider');
-      }, 900);
-
-      // Animate products
-      products.forEach((product, index) => {
-        setTimeout(() => {
-          product.classList.add('animate-product');
-        }, 1200 + (index * 200));
-      });
-    };
-
-    animateElements();
-  }, [products]);
-
   const handleProductClick = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
+  const handleEnquire = (e, product) => {
+    e.stopPropagation(); 
+    router.push('/ConductUs');
+  };
+
+  const staticProducts = [
+    {
+      id: 'appolo',
+      logoSrc: '/forproduct/Apollo.png',
+      logoAlt: 'Apollo logo',
+      imageSrc: '/forproduct/appolo1.jpg',
+      imageAlt: 'Apollo Tyre',
+      description: 'High-performance summer tire',
+      subcategory: 'Summer Tire',
+      color: 'from-purple-600 to-indigo-600'
+    },
+    {
+      id: 'bridgestone1',
+      logoSrc: '/forproduct/bf-goodrich-logo.png',
+      logoAlt: 'BF Goodrich logo',
+      imageSrc: '/forproduct/bf good rich.jpg',
+      imageAlt: 'BF Goodrich Tire',
+      description: 'Winter tire for extreme conditions',
+      subcategory: 'Winter Tire',
+      color: 'from-blue-600 to-blue-800'
+    },
+    {
+      id: 'michelin1',
+      logoSrc: '/forproduct/Michelin.png',
+      logoAlt: 'Michelin logo',
+      imageSrc: '/forproduct/marshal.jpg',
+      imageAlt: 'Michelin Tire',
+      description: 'Energy-efficient all-season tire',
+      subcategory: 'All-Season Tire',
+      color: 'from-blue-500 to-blue-700'
+    },
+    {
+      id: 'yokohama1',
+      logoSrc: '/forproduct/Yokohama.png',
+      logoAlt: 'Yokohama logo',
+      imageSrc: '/forproduct/honur.jpg',
+      imageAlt: 'Yokohama Tire',
+      description: 'Ultra-high performance tire',
+      subcategory: 'Performance Tire',
+      color: 'from-red-600 to-red-800'
+    }
+  ];
+
   return (
-    <section className="py-16 bg-white">
-      <style jsx>{`
-        .main-header {
+    <section className="py-16 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+      <style jsx global>{`
+        @keyframes floatAnimation {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulseGlow {
+          0% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.4); }
+          70% { box-shadow: 0 0 0 10px rgba(255, 200, 0, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0); }
+        }
+        
+        @keyframes spin3D {
+          0% { transform: rotateY(0deg); }
+          100% { transform: rotateY(360deg); }
+        }
+        
+        @keyframes shineEffect {
+          0% { left: -100%; }
+          100% { left: 100%; }
+        }
+        
+        .glow-effect {
+          animation: pulseGlow 2s infinite;
+        }
+        
+        .float-animation {
+          animation: floatAnimation 6s ease-in-out infinite;
+        }
+        
+        .spin-animation {
+          perspective: 1000px;
+        }
+        
+        .spin-animation:hover .spin-content {
+          transform: rotateY(180deg);
+          transition: transform 0.8s;
+        }
+        
+        .shine-effect {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .shine-effect::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+          transform: skewX(-25deg);
+          transition: all 0.75s;
+        }
+        
+        .shine-effect:hover::before {
+          animation: shineEffect 0.75s;
+        }
+        
+        .card-gradient {
+          background-size: 200% 200%;
+          animation: gradientFlow 3s ease infinite;
+        }
+        
+        @keyframes gradientFlow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        .badge-pop {
+          transition: all 0.3s ease;
+        }
+        
+        .badge-pop:hover {
+          transform: scale(1.1);
+        }
+        
+        .tire-spin:hover {
+          animation: spin3D 3s linear infinite;
+        }
+        
+        .flare-effect {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .flare-effect::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
           opacity: 0;
-          transform: translateY(-20px);
-          transition: all 0.8s ease;
+          transform: rotate(30deg);
+          background: rgba(255, 255, 255, 0.13);
+          background: linear-gradient(
+            to right, 
+            rgba(255, 255, 255, 0.13) 0%,
+            rgba(255, 255, 255, 0.13) 77%,
+            rgba(255, 255, 255, 0.5) 92%,
+            rgba(255, 255, 255, 0.0) 100%
+          );
+          transition: opacity 0.2s;
         }
-        .animate-header {
+        
+        .flare-effect:hover::after {
           opacity: 1;
-          transform: translateY(0);
+          animation: flareEffect 1s ease-out;
         }
-        .sub-header {
-          opacity: 0;
-          transform: translateY(-10px);
-          transition: all 0.8s ease;
-        }
-        .animate-subheader {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .divider {
-          width: 0;
-          transition: all 0.8s ease;
-        }
-        .animate-divider {
-          width: 100px;
-        }
-        .product-card {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.8s ease;
-        }
-        .animate-product {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .product-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .product-image {
-          transition: transform 0.5s ease;
-        }
-        .product-card:hover .product-image {
-          transform: scale(1.05);
+        
+        @keyframes flareEffect {
+          0% { left: -50%; opacity: 1; }
+          100% { left: 100%; opacity: 0; }
         }
       `}</style>
 
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="main-header text-5xl font-bold text-gray-800 mb-2">HOT SELLING PRODUCTS</h2>
-          <p className="sub-header text-2xl text-gray-400">AMAZING NEW TYRES AT AMAZING PRICES</p>
-          <div className="divider h-1 bg-yellow-400 mx-auto mt-6"></div>
-        </div>
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <motion.h2 
+            className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-600 mb-2"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            HOT SELLING PRODUCTS
+          </motion.h2>
+          <motion.p 
+            className="text-2xl text-gray-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            AMAZING NEW TYRES AT AMAZING PRICES
+          </motion.p>
+          <motion.div 
+            className="h-1 bg-gradient-to-r from-amber-400 to-yellow-500 w-24 mx-auto mt-6 glow-effect rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: 96 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          ></motion.div>
+        </motion.div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[1, 2, 3, 4].map((index) => (
-              <div key={index} className="animate-pulse bg-gray-100 rounded-lg p-4 h-64"></div>
+              <motion.div 
+                key={index} 
+                className="animate-pulse bg-gray-100 rounded-lg h-96"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              ></motion.div>
             ))}
           </div>
         ) : error ? (
           <div className="text-center text-red-600">{error}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <div
-                key={product._id}
+            {staticProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                className="relative h-96 shine-effect flare-effect overflow-hidden rounded-xl shadow-lg group bg-white"
                 onClick={() => handleProductClick(product)}
-                className="product-card bg-white rounded-lg overflow-hidden shadow-sm transition-all duration-300 cursor-pointer"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                whileHover={{ y: -8 }}
               >
-                <div className="p-4">
-                  <h3 className="text-xl font-medium text-center text-gray-800 mb-4">
-                    {product.name}
-                  </h3>
-                  <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="product-image object-contain w-full h-full transition-transform duration-300"
+                {/* Card Content */}
+                <div className="relative flex flex-col h-full">
+                  {/* Logo area with floating animation */}
+                  <motion.div 
+                    className="h-24 flex items-center justify-center p-4 rounded-b-xl z-10"  // Increased height from h-16 to h-24
+                    whileHover={{ y: -3 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <img 
+                      src={product.logoSrc} 
+                      alt={product.logoAlt} 
+                      className="h-20 w-auto object-contain max-w-[80%]"  // Updated height and added max-width constraint
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/placeholder-image.jpg';
+                        e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">Logo</text></svg>';
                       }}
                     />
-                  </div>
-                  <div className="mt-4">
-                    <p className="text-center text-gray-600 line-clamp-2">{product.description}</p>
-                    <div className="flex justify-center mt-3">
-                      <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-800 rounded-full text-xs font-medium">
+                  </motion.div>
+
+                  {/* Tire image with 3D hover effect */}
+                  <motion.div 
+                    className="h-48 flex items-center justify-center p-4 mt-2 overflow-hidden"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <motion.img 
+                      src={product.imageSrc} 
+                      alt={product.imageAlt} 
+                      className="h-full object-contain drop-shadow-xl tire-spin"
+                      initial={{ rotateY: 0 }}
+                      whileHover={{ rotateY: 360 }}
+                      transition={{ duration: 1.5 }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">No Image</text></svg>';
+                      }}
+                    />
+                  </motion.div>
+
+                  {/* Description area with floating animation */}
+                  <motion.div 
+                    className="p-4 flex-1 flex flex-col items-center mt-auto rounded-t-xl"
+                    initial={{ y: 20 }}
+                    whileHover={{ y: 0 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <motion.p 
+                      className="text-center text-gray-800 font-medium text-lg mb-3"
+                      whileHover={{ scale: 1.03 }}
+                    >
+                      {product.description}
+                    </motion.p>
+                    
+                    {/* Buttons with hover effects */}
+                    <div className="mt-auto flex justify-center space-x-3">
+                      <motion.span 
+                        className="px-3 py-1 border border-amber-200 text-amber-800 rounded-full text-xs font-medium badge-pop"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
                         {product.subcategory}
-                      </span>
+                      </motion.span>
+                      <motion.button
+                        onClick={(e) => handleEnquire(e, product)}
+                        className="px-4 py-1 border border-amber-500 text-amber-600 hover:bg-amber-50 rounded-full text-xs font-medium"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Enquire
+                      </motion.button>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}

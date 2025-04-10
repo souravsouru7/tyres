@@ -8,6 +8,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { FiArrowDown } from 'react-icons/fi';
+import BrandSlider from '../components/BrandSlider';
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -961,6 +962,9 @@ export default function ProductsPage() {
           />
         </div>
 
+        {/* Add BrandSlider component */}
+        <BrandSlider />
+
       </div>
 
       <style jsx global>{`
@@ -979,9 +983,3 @@ export default function ProductsPage() {
     </Layout>
   );
 }
-
-
-
-
-
-

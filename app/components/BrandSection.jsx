@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Orbitron } from 'next/font/google';
 import { FiArrowRight } from 'react-icons/fi';
+import Link from 'next/link';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -338,38 +339,6 @@ const BrandSection = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-16 text-center"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold flex items-center justify-center mx-auto group/btn"
-            >
-              <motion.span
-                variants={textVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                Discover More
-              </motion.span>
-              <motion.div
-                animate={{
-                  x: hoveredElement === 'button' ? 5 : 0,
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <FiArrowRight className="ml-2 transform transition-transform duration-300 group-hover/btn:translate-x-1" />
-              </motion.div>
-            </motion.button>
-          </motion.div>
         </div>
       </div>
 

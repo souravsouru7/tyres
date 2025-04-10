@@ -94,21 +94,59 @@ const Footer = () => {
             className="space-y-6"
           >
             <h3 className="text-xl font-bold text-gray-900">Quick Links</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {['Products', 'About Us', 'Contact', 'Brands'].map((link, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ x: 5 }}
+            <div className="grid grid-cols-2 gap-8">
+              {/* Products Section with Subcategories - Left Side */}
+              <div className="space-y-2">
+                <Link 
+                  href="/products"
+                  className="text-gray-900 font-semibold hover:text-yellow-600 transition-colors flex items-center"
                 >
-                  <Link 
-                    href={`/${link.toLowerCase().replace(' ', '-')}`}
-                    className="text-gray-600 hover:text-yellow-600 transition-colors flex items-center"
+                  <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2" />
+                  Products
+                </Link>
+                <div className="ml-4 space-y-2">
+                  {[
+                    { name: 'Wheels', path: '/products?category=wheels' },
+                    { name: 'Battery', path: '/products?category=battery' },
+                    { name: 'Tyres', path: '/products?category=tyres' }
+                  ].map((subcategory, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ x: 5 }}
+                    >
+                      <Link 
+                        href={subcategory.path}
+                        className="text-gray-600 hover:text-yellow-600 transition-colors flex items-center text-sm"
+                      >
+                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2" />
+                        {subcategory.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Other Links - Right Side */}
+              <div className="space-y-2">
+                {[
+                  { name: 'About Us', path: '/about-us' },
+                  { name: 'Contact', path: '/contact' },
+                  { name: 'Brands', path: '/brands' }
+                ].map((link, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ x: 5 }}
                   >
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2" />
-                    {link}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link 
+                      href={link.path}
+                      className="text-gray-600 hover:text-yellow-600 transition-colors flex items-center"
+                    >
+                      <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2" />
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
 

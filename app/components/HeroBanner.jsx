@@ -310,13 +310,6 @@ const HeroBanner = () => {
                       whileHover={{ x: "0%" }}
                     />
                   </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="group p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
-                  >
-                    <FiPlay className="w-6 h-6 text-white transform group-hover:scale-110 transition-transform duration-300" />
-                  </motion.button>
                 </motion.div>
               </div>
             </div>

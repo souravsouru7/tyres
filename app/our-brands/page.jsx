@@ -81,7 +81,7 @@ export default function BrandsPage() {
     {
       title: "Wings of Innovation: The Falcon Legacy",
       content: "In the vast, ever-evolving landscape of the Middle East and North Africa, where the scorching sun meets endless highways and the urban sprawls transition into vast deserts, a brand soared high, leaving a trail of innovation and expertise behind. This is the story of Falcon, a beacon of superior quality and specialized engineering, crafted meticulously to cater to the distinct needs of its domain.",
-      image: "/new iamges/golden-2.jpg",
+      video: "/13282968_2160_3840_30fps.mp4",
       icon: <FiAward className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Years of Excellence", value: "25+", icon: <FiStar /> },
@@ -92,7 +92,7 @@ export default function BrandsPage() {
     {
       title: "The Spirit of the Falcon",
       content: "Founded on the ideals of precision and resilience, Falcon was named in homage to the national bird of the UAE. The falcon, with its sharp vision, swiftness, and majestic flight, symbolized what the brand aspired to be: powerful, agile, and ahead of its competitors.",
-      image: "/new iamges/golden-3.jpg",
+      video: "/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4",
       icon: <FiShield className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Innovation Rate", value: "95%", icon: <FiTrendingUp /> },
@@ -103,7 +103,7 @@ export default function BrandsPage() {
     {
       title: "The Tyre Trail: Precision and Perception",
       content: "Falcon's journey began with a singular goal: to design and manufacture tyres that could withstand the diverse terrains and climate of the region. The company ventured into crafting PCR (Passenger Car Radial), TBR (Truck and Bus Radial), and LTR (Light Truck Radial) tyres. Each variant was a masterpiece of advanced technology and understanding of the regional demands. Customers revered Falcon tyres for their durability, reliability, and exceptional performance on both sun-scorched sands and bustling city roads.",
-      image: "/new iamges/golden-4.jpg",
+      video: "/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4",
       icon: <FiTrendingUp className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Tyre Types", value: "15+", icon: <FiStar /> },
@@ -114,7 +114,7 @@ export default function BrandsPage() {
     {
       title: "Wheels of Steel: A Revolution in Motion",
       content: "As roads interlinked distant lands and connected people, Falcon expanded its horizons to encompass specialized wheels, including both PCR and TBR. These wheels, crafted with the same precision and passion, became synonymous with strength and stability. Falcon wheels were not just components; they became the backbone of vehicles, offering the steadfastness needed in both urban environments and across desert voyages.",
-      image: "/new iamges/golden-5.jpg",
+      video: "/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4",
       icon: <FiTruck className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Wheel Types", value: "20+", icon: <FiPackage /> },
@@ -125,7 +125,7 @@ export default function BrandsPage() {
     {
       title: "Power Unleashed: The Battery Breakthrough",
       content: "Not content with conquering roads, Falcon took a groundbreaking leap into the energy sector, innovating UPS batteries and Bike Batteries. Here, Falcon's ingenuity shined yet again, offering unmatched energy solutions that powered everything from emergency backup systems in towering skyscrapers to motorbike adventures under the open sky. Every Falcon battery was a testament to safety, longevity, and consistent power supply, illuminating and energizing lives across the region.",
-      image: "/new iamges/golden-6.jpg",
+      video: "/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4",
       icon: <FiBattery className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Battery Types", value: "10+", icon: <FiBattery /> },
@@ -136,7 +136,7 @@ export default function BrandsPage() {
     {
       title: "Flight of the Falcon: A Unified Legacy",
       content: "From tyres to wheels, to batteries — Falcon became the embodiment of trust and innovation. Their products weren't just about meeting demands; they were about anticipating them, providing solutions that encapsulated the spirit of a region known for its rich heritage and promising future. Today, Falcon stands not just as a brand but as a legacy, embodying the United Arab Emirates' values — blending tradition with cutting-edge technology. Like the falcon that inspired its name, the brand continues to glide effortlessly across the landscape, a symbol of what's possible when vision meets expertise.",
-      image: "/new iamges/golden-7.jpg",
+      video: "/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4",
       icon: <FiStar className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Brand Value", value: "$500M+", icon: <FiTrendingUp /> },
@@ -290,7 +290,7 @@ export default function BrandsPage() {
                       className="relative w-full h-full"
                     >
                       <Image
-                        src="/new iamges/golden-4.jpg"
+                        src="/3dtyre.jpg"
                         alt="Premium Wheel"
                         fill
                         className="object-cover rounded-full"
@@ -359,60 +359,100 @@ export default function BrandsPage() {
               <div className="w-16 md:w-24 h-1 bg-[#FF6B00] mx-auto mb-8" />
             </motion.div>
 
-            <div className="max-w-4xl mx-auto space-y-12 md:space-y-20 px-4 md:px-0">
+            <div className="max-w-7xl mx-auto">
               {storyContent.map((story, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="relative group"
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  className="mb-32 last:mb-0"
                 >
-                  <div className="absolute left-0 top-0 w-8 md:w-12 h-8 md:h-12 -translate-x-4 md:-translate-x-6 flex items-center justify-center">
-                    <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500" />
-                  </div>
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="bg-white rounded-2xl p-4 md:p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden"
-                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center">
-                      <div className="relative h-48 md:h-64 rounded-xl overflow-hidden group">
-                        <Image
-                          src={story.image}
-                          alt={story.title}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </div>
-                      <div>
-                        <div className="flex items-center mb-4">
-                          <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-3">
+                  <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                    {/* Content Side */}
+                    <div className={`relative z-10 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <motion.div
+                        initial={{ x: -50, opacity: 0 }}
+                        whileInView={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 shadow-2xl"
+                      >
+                        <div className="flex items-center gap-4 mb-6">
+                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
                             {story.icon}
                           </div>
-                          <h3 className="text-xl md:text-2xl font-bold text-gray-900">{story.title}</h3>
+                          <h3 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+                            {story.title}
+                          </h3>
                         </div>
-                        <p className="text-gray-600 mb-6">{story.content}</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        
+                        <p className="text-gray-700 leading-relaxed mb-8">
+                          {story.content}
+                        </p>
+
+                        <div className="grid grid-cols-3 gap-4">
                           {story.stats.map((stat, statIndex) => (
                             <motion.div
                               key={statIndex}
-                              initial={{ opacity: 0, y: 20 }}
-                              whileInView={{ opacity: 1, y: 0 }}
+                              initial={{ scale: 0.8, opacity: 0 }}
+                              whileInView={{ scale: 1, opacity: 1 }}
                               transition={{ duration: 0.5, delay: 0.2 + statIndex * 0.1 }}
-                              className="bg-gray-50 rounded-xl p-3 text-center"
+                              className="relative group"
                             >
-                              <div className="text-amber-500 mb-1">{stat.icon}</div>
-                              <div className="text-xl font-bold text-gray-900">{stat.value}</div>
-                              <div className="text-xs text-gray-600">{stat.label}</div>
+                              <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-orange-500/10 rounded-2xl transform group-hover:scale-105 transition-transform duration-300" />
+                              <div className="relative p-4 text-center">
+                                <div className="text-amber-500 mb-2">{stat.icon}</div>
+                                <div className="text-2xl font-bold text-gray-800 mb-1">{stat.value}</div>
+                                <div className="text-sm text-gray-600">{stat.label}</div>
+                              </div>
                             </motion.div>
                           ))}
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
-                  </motion.div>
+
+                    {/* Video Side */}
+                    <div className={`relative ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
+                      <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        whileInView={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        className="relative rounded-[2rem] overflow-hidden group"
+                      >
+                        {/* Decorative Elements */}
+                        <div className="absolute -inset-2 bg-gradient-to-tr from-amber-500 to-orange-500 opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-orange-500/10 mix-blend-overlay" />
+                        
+                        {/* Main Video Container */}
+                        <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+                          <video
+                            src={story.video}
+                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60" />
+                          
+                          {/* Play Button Overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <motion.div
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                              className="w-16 h-16 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+                            >
+                              <FiPlay className="w-6 h-6 text-white" />
+                            </motion.div>
+                          </div>
+                        </div>
+
+                        {/* Decorative Corner Elements */}
+                        <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-amber-500/50 rounded-tl-lg" />
+                        <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-orange-500/50 rounded-br-lg" />
+                      </motion.div>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -752,4 +792,4 @@ export default function BrandsPage() {
       </div>
     </Layout>
   );
-} 
+}

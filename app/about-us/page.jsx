@@ -3,20 +3,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useAnimation, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 import Layout from '../components/Layout';
-import { FiAward, FiUsers, FiTarget, FiTruck, FiMapPin, FiClock, FiCheck, FiArrowRight, FiStar, FiShield, FiTrendingUp, FiPackage, FiDollarSign, FiHeadphones, FiTruck as FiLogistics, FiBookOpen, FiCheckCircle, FiChevronDown, FiChevronUp, FiPlay, FiPause, FiVolume2, FiVolumeX } from 'react-icons/fi';
+import { FiAward, FiUsers, FiTarget, FiTruck, FiMapPin, FiClock, FiCheck, FiArrowRight, FiStar, FiShield, FiTrendingUp, FiPackage, FiDollarSign, FiHeadphones, FiTruck as FiLogistics, FiBookOpen, FiCheckCircle, FiChevronDown, FiChevronUp, FiPlay, FiPause, FiVolume2, FiVolumeX, FiHome, FiInfo, FiMail, FiCalendar } from 'react-icons/fi';
 
 export default function AboutUs() {
   const [isMounted, setIsMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState('about');
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const videoRef = useRef(null);
+  const videoContainerRef = useRef(null);
+  const isVideoInView = useInView(videoContainerRef, { once: false });
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
-  
+
   useEffect(() => {
     setIsMounted(true);
     
@@ -27,6 +28,16 @@ export default function AboutUs() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isVideoInView && videoRef.current) {
+      videoRef.current.play();
+      setIsVideoPlaying(true);
+    } else if (!isVideoInView && videoRef.current) {
+      videoRef.current.pause();
+      setIsVideoPlaying(false);
+    }
+  }, [isVideoInView]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -114,6 +125,27 @@ export default function AboutUs() {
     { value: "1974", label: "Established", icon: <FiStar className="w-6 h-6" /> },
     { value: "100%", label: "Customer Satisfaction", icon: <FiCheckCircle className="w-6 h-6" /> }
   ];
+
+  const navItems = [
+    { label: "Story", target: "story" },
+    { label: "Journey", target: "journey" },
+    { label: "Mission", target: "mission" },
+    { label: "Features", target: "features" }
+  ];
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 100; // Adjust this value based on your header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <Layout>
@@ -265,21 +297,20 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md shadow-sm">
+        {/* Sub Navigation */}
+        <div className="sticky top-20 z-50 py-4 bg-white/90 backdrop-blur-md border-y border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex overflow-x-auto hide-scrollbar">
-              {['about', 'mission', 'features', 'showroom'].map((tab) => (
+            <div className="flex justify-center items-center space-x-8">
+              {navItems.map((item, index) => (
                 <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-3 text-sm md:text-base font-medium whitespace-nowrap border-b-2 transition-all duration-300 ${
-                    activeTab === tab 
-                      ? 'border-amber-500 text-amber-600' 
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
+                  key={index}
+                  onClick={() => scrollToSection(item.target)}
+                  className="relative group px-3 py-2"
                 >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  <span className="text-gray-600 group-hover:text-amber-600 font-medium transition-colors duration-300">
+                    {item.label}
+                  </span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                 </button>
               ))}
             </div>
@@ -287,13 +318,13 @@ export default function AboutUs() {
         </div>
 
         {/* About Section */}
-        <section id="about-section" className="py-12 md:py-20">
+        <section id="story" className="relative py-12 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
               className="text-center mb-12 md:mb-16"
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
@@ -308,7 +339,6 @@ export default function AboutUs() {
                   />
                 </span>
               </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -334,6 +364,7 @@ export default function AboutUs() {
               </motion.div>
 
               <motion.div
+                ref={videoContainerRef}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
@@ -341,29 +372,54 @@ export default function AboutUs() {
                 className="relative"
               >
                 <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl group">
-              <Image
-                src="/new/DSC00923.jpg"
-                alt="Premium Tires Collection"
-                fill
-                style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    loop
+                    playsInline
+                    muted={isVideoMuted}
+                  >
+                    <source src="/forproduct/our story.mov" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-xl md:text-2xl font-bold mb-2">Premium Tire Solutions</h3>
-                    <p className="text-sm md:text-base">Designed for the demanding needs of fleets, tire shops, and dealers</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">Our Company Profile</h3>
+                        <p className="text-sm md:text-base">Experience our journey and commitment to excellence</p>
+                      </div>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={toggleVideoPlayback}
+                          className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors duration-300"
+                        >
+                          {isVideoPlaying ? <FiPause className="w-6 h-6" /> : <FiPlay className="w-6 h-6" />}
+                        </button>
+                        <button
+                          onClick={toggleVideoMute}
+                          className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors duration-300"
+                        >
+                          {isVideoMuted ? <FiVolumeX className="w-6 h-6" /> : <FiVolume2 className="w-6 h-6" />}
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </div>
+          </div>
+        </section>
 
-            {/* Timeline */}
+        {/* Timeline */}
+        <section id="journey" className="relative py-12 md:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mt-20"
+              className="text-center mb-12 md:mb-16"
             >
               <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-8 text-center">Our Journey</h3>
               <div className="relative">
@@ -395,7 +451,7 @@ export default function AboutUs() {
         </section>
 
         {/* Mission Section */}
-        <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+        <section id="mission" className="relative py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -416,7 +472,6 @@ export default function AboutUs() {
                   />
                 </span>
               </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -479,17 +534,17 @@ export default function AboutUs() {
                       <div>
                         <h4 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-amber-600 transition-colors duration-300">{item.title}</h4>
                         <p className="text-sm md:text-base text-gray-700">{item.description}</p>
-              </div>
+                      </div>
                     </motion.div>
                   ))}
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
-        </div>
           </div>
         </section>
 
         {/* Features Section */}
-        <section className="py-12 md:py-20">
+        <section id="features" className="relative py-12 md:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -499,8 +554,8 @@ export default function AboutUs() {
               className="text-center mb-12 md:mb-16"
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
-                Why Choose <span className="text-amber-600 relative">
-                  Our Wholesale Showroom
+                Our <span className="text-amber-600 relative">
+                  Features
                   <motion.span 
                     className="absolute -bottom-2 left-0 w-full h-1 bg-amber-500"
                     initial={{ width: 0 }}
@@ -510,7 +565,6 @@ export default function AboutUs() {
                   />
                 </span>
               </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
             </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -532,8 +586,8 @@ export default function AboutUs() {
           </div>
         </section>
 
-        {/* Showroom Section */}
-        <section className="py-12 md:py-20 bg-gradient-to-b from-white to-gray-50">
+        {/* Events Section */}
+        <section className="relative py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -544,7 +598,7 @@ export default function AboutUs() {
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                 Our <span className="text-amber-600 relative">
-                  Showroom
+                  Events
                   <motion.span 
                     className="absolute -bottom-2 left-0 w-full h-1 bg-amber-500"
                     initial={{ width: 0 }}
@@ -554,143 +608,8 @@ export default function AboutUs() {
                   />
                 </span>
               </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">Come and explore our showroom!</h3>
-                <p className="text-sm md:text-base text-gray-700">
-                  Explore a world of Tire solutions designed for your business. Whether you are looking to expand your product range or seeking reliable suppliers, our showroom is your go-to destination.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <FiMapPin className="w-6 h-6 text-amber-500 mr-3" />
-                    <div>
-                      <h4 className="text-base md:text-lg font-semibold text-gray-900">Location</h4>
-                      <p className="text-sm md:text-base text-gray-700">DUBAI DEIRA</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <FiClock className="w-6 h-6 text-amber-500 mr-3" />
-                    <div>
-                      <h4 className="text-base md:text-lg font-semibold text-gray-900">Opening Hours</h4>
-                      <p className="text-sm md:text-base text-gray-700">EVERYDAY, 9 AM - 7 PM</p>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-sm md:text-base text-gray-700">
-                  Partner with us for quality, reliability, and exceptional service. Visit us today and experience the unparalleled benefits of our Tire wholesale showroom. We look forward to building a productive and prosperous partnership with you.
-                </p>
-                <a 
-                  href="/contact" 
-                  className="inline-flex items-center px-6 py-3 bg-amber-500 text-white rounded-xl font-medium shadow-lg hover:bg-amber-600 transition-all duration-300 group"
-                >
-                  Contact Us <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </a>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="relative aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl group"
-              >
-                <video
-                  ref={videoRef}
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster="/new/ADM_4501.JPG"
-                >
-                  <source src="/new/WhatsApp Video 2025-04-08 at 16.58.23_653a0816.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 flex justify-between items-center">
-                  <div className="text-white">
-                    <h3 className="text-lg md:text-xl font-bold">Golden Extreme Showroom</h3>
-                    <p className="text-sm md:text-base text-gray-300">Experience our premium tire collection</p>
-                  </div>
-                  <div className="flex space-x-2">
-                    <button 
-                      onClick={toggleVideoPlayback}
-                      className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors duration-300"
-                    >
-                      {isVideoPlaying ? <FiPause className="w-5 h-5" /> : <FiPlay className="w-5 h-5" />}
-                    </button>
-                    <button 
-                      onClick={toggleVideoMute}
-                      className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors duration-300"
-                    >
-                      {isVideoMuted ? <FiVolumeX className="w-5 h-5" /> : <FiVolume2 className="w-5 h-5" />}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center mb-8 md:mb-12"
-            >
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">
-                Explore Our <span className="text-amber-600">Showroom</span>
-              </h3>
-            </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-              {[
-                '/new/ADM_4501.JPG',
-                '/new/ADM_4502.JPG',
-                '/new/ADM_4508.JPG',
-                '/new/ADM_4614.JPG',
-                '/new/ADM_4616.JPG',
-                '/new/ADM_4724.JPG'
-              ].map((src, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                  viewport={{ once: true }}
-                  className="relative aspect-square rounded-2xl md:rounded-3xl overflow-hidden shadow-lg md:shadow-xl group"
-                >
-                  <Image
-                    src={src}
-                    alt="Showroom"
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                      <h3 className="text-lg md:text-xl font-bold text-white">Showroom View {index + 1}</h3>
-                      <p className="text-sm md:text-base text-gray-300">Explore our premium tire collection</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section className="py-12 md:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -698,52 +617,21 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="text-center"
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
-                Visit Our <span className="text-amber-600 relative">
-                  Showroom
-                  <motion.span 
-                    className="absolute -bottom-2 left-0 w-full h-1 bg-amber-500"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-                  />
-                </span>
-            </h2>
-              <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mb-8" />
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-xl max-w-2xl mx-auto border border-gray-100"
-            >
-                <div className="space-y-6 md:space-y-8">
-                <div className="flex items-center justify-center space-x-4">
-                    <FiMapPin className="w-6 h-6 md:w-8 md:h-8 text-amber-600" />
-                    <p className="text-base md:text-xl text-gray-700">
-                    Location: DUBAI DEIRA
-                  </p>
+              <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl max-w-3xl mx-auto">
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <FiCalendar className="w-8 h-8 text-amber-600" />
                 </div>
-                <div className="flex items-center justify-center space-x-4">
-                    <FiClock className="w-6 h-6 md:w-8 md:h-8 text-amber-600" />
-                    <p className="text-base md:text-xl text-gray-700">
-                    Opening Hours: EVERYDAY, 9 AM - 7 PM
-                  </p>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Exciting Events Coming Soon</h3>
+                <p className="text-gray-600 mb-6">
+                  Stay tuned for exclusive automotive events, product launches, and special promotions. We're planning something amazing for you!
+                </p>
+                <div className="inline-flex items-center px-6 py-3 bg-amber-500 text-white rounded-xl font-medium shadow-lg hover:bg-amber-600 transition-all duration-300 group">
+                  <span>Get Notified</span>
+                  <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
               </div>
-                <p className="mt-6 md:mt-8 text-sm md:text-base text-gray-600">
-                Partner with us for quality, reliability, and exceptional service. Visit us today and experience the unparalleled benefits of our Tire wholesale showroom.
-              </p>
-                <div className="mt-8 flex justify-center">
-                  <a 
-                    href="/contact" 
-                    className="inline-flex items-center px-6 py-3 bg-amber-500 text-white rounded-xl font-medium shadow-lg hover:bg-amber-600 transition-all duration-300 group"
-                  >
-                    Get in Touch <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                  </a>
-                </div>
-              </motion.div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
         </section>
 
         {/* Scroll to Top Button */}
