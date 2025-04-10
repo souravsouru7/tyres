@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FiCalendar, FiArrowRight } from 'react-icons/fi';
+import Link from 'next/link';
 
 const EventsSection = () => {
   return (
@@ -67,14 +68,16 @@ const EventsSection = () => {
             <p className="text-gray-600 text-lg mb-8">
               We're preparing something exciting for you. Stay tuned for our upcoming events and announcements.
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl font-semibold shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 group"
-            >
-              <span>Get Notified</span>
-              <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-            </motion.button>
+            <Link href="/events">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl font-semibold shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 group"
+              >
+                <span>Get Notified</span>
+                <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
+              </motion.button>
+            </Link>
           </div>
         </motion.div>
       </div>

@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiPlus, FiMinus } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
 
 const FaqSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const router = useRouter();
 
   const faqs = [
     {
@@ -246,6 +248,7 @@ const FaqSection = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => router.push('/ContactUs')}
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold inline-flex items-center group"
           >
             <span>Contact Support</span>

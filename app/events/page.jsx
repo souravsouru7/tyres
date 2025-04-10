@@ -101,7 +101,7 @@ export default function EventsPage() {
               Want to be the first to know about our upcoming events? Visit our contact page to get in touch!
             </p>
             <Link
-              href="/contact"
+              href="/ConductUs"
               className="inline-flex items-center px-8 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               Contact Us

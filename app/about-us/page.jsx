@@ -61,6 +61,20 @@ export default function AboutUs() {
     }
   };
 
+  const scrollToStory = () => {
+    const storySection = document.getElementById('story');
+    if (storySection) {
+      const offset = 100; // Adjust for header height
+      const elementPosition = storySection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   const timelineData = [
     { year: '1974', title: 'Taleb Group Founded', description: 'The Taleb Group established with successful ventures in various industries' },
     { year: '2006', title: 'Golden Extreme Journey Begins', description: 'Specializing in high-quality tires to meet diverse customer needs' },
@@ -252,13 +266,13 @@ export default function AboutUs() {
                 transition={{ delay: 0.6, duration: 0.8 }}
                 className="mt-8 md:mt-12"
               >
-                <a 
-                  href="#about-section" 
+                <button 
+                  onClick={scrollToStory}
                   className="inline-flex items-center px-6 py-3 bg-amber-500 text-white rounded-xl font-medium shadow-lg hover:bg-amber-600 transition-all duration-300 group"
                 >
                   Discover Our Story 
                   <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </a>
+                </button>
               </motion.div>
             </motion.div>
           </div>

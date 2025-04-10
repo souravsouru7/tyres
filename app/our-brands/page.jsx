@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Layout from '../components/Layout';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence, useInView } from 'framer-motion';
 import Image from 'next/image';
@@ -21,6 +21,7 @@ export default function BrandsPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [rotationAngle, setRotationAngle] = useState(0);
   const [isWheelSpinning, setIsWheelSpinning] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -103,7 +104,7 @@ export default function BrandsPage() {
     {
       title: "The Tyre Trail: Precision and Perception",
       content: "Falcon's journey began with a singular goal: to design and manufacture tyres that could withstand the diverse terrains and climate of the region. The company ventured into crafting PCR (Passenger Car Radial), TBR (Truck and Bus Radial), and LTR (Light Truck Radial) tyres. Each variant was a masterpiece of advanced technology and understanding of the regional demands. Customers revered Falcon tyres for their durability, reliability, and exceptional performance on both sun-scorched sands and bustling city roads.",
-      image: "/new iamges/golden-1.jpg",
+      image: "/newpng/marshall.png",
       icon: <FiTrendingUp className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Tyre Types", value: "15+", icon: <FiStar /> },
@@ -114,7 +115,7 @@ export default function BrandsPage() {
     {
       title: "Wheels of Steel: A Revolution in Motion",
       content: "As roads interlinked distant lands and connected people, Falcon expanded its horizons to encompass specialized wheels, including both PCR and TBR. These wheels, crafted with the same precision and passion, became synonymous with strength and stability. Falcon wheels were not just components; they became the backbone of vehicles, offering the steadfastness needed in both urban environments and across desert voyages.",
-      image: "/new iamges/golden-2.jpg",
+      image: "/newpng/yo.png",
       icon: <FiTruck className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Wheel Types", value: "20+", icon: <FiPackage /> },
@@ -125,7 +126,7 @@ export default function BrandsPage() {
     {
       title: "Power Unleashed: The Battery Breakthrough",
       content: "Not content with conquering roads, Falcon took a groundbreaking leap into the energy sector, innovating UPS batteries and Bike Batteries. Here, Falcon's ingenuity shined yet again, offering unmatched energy solutions that powered everything from emergency backup systems in towering skyscrapers to motorbike adventures under the open sky. Every Falcon battery was a testament to safety, longevity, and consistent power supply, illuminating and energizing lives across the region.",
-      image: "/new iamges/golden-3.jpg",
+      image: "/new iamges/5Y8A1228.JPG",
       icon: <FiBattery className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Battery Types", value: "10+", icon: <FiBattery /> },
@@ -136,7 +137,7 @@ export default function BrandsPage() {
     {
       title: "Flight of the Falcon: A Unified Legacy",
       content: "From tyres to wheels, to batteries — Falcon became the embodiment of trust and innovation. Their products weren't just about meeting demands; they were about anticipating them, providing solutions that encapsulated the spirit of a region known for its rich heritage and promising future. Today, Falcon stands not just as a brand but as a legacy, embodying the United Arab Emirates' values — blending tradition with cutting-edge technology. Like the falcon that inspired its name, the brand continues to glide effortlessly across the landscape, a symbol of what's possible when vision meets expertise.",
-      image: "/new iamges/golden-4.jpg",
+      image: "/images/img1.jpg",
       icon: <FiStar className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Brand Value", value: "$500M+", icon: <FiTrendingUp /> },
@@ -167,7 +168,7 @@ export default function BrandsPage() {
     {
       title: "Commercial Wheels",
       description: "Built for heavy-duty performance",
-      image: "/new iamges/golden-5.jpg",
+      image: "/newpng/yo.png",
       icon: <FiPackage className="w-8 h-8" />,
       features: [
         "Steel Wheels",
@@ -238,15 +239,6 @@ export default function BrandsPage() {
                 transition={{ duration: 0.8 }}
                 className="text-center"
               >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-[#FF6B00]/10 to-orange-500/10 border border-[#FF6B00]/20 text-[#FF6B00] text-sm font-medium mb-8 backdrop-blur-sm"
-                >
-                  Premium Wheel Solutions
-                </motion.div>
-
                 <div className="relative">
                   <motion.h1 
                     className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-6 md:mb-8 text-[#FF6B00]"
@@ -318,14 +310,7 @@ export default function BrandsPage() {
                     Explore Our Brands
                     <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 rounded-full bg-gray-100 text-gray-700 font-medium flex items-center gap-2 hover:bg-gray-200 transition-colors duration-300"
-                  >
-                    Watch Video
-                    <FiPlay className="w-5 h-5" />
-                  </motion.button>
+                  
                 </div>
               </motion.div>
             </div>
@@ -368,16 +353,16 @@ export default function BrandsPage() {
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   className="mb-32 last:mb-0"
                 >
-                  <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                  <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 min-h-[600px]">
                     {/* Content Side */}
-                    <div className={`relative z-10 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
+                    <div className={`relative z-10 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'} flex`}>
                       <motion.div
                         initial={{ x: -50, opacity: 0 }}
                         whileInView={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 shadow-2xl"
+                        className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 lg:p-12 shadow-2xl w-full flex flex-col justify-between"
                       >
-                        <div className="flex items-center gap-4 mb-6">
+                        <div className="flex items-center gap-4 mb-10">
                           <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
                             {story.icon}
                           </div>
@@ -386,11 +371,11 @@ export default function BrandsPage() {
                           </h3>
                         </div>
                         
-                        <p className="text-gray-700 leading-relaxed mb-8">
+                        <p className="text-gray-700 leading-relaxed mb-12 text-lg">
                           {story.content}
                         </p>
 
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-3 gap-4 mt-auto">
                           {story.stats.map((stat, statIndex) => (
                             <motion.div
                               key={statIndex}
@@ -411,45 +396,40 @@ export default function BrandsPage() {
                       </motion.div>
                     </div>
 
-                    {/* Video Side */}
-                    <div className={`relative ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
+                    {/* Video/Image Side */}
+                    <div className={`relative ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'} flex h-full`}>
                       <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         whileInView={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.8 }}
-                        className="relative rounded-[2rem] overflow-hidden group"
+                        className="relative w-full h-full rounded-[2rem] overflow-hidden group"
                       >
                         {/* Decorative Elements */}
                         <div className="absolute -inset-2 bg-gradient-to-tr from-amber-500 to-orange-500 opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-300" />
-                        <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-orange-500/10 mix-blend-overlay" />
                         
-                        {/* Main Video Container */}
-                        <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
-                          <video
-                            src={story.video}
-                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                          />
+                        {/* Main Media Container */}
+                        <div className="relative w-full h-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+                          {story.video ? (
+                            <video
+                              src={story.video}
+                              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                            />
+                          ) : story.image && (
+                            <Image
+                              src={story.image}
+                              alt={story.title}
+                              fill
+                              className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+                              priority
+                            />
+                          )}
+                          {/* Overlay */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60" />
-                          
-                          {/* Play Button Overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <motion.div
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              className="w-16 h-16 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center cursor-pointer"
-                            >
-                              <FiPlay className="w-6 h-6 text-white" />
-                            </motion.div>
-                          </div>
                         </div>
-
-                        {/* Decorative Corner Elements */}
-                        <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-amber-500/50 rounded-tl-lg" />
-                        <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-orange-500/50 rounded-br-lg" />
                       </motion.div>
                     </div>
                   </div>
@@ -482,15 +462,29 @@ export default function BrandsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl group"
+                className="relative rounded-3xl overflow-hidden shadow-2xl group"
               >
                 {/* Video Background Glow */}
                 <div className="absolute -inset-2 bg-gradient-to-r from-amber-500 to-orange-500 opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-300" />
                 
                 {/* Main Video Container */}
-                <div className="relative rounded-3xl overflow-hidden border border-gray-200">
+                <div 
+                  className="relative h-[300px] w-full rounded-3xl overflow-hidden border border-gray-200"
+                  ref={useCallback(node => {
+                    if (!node) return;
+                    const observer = new IntersectionObserver(
+                      ([entry]) => {
+                        if (entry.isIntersecting) {
+                          node.querySelector('video').play();
+                        }
+                      },
+                      { threshold: 0.5 }
+                    );
+                    observer.observe(node);
+                    return () => observer.disconnect();
+                  }, [])}
+                >
                   <video
-                    ref={videoRef}
                     className="w-full h-full object-cover"
                     autoPlay
                     muted
@@ -504,40 +498,6 @@ export default function BrandsPage() {
                   
                   {/* Video Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  {/* Video Controls */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="text-white">
-                      <h3 className="text-2xl md:text-3xl font-bold mb-2">Crafting Excellence</h3>
-                      <p className="text-gray-200 text-sm md:text-base max-w-xl">
-                        Watch how we craft our premium wheels with precision and passion
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <motion.button 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={toggleVideoPlayback}
-                        className="w-12 h-12 bg-[#FF6B00] hover:bg-[#FF8533] rounded-full flex items-center justify-center text-white transition-colors duration-300 shadow-lg"
-                      >
-                        {isVideoPlaying ? 
-                          <FiPause className="w-6 h-6" /> : 
-                          <FiPlay className="w-6 h-6 ml-1" />
-                        }
-                      </motion.button>
-                      <motion.button 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={toggleVideoMute}
-                        className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-300 backdrop-blur-sm"
-                      >
-                        {isVideoMuted ? 
-                          <FiVolumeX className="w-6 h-6" /> : 
-                          <FiVolume2 className="w-6 h-6" />
-                        }
-                      </motion.button>
-                    </div>
-                  </div>
                 </div>
               </motion.div>
 

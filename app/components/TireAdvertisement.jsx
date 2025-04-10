@@ -243,109 +243,93 @@ const TireAdvertisement = () => {
           ></motion.div>
         </motion.div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[1, 2, 3, 4].map((index) => (
-              <motion.div 
-                key={index} 
-                className="animate-pulse bg-gray-100 rounded-lg h-96"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              ></motion.div>
-            ))}
-          </div>
-        ) : error ? (
-          <div className="text-center text-red-600">{error}</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {staticProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                className="relative h-96 shine-effect flare-effect overflow-hidden rounded-xl shadow-lg group bg-white"
-                onClick={() => handleProductClick(product)}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                whileHover={{ y: -8 }}
-              >
-                {/* Card Content */}
-                <div className="relative flex flex-col h-full">
-                  {/* Logo area with floating animation */}
-                  <motion.div 
-                    className="h-24 flex items-center justify-center p-4 rounded-b-xl z-10"  // Increased height from h-16 to h-24
-                    whileHover={{ y: -3 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <img 
-                      src={product.logoSrc} 
-                      alt={product.logoAlt} 
-                      className="h-20 w-auto object-contain max-w-[80%]"  // Updated height and added max-width constraint
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">Logo</text></svg>';
-                      }}
-                    />
-                  </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {staticProducts.map((product, index) => (
+            <motion.div
+              key={product.id}
+              className="relative h-96 shine-effect flare-effect overflow-hidden rounded-xl shadow-lg group bg-white"
+              onClick={() => handleProductClick(product)}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -8 }}
+            >
+              {/* Card Content */}
+              <div className="relative flex flex-col h-full">
+                {/* Logo area with floating animation */}
+                <motion.div 
+                  className="h-24 flex items-center justify-center p-4 rounded-b-xl z-10"
+                  whileHover={{ y: -3 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <img 
+                    src={product.logoSrc} 
+                    alt={product.logoAlt} 
+                    className="h-20 w-auto object-contain max-w-[80%]"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">Logo</text></svg>';
+                    }}
+                  />
+                </motion.div>
 
-                  {/* Tire image with 3D hover effect */}
-                  <motion.div 
-                    className="h-48 flex items-center justify-center p-4 mt-2 overflow-hidden"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <motion.img 
-                      src={product.imageSrc} 
-                      alt={product.imageAlt} 
-                      className="h-full object-contain drop-shadow-xl tire-spin"
-                      initial={{ rotateY: 0 }}
-                      whileHover={{ rotateY: 360 }}
-                      transition={{ duration: 1.5 }}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">No Image</text></svg>';
-                      }}
-                    />
-                  </motion.div>
+                {/* Tire image with 3D hover effect */}
+                <motion.div 
+                  className="h-48 flex items-center justify-center p-4 mt-2 overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  <motion.img 
+                    src={product.imageSrc} 
+                    alt={product.imageAlt} 
+                    className="h-full object-contain drop-shadow-xl tire-spin"
+                    initial={{ rotateY: 0 }}
+                    whileHover={{ rotateY: 360 }}
+                    transition={{ duration: 1.5 }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">No Image</text></svg>';
+                    }}
+                  />
+                </motion.div>
 
-                  {/* Description area with floating animation */}
-                  <motion.div 
-                    className="p-4 flex-1 flex flex-col items-center mt-auto rounded-t-xl"
-                    initial={{ y: 20 }}
-                    whileHover={{ y: 0 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                {/* Description area with floating animation */}
+                <motion.div 
+                  className="p-4 flex-1 flex flex-col items-center mt-auto rounded-t-xl"
+                  initial={{ y: 20 }}
+                  whileHover={{ y: 0 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <motion.p 
+                    className="text-center text-gray-800 font-medium text-lg mb-3"
+                    whileHover={{ scale: 1.03 }}
                   >
-                    <motion.p 
-                      className="text-center text-gray-800 font-medium text-lg mb-3"
-                      whileHover={{ scale: 1.03 }}
+                    {product.description}
+                  </motion.p>
+                  
+                  {/* Buttons with hover effects */}
+                  <div className="mt-auto flex justify-center space-x-3">
+                    <motion.span 
+                      className="px-3 py-1 border border-amber-200 text-amber-800 rounded-full text-xs font-medium badge-pop"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      {product.description}
-                    </motion.p>
-                    
-                    {/* Buttons with hover effects */}
-                    <div className="mt-auto flex justify-center space-x-3">
-                      <motion.span 
-                        className="px-3 py-1 border border-amber-200 text-amber-800 rounded-full text-xs font-medium badge-pop"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {product.subcategory}
-                      </motion.span>
-                      <motion.button
-                        onClick={(e) => handleEnquire(e, product)}
-                        className="px-4 py-1 border border-amber-500 text-amber-600 hover:bg-amber-50 rounded-full text-xs font-medium"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Enquire
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
+                      {product.subcategory}
+                    </motion.span>
+                    <motion.button
+                      onClick={(e) => handleEnquire(e, product)}
+                      className="px-4 py-1 border border-amber-500 text-amber-600 hover:bg-amber-50 rounded-full text-xs font-medium"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Enquire
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Product Modal */}
