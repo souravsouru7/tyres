@@ -68,7 +68,7 @@ export default function BatteriesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">
                   Premium Batteries
                 </span>
               </motion.h1>
@@ -107,7 +107,7 @@ export default function BatteriesPage() {
               </div>
               <button 
                 onClick={() => window.location.reload()} 
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors"
+                className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg transition-colors"
               >
                 Try Again
               </button>
@@ -118,7 +118,7 @@ export default function BatteriesPage() {
               <p className="text-gray-600 mb-8">We couldn't find any battery products at the moment.</p>
               <Link 
                 href="/products" 
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors"
+                className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg transition-colors"
               >
                 Browse All Products
               </Link>
@@ -147,7 +147,7 @@ export default function BatteriesPage() {
                         
                         {product.subcategory && (
                           <div className="absolute top-4 left-4">
-                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full">
+                            <span className="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-1 rounded-full">
                               {product.subcategory}
                             </span>
                           </div>
@@ -159,7 +159,7 @@ export default function BatteriesPage() {
                         <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
                         
                         <div className="flex justify-center">
-                          <div className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium inline-flex items-center">
+                          <div className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium inline-flex items-center">
                             View Details
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

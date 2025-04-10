@@ -18,8 +18,53 @@ export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState(categoryParam);
   const [searchQuery, setSearchQuery] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [expandedCard, setExpandedCard] = useState(null);
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
+
+  const tier1Content = {
+    description: "By partnering with these industry giants, Golden Extreme guarantees a superior selection, delivering unmatched quality and trust with every purchase.",
+    partners: [
+      { name: "Michelin", desc: "Renowned for their innovation and premium tyre solutions." },
+      { name: "Bridgestone", desc: "Leaders in advanced tyre technology and sustainability." },
+      { name: "Goodyear", desc: "Known for their extensive range and cutting-edge designs." },
+      { name: "Pirelli", desc: "Famous for their high-performance and luxury vehicle tyres." },
+      { name: "Continental", desc: "Experts in safety-focused and durable tyre production." },
+      { name: "Sailun Group", desc: "Recognized for producing cost-efficient tires using advanced technology, aiming to balance affordability with performance across global markets." },
+      { name: "Double Coin Holdings", desc: "Known for manufacturing reliable and durable commercial truck and bus tires, often preferred for their value and longevity." },
+      { name: "Zc Rubber", desc: "One of China's largest tire manufacturers, emphasizing environmental sustainability and advanced engineering in producing a wide range of tire products." }
+    ]
+  };
+
+  const tier2Content = {
+    description: "This partnership allows us to provide quality and variety, ensuring customers find the perfect fit for their needs.",
+    partners: [
+      { name: "Yokohama Rubber Company", desc: "Offers technologically advanced tyres designed for performance and comfort, with a focus on environmental sustainability." },
+      { name: "Kumho Tire", desc: "Offers a wide range of tyres with a focus on safety, performance, and value, suitable for a variety of vehicles including cars and light trucks." },
+      { name: "Hankook Tire", desc: "Provides high-quality tyres known for their durability and advanced technology, catering to both commercial and passenger vehicles." },
+      { name: "Nexen Tire", desc: "Known for its innovative designs and technology, Nexen provides reliable and high-performance tyres for passenger vehicles, trucks, and SUVs." },
+      { name: "Falken Tire", desc: "Specializes in ultra-high-performance tyres, they are popular in motorsports and among enthusiasts looking for superior grip and handling." },
+      { name: "Toyo Tire", desc: "Produces durable tyres known for their quiet ride and longevity, suitable for both everyday driving and challenging conditions." },
+      { name: "Linglong tire", desc: "A prominent Tier 2 manufacturer known for its affordable and increasingly quality-driven tire options, with expanding research and development efforts." },
+      { name: "Aeolus Tyres", desc: "Specializes in producing economical and durable tires for commercial vehicles, focused on offering good performance across diverse driving conditions." },
+      { name: "Traingle Tyres", desc: "A versatile Tier 2 manufacturer producing a wide variety of tires, highly regarded for its affordability and commitment to innovation." },
+      { name: "Goodride Tires", desc: "Offers a broad range of value-focused tires, recognized for their reliability and balance of performance at competitive prices." },
+      { name: "Westltake Tires", desc: "Produced by ZC Rubber, known for delivering budget-friendly, dependable tires with a growing emphasis on technology and global market reach." }
+    ]
+  };
+
+  const tier3Content = {
+    description: "To provide an array of options to suit your driving needs. Whether for everyday use or specific requirements, our tires deliver performance and value you can trust.",
+    partners: [
+      { name: "Apollo Tyres", desc: "Offers reliable and economical tire solutions, expanding its global footprint with a focus on innovation and sustainability." },
+      { name: "Ceat Tyres", desc: "Known for producing cost-effective and durable tires, particularly in the truck and bus segments, emphasizing customer satisfaction." },
+      { name: "Tationg Tires", desc: "Provides budget-friendly tire options, focusing on meeting essential performance needs for everyday vehicles." },
+      { name: "Doublestar Tyres", desc: "Specializes in affordable tire offerings with increasing investments in intelligent manufacturing and environmentally friendly technology." },
+      { name: "Maxxis Tyre", desc: "Delivers trusted, value-oriented tires known for respectable performance and unique design features across various vehicle categories." },
+      { name: "Roadone Tyres", desc: "Offers competitively priced tires, focusing on delivering dependable performance and safety for a wide range of vehicle." },
+      { name: "Jinjyu Tire", desc: "Recognized for producing economically priced tires with adequate performance, targeting the budget segment of the global tire market." }
+    ]
+  };
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -128,12 +173,12 @@ export default function ProductsPage() {
           transition={{ duration: 0.8 }}
         >
           <div className="w-full relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 mix-blend-multiply z-10 rounded-3xl mx-auto max-w-7xl" />
+            <div className="absolute inset-0 bg-black/20 mix-blend-multiply z-10 rounded-3xl mx-auto max-w-7xl" />
             <img 
-              src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-              alt="Tire workshop" 
-              className="w-full h-[600px] object-cover rounded-3xl mx-auto max-w-7xl shadow-2xl brightness-[0.85]"
-              style={{ objectPosition: '50% 30%' }}
+              src="/new/ADM_4502.JPG" 
+              alt="Premium Automotive Collection" 
+              className="w-full h-[600px] object-cover rounded-3xl mx-auto max-w-7xl shadow-2xl"
+              style={{ objectPosition: 'center center' }}
             />
             
             <motion.div 
@@ -142,11 +187,14 @@ export default function ProductsPage() {
               animate={{ opacity: 1, y: 0, rotate: 0 }}
               transition={{ duration: 1, delay: 0.5, type: "spring" }}
             >
-              <img 
-                src="https://pngimg.com/d/car_wheel_PNG23304.png" 
-                alt="3D Tire" 
-                className="h-[300px] w-auto drop-shadow-2xl"
-              />
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[300px] w-[400px]">
+                <img 
+                  src="/new/ADM_4616.JPG" 
+                  alt="Featured Product" 
+                  className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
             </motion.div>
           </div>
           
@@ -157,55 +205,47 @@ export default function ProductsPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="max-w-xl w-full"
             >
-              <div className="bg-black/30 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-3xl border border-white/10">
+              <div className="bg-black/40 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl border border-white/20 shadow-xl">
                 <motion.h1 
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-white"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400">
-                    Golden Extreme
-                  </span>
+                  Premium Collection
                 </motion.h1>
                 <motion.p 
-                  className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-white/90"
+                  className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-white/90 font-medium"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  Premium Automotive Solutions for the Ultimate Performance
+                  Discover Our Range of High-Quality Automotive Products
                 </motion.p>
                 
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="mt-8"
+                  className="mt-8 flex flex-wrap gap-4"
                 >
-                  <Link href="#products" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group">
-                    Explore Products
+                  <Link 
+                    href="#products" 
+                    className="bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg inline-flex items-center group"
+                  >
+                    View Products
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </Link>
+                  <Link 
+                    href="/contact" 
+                    className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 shadow-lg"
+                  >
+                    Contact Us
+                  </Link>
                 </motion.div>
               </div>
-            </motion.div>
-            
-            <motion.div
-              className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-              style={{ opacity }}
-              animate={{
-                y: [0, 10, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            >
-              <FiArrowDown className="w-8 h-8 text-white drop-shadow-lg" />
             </motion.div>
           </div>
         </motion.div>
@@ -218,6 +258,20 @@ export default function ProductsPage() {
           viewport={{ once: true }}
         >
           <div className="bg-white/80 backdrop-blur-lg rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-100/50 overflow-x-auto">
+            <div className="flex flex-col items-center mb-6">
+              <div className="relative w-32 h-32 mb-3">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-full blur-xl"></div>
+                <img 
+                  src="/logo.png" 
+                  alt="Golden Extreme Logo" 
+                  className="w-full h-full object-contain relative z-10"
+                />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 mb-2">
+                Golden Extreme
+              </h3>
+              <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+            </div>
             <div className="flex flex-wrap sm:flex-nowrap justify-center items-center gap-4 sm:gap-6 md:gap-12">
               {['TYRES', 'WHEELS', 'BATTERIES'].map((category) => (
                 <motion.div
@@ -368,13 +422,25 @@ export default function ProductsPage() {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <div className="relative h-full flex items-center justify-center">
+            <div className="relative h-full flex items-center justify-center group">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent blur-3xl"></div>
-              <img 
-                src="https://images.pexels.com/photos/5214413/pexels-photo-5214413.jpeg" 
-                alt="Premium Wheel" 
-                className="w-full h-full object-cover rounded-l-3xl"
-              />
+              <div className="relative w-full h-full overflow-hidden rounded-l-3xl shadow-2xl transform transition-transform duration-300 group-hover:scale-105">
+                <video 
+                  src="/cutvideo.mp4"
+                  alt="Premium Wheel" 
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <h3 className="text-xl font-bold mb-2">Premium Wheels Collection</h3>
+                  <p className="text-sm">Experience the excellence of our premium wheel designs</p>
+                </div>
+              </div>
             </div>
           </motion.div>
           
@@ -481,7 +547,7 @@ export default function ProductsPage() {
               >
                 <div className="h-56 overflow-hidden">
                   <img 
-                    src="https://images.pexels.com/photos/2920064/pexels-photo-2920064.jpeg" 
+                    src="/allowwheel.jpg" 
                     alt="Luxury Wheel" 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -498,7 +564,7 @@ export default function ProductsPage() {
               >
                 <div className="h-56 overflow-hidden">
                   <img 
-                    src="https://images.pexels.com/photos/9349220/pexels-photo-9349220.jpeg" 
+                    src="/sportswheel.webp" 
                     alt="Performance Wheel" 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -540,7 +606,7 @@ export default function ProductsPage() {
           
           <div className="container mx-auto relative z-10">
             <motion.h2 
-              className="text-5xl md:text-6xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold mb-8 sm:mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 px-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -550,114 +616,252 @@ export default function ProductsPage() {
             </motion.h2>
             
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+              className="grid grid-cols-1 gap-6 sm:gap-8 mb-8 sm:mb-16 px-4 sm:px-6 md:px-8"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, staggerChildren: 0.1 }}
               viewport={{ once: true }}
             >
               <motion.div 
-                className="bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden shadow-xl border border-gray-800 h-full"
-                whileHover={{ translateY: -8, transition: { duration: 0.3 } }}
+                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier1' ? 'col-span-full' : ''}`}
+                whileHover={{ 
+                  scale: expandedCard === 'tier1' ? 1 : 1.02,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="h-16 bg-gradient-to-r from-amber-500 to-orange-500"></div>
-                <div className="p-8">
-                  <h3 className="text-3xl font-bold mb-4 text-white">TIER 1</h3>
-                  <p className="text-gray-300 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                <div className="h-3 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+                <div className="relative p-6 sm:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">TIER 1</h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="inline-block w-2 h-2 rounded-full bg-amber-500"></span>
+                      <span className="inline-block w-2 h-2 rounded-full bg-orange-500"></span>
+                    </div>
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-600 mb-6">
                     We partner with industry leaders known for their superior quality and innovation in the automotive world.
                   </p>
-                  <ul className="space-y-3 text-gray-300">
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-400">Michelin</span>
-                      <span className="mx-2">·</span>
-                      <span>Premium innovation</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-400">Bridgestone</span>
-                      <span className="mx-2">·</span>
-                      <span>Advanced technology</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-400">Continental</span>
-                      <span className="mx-2">·</span>
-                      <span>Safety excellence</span>
-                    </li>
-                  </ul>
+                  {expandedCard === 'tier1' ? (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-6"
+                    >
+                      <p className="text-base text-gray-600 italic border-l-4 border-amber-500 pl-4">{tier1Content.description}</p>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {tier1Content.partners.map((partner, index) => (
+                          <motion.div 
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          >
+                            <h4 className="font-bold text-amber-600 mb-2 flex items-center">
+                              <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                              {partner.name}
+                            </h4>
+                            <p className="text-gray-600 text-sm">{partner.desc}</p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <ul className="space-y-4">
+                      {tier1Content.partners.slice(0, 3).map((partner, index) => (
+                        <li key={index} className="flex items-center space-x-3 group/item hover:bg-amber-50 p-2 rounded-lg transition-all duration-300">
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 group-hover/item:scale-150 transition-transform duration-300"></div>
+                          <span className="font-semibold text-amber-600">{partner.name}</span>
+                          <span className="text-gray-400">·</span>
+                          <span className="text-gray-600 line-clamp-1 group-hover/item:line-clamp-none transition-all duration-300">{partner.desc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <button
+                    onClick={() => setExpandedCard(expandedCard === 'tier1' ? null : 'tier1')}
+                    className="mt-6 group/btn relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white w-full sm:w-auto"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 transition-transform duration-300 group-hover/btn:scale-105"></span>
+                    <span className="relative flex items-center justify-center gap-2">
+                      {expandedCard === 'tier1' ? 'Show Less' : 'Read More'}
+                      <svg
+                        className={`w-4 h-4 transform transition-transform duration-300 ${expandedCard === 'tier1' ? 'rotate-180' : ''} group-hover/btn:translate-x-1`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </button>
                 </div>
               </motion.div>
               
               <motion.div 
-                className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl overflow-hidden shadow-xl border border-gray-200 h-full"
-                whileHover={{ translateY: -8, transition: { duration: 0.3 } }}
+                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier2' ? 'col-span-full' : ''}`}
+                whileHover={{ 
+                  scale: expandedCard === 'tier2' ? 1 : 1.02,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="h-16 bg-gradient-to-r from-amber-400 to-yellow-500"></div>
-                <div className="p-8">
-                  <h3 className="text-3xl font-bold mb-4 text-gray-800">TIER 2</h3>
-                  <p className="text-gray-600 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                <div className="h-3 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+                <div className="relative p-6 sm:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">TIER 2</h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="inline-block w-2 h-2 rounded-full bg-amber-500"></span>
+                      <span className="inline-block w-2 h-2 rounded-full bg-orange-500"></span>
+                    </div>
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-600 mb-6">
                     Quality-focused manufacturers that balance performance and value for diverse driving needs.
                   </p>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-600">Yokohama</span>
-                      <span className="mx-2">·</span>
-                      <span>Performance comfort</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-600">Hankook</span>
-                      <span className="mx-2">·</span>
-                      <span>Advanced durability</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-600">Falken</span>
-                      <span className="mx-2">·</span>
-                      <span>Performance grip</span>
-                    </li>
-                  </ul>
+                  {expandedCard === 'tier2' ? (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-6"
+                    >
+                      <p className="text-base text-gray-600 italic border-l-4 border-amber-500 pl-4">{tier2Content.description}</p>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {tier2Content.partners.map((partner, index) => (
+                          <motion.div 
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          >
+                            <h4 className="font-bold text-amber-600 mb-2 flex items-center">
+                              <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                              {partner.name}
+                            </h4>
+                            <p className="text-gray-600 text-sm">{partner.desc}</p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <ul className="space-y-4">
+                      {tier2Content.partners.slice(0, 3).map((partner, index) => (
+                        <li key={index} className="flex items-center space-x-3 group/item hover:bg-amber-50 p-2 rounded-lg transition-all duration-300">
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 group-hover/item:scale-150 transition-transform duration-300"></div>
+                          <span className="font-semibold text-amber-600">{partner.name}</span>
+                          <span className="text-gray-400">·</span>
+                          <span className="text-gray-600 line-clamp-1 group-hover/item:line-clamp-none transition-all duration-300">{partner.desc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <button
+                    onClick={() => setExpandedCard(expandedCard === 'tier2' ? null : 'tier2')}
+                    className="mt-6 group/btn relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white w-full sm:w-auto"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 transition-transform duration-300 group-hover/btn:scale-105"></span>
+                    <span className="relative flex items-center justify-center gap-2">
+                      {expandedCard === 'tier2' ? 'Show Less' : 'Read More'}
+                      <svg
+                        className={`w-4 h-4 transform transition-transform duration-300 ${expandedCard === 'tier2' ? 'rotate-180' : ''} group-hover/btn:translate-x-1`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </button>
                 </div>
               </motion.div>
               
               <motion.div 
-                className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-3xl overflow-hidden shadow-xl border border-amber-200 h-full"
-                whileHover={{ translateY: -8, transition: { duration: 0.3 } }}
+                className={`group relative bg-gradient-to-br from-white to-amber-50/50 rounded-3xl overflow-hidden shadow-xl border border-amber-100/50 backdrop-blur-sm ${expandedCard === 'tier3' ? 'col-span-full' : ''}`}
+                whileHover={{ 
+                  scale: expandedCard === 'tier3' ? 1 : 1.02,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="h-16 bg-gradient-to-r from-yellow-400 to-amber-300"></div>
-                <div className="p-8">
-                  <h3 className="text-3xl font-bold mb-4 text-gray-800">TIER 3</h3>
-                  <p className="text-gray-600 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                <div className="h-3 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+                <div className="relative p-6 sm:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">TIER 3</h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="inline-block w-2 h-2 rounded-full bg-amber-500"></span>
+                      <span className="inline-block w-2 h-2 rounded-full bg-orange-500"></span>
+                    </div>
+                  </div>
+                  <p className="text-sm sm:text-base text-gray-600 mb-6">
                     Reliable manufacturers offering quality products at accessible price points.
                   </p>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-600">Apollo</span>
-                      <span className="mx-2">·</span>
-                      <span>Reliable economy</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-600">Doublestar</span>
-                      <span className="mx-2">·</span>
-                      <span>Sustainable innovation</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
-                      <span className="font-semibold text-amber-600">Roadlone</span>
-                      <span className="mx-2">·</span>
-                      <span>Dependable performance</span>
-                    </li>
-                  </ul>
+                  {expandedCard === 'tier3' ? (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      transition={{ duration: 0.5 }}
+                      className="space-y-6"
+                    >
+                      <p className="text-base text-gray-600 italic border-l-4 border-amber-500 pl-4">{tier3Content.description}</p>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {tier3Content.partners.map((partner, index) => (
+                          <motion.div 
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-white rounded-xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          >
+                            <h4 className="font-bold text-amber-600 mb-2 flex items-center">
+                              <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                              {partner.name}
+                            </h4>
+                            <p className="text-gray-600 text-sm">{partner.desc}</p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <ul className="space-y-4">
+                      {tier3Content.partners.slice(0, 3).map((partner, index) => (
+                        <li key={index} className="flex items-center space-x-3 group/item hover:bg-amber-50 p-2 rounded-lg transition-all duration-300">
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 group-hover/item:scale-150 transition-transform duration-300"></div>
+                          <span className="font-semibold text-amber-600">{partner.name}</span>
+                          <span className="text-gray-400">·</span>
+                          <span className="text-gray-600 line-clamp-1 group-hover/item:line-clamp-none transition-all duration-300">{partner.desc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <button
+                    onClick={() => setExpandedCard(expandedCard === 'tier3' ? null : 'tier3')}
+                    className="mt-6 group/btn relative overflow-hidden px-6 py-3 rounded-xl font-semibold text-white w-full sm:w-auto"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 transition-transform duration-300 group-hover/btn:scale-105"></span>
+                    <span className="relative flex items-center justify-center gap-2">
+                      {expandedCard === 'tier3' ? 'Show Less' : 'Read More'}
+                      <svg
+                        className={`w-4 h-4 transform transition-transform duration-300 ${expandedCard === 'tier3' ? 'rotate-180' : ''} group-hover/btn:translate-x-1`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </button>
                 </div>
               </motion.div>
             </motion.div>
             
             <motion.div
-              className="text-center"
+              className="text-center px-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -665,10 +869,10 @@ export default function ProductsPage() {
             >
               <Link 
                 href="/our-brands"
-                className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group"
               >
                 Explore All Brand Partnerships
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </Link>
@@ -686,7 +890,7 @@ export default function ProductsPage() {
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-black/60 z-10"></div>
             <img 
-              src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80" 
+              src="/sports12.webp" 
               alt="Performance Tyres" 
               className="w-full h-full object-cover"
             />
@@ -753,23 +957,46 @@ export default function ProductsPage() {
                 className="mb-16 sm:mb-32"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
-                  <div className="relative">
+                  <div className="relative group">
                     <motion.div
                       initial={{ scale: 0.8, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.8 }}
-                      className="relative rounded-3xl overflow-hidden shadow-2xl"
+                      className="relative rounded-[2rem] overflow-hidden shadow-2xl transform-gpu transition-all duration-500 group-hover:scale-[1.02]"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600/20 to-orange-600/20 mix-blend-overlay group-hover:opacity-75 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-amber-600/30 to-orange-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm"></div>
                       <img
-                        src="/new iamges/DSC00941.JPG"
+                        src="/whiteallow.jpg"
                         alt="Premium Wheels"
-                        className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
+                        className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover transform transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
-                        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">Premium Wheels</h3>
-                        <p className="text-sm sm:text-base text-gray-200">Engineered for excellence, designed for performance</p>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 transform transition-transform duration-500 group-hover:translate-y-0"
+                        initial={{ y: 20 }}
+                        whileInView={{ y: 0 }}
+                      >
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-3xl sm:text-4xl font-bold text-white">Premium Alloyee</h3>
+                        </div>
+                        <p className="text-base sm:text-lg text-gray-200 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                          Experience the perfect blend of style and performance
+                        </p>
+                        <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 text-sm">
+                            High Performance
+                          </span>
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-orange-500/20 text-orange-300 text-sm">
+                            Premium Quality
+                          </span>
+                        </div>
+                      </motion.div>
                     </motion.div>
                   </div>
                   <div>
@@ -777,26 +1004,75 @@ export default function ProductsPage() {
                       initial={{ opacity: 0, x: 50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8 }}
-                      className="p-4 sm:p-0"
+                      className="p-8 bg-gradient-to-br from-white to-amber-50 rounded-[2rem] shadow-xl border border-amber-100/50"
                     >
-                      <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-[#FF6B00]">Premium Wheels for Superior Performance</h2>
-                      <div className="w-20 h-1 bg-[#FF6B00] mb-6 sm:mb-8" />
-                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-6 sm:mb-8">
-                        At Golden Extreme Trading, we offer a wide selection of high-performance wheels designed to enhance the safety, durability, and style of your vehicle.
+                      <div className="relative mb-8">
+                        <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">
+                          Premium Wheels
+                        </h2>
+                        <span className="absolute -top-6 left-0 text-8xl font-bold text-amber-100/50 -z-10">
+                          WHEELS
+                        </span>
+                        <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mt-4" />
+                      </div>
+                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-8">
+                        At Golden Extreme Trading, we offer a curated selection of premium wheels that combine cutting-edge technology with stunning aesthetics. Each wheel is engineered to deliver exceptional performance and elevate your vehicle's appearance.
                       </p>
-                      <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8">
+                      <div className="grid grid-cols-2 gap-6 mb-8">
                         {[
-                          "Premium Materials",
-                          "Enhanced Safety",
-                          "Superior Durability",
-                          "Optimal Performance"
+                          {
+                            title: "Premium Materials",
+                            desc: "Aerospace-grade alloys",
+                            icon: "🛡️"
+                          },
+                          {
+                            title: "Enhanced Safety",
+                            desc: "Rigorous testing standards",
+                            icon: "⚡"
+                          },
+                          {
+                            title: "Superior Durability",
+                            desc: "Built to last longer",
+                            icon: "💪"
+                          },
+                          {
+                            title: "Optimal Performance",
+                            desc: "Maximum efficiency",
+                            icon: "🎯"
+                          }
                         ].map((feature, index) => (
-                          <div key={index} className="flex items-center gap-2 sm:gap-3">
-                            <div className="w-2 h-2 rounded-full bg-[#FF6B00]" />
-                            <span className="text-sm sm:text-base text-gray-700">{feature}</span>
-                          </div>
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="group bg-white p-4 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          >
+                            <div className="flex items-start gap-3">
+                              <span className="text-2xl group-hover:scale-125 transition-transform duration-300">
+                                {feature.icon}
+                              </span>
+                              <div>
+                                <h3 className="font-semibold text-gray-800 mb-1">
+                                  {feature.title}
+                                </h3>
+                                <p className="text-sm text-gray-600">
+                                  {feature.desc}
+                                </p>
+                              </div>
+                            </div>
+                          </motion.div>
                         ))}
                       </div>
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                      >
+                        Explore Collection
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </motion.div>
                     </motion.div>
                   </div>
                 </div>
@@ -815,45 +1091,132 @@ export default function ProductsPage() {
                       initial={{ opacity: 0, x: -50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8 }}
+                      className="p-8 bg-gradient-to-br from-white to-amber-50 rounded-[2rem] shadow-xl border border-amber-100/50"
                     >
-                      <h2 className="text-4xl font-bold mb-6 text-[#FF6B00]">FALCON WHEELS</h2>
-                      <div className="w-20 h-1 bg-[#FF6B00] mb-8" />
-                      <p className="text-gray-600 mb-8 text-lg leading-relaxed">
+                      <div className="relative mb-8">
+                        <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">
+                          FALCON WHEELS
+                        </h2>
+                        <span className="absolute -top-6 left-0 text-8xl font-bold text-amber-100/50 -z-10">
+                          FALCON
+                        </span>
+                        <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mt-4" />
+                      </div>
+                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-8">
                         Golden Extreme Trading proudly offers Falcon Wheels, renowned for their exceptional quality and performance in both Passenger Car Radial (PCR) and Truck and Bus Radial (TBR) categories.
                       </p>
-                      <div className="grid grid-cols-1 gap-6 mb-8">
-                        <div className="bg-white rounded-xl p-6 shadow-lg">
-                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">PCR Wheels</h3>
-                          <p className="text-gray-600">
-                            Deliver a smooth, fuel-efficient, and reliable driving experience for everyday vehicles
-                          </p>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 shadow-lg">
-                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">TBR Wheels</h3>
-                          <p className="text-gray-600">
-                            Built for heavy-duty trucks and buses, offering maximum strength, durability, and load-bearing capacity
-                          </p>
-                        </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                        <motion.div 
+                          className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 mb-2">PCR Wheels</h3>
+                              <p className="text-gray-600">
+                                Deliver a smooth, fuel-efficient, and reliable driving experience for everyday vehicles
+                              </p>
+                              <ul className="mt-4 space-y-2">
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                                  Enhanced Grip Performance
+                                </li>
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                                  Fuel Efficiency Design
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        <motion.div 
+                          className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                              </svg>
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 mb-2">TBR Wheels</h3>
+                              <p className="text-gray-600">
+                                Built for heavy-duty trucks and buses, offering maximum strength, durability, and load-bearing capacity
+                              </p>
+                              <ul className="mt-4 space-y-2">
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                                  Maximum Load Capacity
+                                </li>
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                                  Extended Durability
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </motion.div>
                       </div>
+
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                      >
+                        Explore Falcon Collection
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </motion.div>
                     </motion.div>
                   </div>
+
                   <div className="order-1 lg:order-2">
                     <motion.div
                       initial={{ scale: 0.8, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.8 }}
-                      className="relative rounded-3xl overflow-hidden shadow-2xl"
+                      className="relative group rounded-[2rem] overflow-hidden shadow-2xl transform-gpu transition-all duration-500 group-hover:scale-[1.02]"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600/20 to-orange-600/20 mix-blend-overlay group-hover:opacity-75 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-amber-600/30 to-orange-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm"></div>
                       <img
                         src="/new iamges/golden-3.jpg"
                         alt="Falcon Wheels"
-                        className="w-full h-[500px] object-cover"
+                        className="w-full h-[500px] object-cover transform transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-8">
-                        <h3 className="text-3xl font-bold text-white mb-2">Falcon Wheels</h3>
-                        <p className="text-gray-200">High-Performance PCR and TBR Solutions</p>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 transform transition-transform duration-500"
+                        initial={{ y: 20 }}
+                        whileInView={{ y: 0 }}
+                      >
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-3xl sm:text-4xl font-bold text-white">Falcon Wheels</h3>
+                        </div>
+                        <p className="text-base sm:text-lg text-gray-200 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                          High-Performance PCR and TBR Solutions
+                        </p>
+                        <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 text-sm">
+                            Premium Quality
+                          </span>
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-orange-500/20 text-orange-300 text-sm">
+                            Superior Performance
+                          </span>
+                        </div>
+                      </motion.div>
                     </motion.div>
                   </div>
                 </div>
@@ -867,23 +1230,46 @@ export default function ProductsPage() {
                 className="mb-32"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                  <div className="relative">
+                  <div className="relative group">
                     <motion.div
                       initial={{ scale: 0.8, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.8 }}
-                      className="relative rounded-3xl overflow-hidden shadow-2xl"
+                      className="relative rounded-[2rem] overflow-hidden shadow-2xl transform-gpu transition-all duration-500 group-hover:scale-[1.02]"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600/20 to-orange-600/20 mix-blend-overlay group-hover:opacity-75 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-amber-600/30 to-orange-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm"></div>
                       <img
                         src="/new/DSC00923.jpg"
                         alt="Falcon Batteries"
-                        className="w-full h-[500px] object-cover"
+                        className="w-full h-[500px] object-cover transform transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-8">
-                        <h3 className="text-3xl font-bold text-white mb-2">Falcon Batteries</h3>
-                        <p className="text-gray-200">Reliable Power Solutions</p>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 transform transition-transform duration-500"
+                        initial={{ y: 20 }}
+                        whileInView={{ y: 0 }}
+                      >
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-3xl sm:text-4xl font-bold text-white">Falcon Batteries</h3>
+                        </div>
+                        <p className="text-base sm:text-lg text-gray-200 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                          Powering Your Journey with Reliable Energy Solutions
+                        </p>
+                        <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 text-sm">
+                            Superior Performance
+                          </span>
+                          <span className="inline-flex items-center px-4 py-2 rounded-full bg-orange-500/20 text-orange-300 text-sm">
+                            Long-lasting Power
+                          </span>
+                        </div>
+                      </motion.div>
                     </motion.div>
                   </div>
                   <div>
@@ -891,26 +1277,89 @@ export default function ProductsPage() {
                       initial={{ opacity: 0, x: 50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8 }}
+                      className="p-8 bg-gradient-to-br from-white to-amber-50 rounded-[2rem] shadow-xl border border-amber-100/50"
                     >
-                      <h2 className="text-4xl font-bold mb-6 text-[#FF6B00]">FALCON BATTERIES</h2>
-                      <div className="w-20 h-1 bg-[#FF6B00] mb-8" />
-                      <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-                        Falcon Batteries are known for their superior performance and reliability. Our range includes high-quality bike batteries and UPS batteries designed to meet your power needs with durability and efficiency.
-                      </p>
-                      <div className="grid grid-cols-1 gap-6 mb-8">
-                        <div className="bg-white rounded-xl p-6 shadow-lg">
-                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">Bike Batteries</h3>
-                          <p className="text-gray-600">
-                            Deliver consistent starting power and long-lasting performance, ensuring a smooth ride in all conditions
-                          </p>
-                        </div>
-                        <div className="bg-white rounded-xl p-6 shadow-lg">
-                          <h3 className="text-xl font-bold text-[#FF6B00] mb-4">UPS Batteries</h3>
-                          <p className="text-gray-600">
-                            Designed to offer uninterrupted power supply for critical systems, providing dependable backup during outages
-                          </p>
-                        </div>
+                      <div className="relative mb-8">
+                        <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">
+                          FALCON BATTERIES
+                        </h2>
+                        <span className="absolute -top-6 left-0 text-8xl font-bold text-amber-100/50 -z-10">
+                          POWER
+                        </span>
+                        <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mt-4" />
                       </div>
+                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-8">
+                        Falcon Batteries are engineered for excellence, delivering superior performance and unwavering reliability. Our comprehensive range includes specialized solutions for both automotive and backup power needs.
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                        <motion.div 
+                          className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 mb-2">Bike Batteries</h3>
+                              <p className="text-gray-600">
+                                Consistent starting power and long-lasting performance for a smooth ride in all conditions
+                              </p>
+                              <ul className="mt-4 space-y-2">
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                                  Quick Start Technology
+                                </li>
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                                  Weather Resistant
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </motion.div>
+
+                        <motion.div 
+                          className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 mb-2">UPS Batteries</h3>
+                              <p className="text-gray-600">
+                                Reliable backup power solutions ensuring uninterrupted operation of critical systems
+                              </p>
+                              <ul className="mt-4 space-y-2">
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                                  Extended Backup Time
+                                </li>
+                                <li className="flex items-center text-sm text-gray-600">
+                                  <span className="w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                                  Low Maintenance
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </div>
+
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                      >
+                        Explore Battery Collection
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </motion.div>
                     </motion.div>
                   </div>
                 </div>

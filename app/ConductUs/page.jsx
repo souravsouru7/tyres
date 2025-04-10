@@ -4,20 +4,84 @@ import Image from 'next/image';
 import Layout from '../components/Layout';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaArrowRight } from 'react-icons/fa';
+import { submitContactForm } from '../../src/utils/api';
 
 const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobileNumber: '',
+    message: ''
+  });
   const [formStatus, setFormStatus] = useState('');
+  const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setFormStatus('Thank you for your message! We will get back to you soon.');
-    setIsSubmitting(false);
+    setFormError('');
+    setFormStatus('');
+
+    // Frontend validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.mobileNumber || !formData.message) {
+      setFormError('All fields are required');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormError('Please enter a valid email address');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Mobile number validation
+    const mobileNumberRegex = /^[+]?[\d]{10,14}$/;
+    if (!mobileNumberRegex.test(formData.mobileNumber)) {
+      setFormError('Please enter a valid mobile number');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Message length validation
+    if (formData.message.length < 10) {
+      setFormError('Message must be at least 10 characters long');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await submitContactForm(formData);
+      if (response.success) {
+        setFormStatus('Thank you for your message! We will get back to you soon.');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          mobileNumber: '',
+          message: ''
+        });
+      }
+    } catch (error) {
+      setFormError(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -149,8 +213,31 @@ const ContactUs = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
+                {formError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-red-600 font-medium bg-red-50 p-4 rounded-xl mb-6"
+                  >
+                    {formError}
+                  </motion.div>
+                )}
+
+                {formStatus && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-green-600 font-medium bg-green-50 p-4 rounded-xl mb-6"
+                  >
+                    {formStatus}
+                  </motion.div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {["First Name", "Last Name"].map((label, index) => (
+                  {[
+                    { label: "First Name", name: "firstName", required: true },
+                    { label: "Last Name", name: "lastName", required: false }
+                  ].map((field, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 20 }}
@@ -158,13 +245,16 @@ const ContactUs = () => {
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                     >
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {label} {index === 0 && <span className="text-amber-500">*</span>}
+                        {field.label} {field.required && <span className="text-amber-500">*</span>}
                       </label>
                       <input
                         type="text"
-                        required={index === 0}
+                        name={field.name}
+                        value={formData[field.name]}
+                        onChange={handleChange}
+                        required={field.required}
                         className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
-                        placeholder={`Your ${label.toLowerCase()}`}
+                        placeholder={`Your ${field.label.toLowerCase()}`}
                       />
                     </motion.div>
                   ))}
@@ -180,6 +270,9 @@ const ContactUs = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                     className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
                     placeholder="Your email address"
@@ -192,9 +285,31 @@ const ContactUs = () => {
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
                   <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Mobile Number <span className="text-amber-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
+                    placeholder="Your mobile number"
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Message <span className="text-amber-500">*</span>
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     required
                     rows="6"
                     className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 resize-none"
@@ -216,16 +331,6 @@ const ContactUs = () => {
                     <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </motion.div>
-
-                {formStatus && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-center text-green-600 font-medium bg-green-50 p-4 rounded-xl"
-                  >
-                    {formStatus}
-                  </motion.div>
-                )}
               </form>
             </motion.div>
           </div>

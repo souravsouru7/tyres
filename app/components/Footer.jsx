@@ -93,7 +93,6 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-6"
           >
-            <h3 className="text-xl font-bold text-gray-900">Quick Links</h3>
             <div className="grid grid-cols-2 gap-8">
               {/* Products Section with Subcategories - Left Side */}
               <div className="space-y-2">
@@ -128,6 +127,11 @@ const Footer = () => {
 
               {/* Other Links - Right Side */}
               <div className="space-y-2">
+                <div className="flex items-center space-x-2 mb-4">
+                 
+                
+                  <h3 className="text-xl font-bold text-gray-900">Quick Links</h3>
+                </div>
                 {[
                   { name: 'About Us', path: '/about-us' },
                   { name: 'Contact', path: '/contact' },

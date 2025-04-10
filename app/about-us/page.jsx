@@ -586,54 +586,6 @@ export default function AboutUs() {
           </div>
         </section>
 
-        {/* Events Section */}
-        <section className="relative py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center mb-12 md:mb-16"
-            >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
-                Our <span className="text-amber-600 relative">
-                  Events
-                  <motion.span 
-                    className="absolute -bottom-2 left-0 w-full h-1 bg-amber-500"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ duration: 0.5 }}
-                    viewport={{ once: true }}
-                  />
-                </span>
-              </h2>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl max-w-3xl mx-auto">
-                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <FiCalendar className="w-8 h-8 text-amber-600" />
-                </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Exciting Events Coming Soon</h3>
-                <p className="text-gray-600 mb-6">
-                  Stay tuned for exclusive automotive events, product launches, and special promotions. We're planning something amazing for you!
-                </p>
-                <div className="inline-flex items-center px-6 py-3 bg-amber-500 text-white rounded-xl font-medium shadow-lg hover:bg-amber-600 transition-all duration-300 group">
-                  <span>Get Notified</span>
-                  <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
         {/* Scroll to Top Button */}
         <AnimatePresence>
           {showScrollTop && (
