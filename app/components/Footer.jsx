@@ -7,15 +7,48 @@ import { motion } from 'framer-motion';
 
 const Footer = () => {
   const socialLinks = [
-    { icon: FaInstagram, href: "https://instagram.com", color: "#E1306C" },
-    { icon: FaFacebookF, href: "https://facebook.com", color: "#4267B2" },
-    { icon: FaLinkedinIn, href: "https://linkedin.com", color: "#0077B5" }
+    { 
+      icon: FaInstagram, 
+      href: "https://www.instagram.com/goldenextreme?igsh=MWdoZmc1OXRyZHZqbQ%3D%3D", 
+      color: "#E1306C",
+      label: "Instagram"
+    },
+    { 
+      icon: FaFacebookF, 
+      href: "https://www.facebook.com/goldenextreme/?_rdr", 
+      color: "#4267B2",
+      label: "Facebook"
+    },
+    { 
+      icon: FaLinkedinIn, 
+      href: "https://www.linkedin.com/company/goldentrading/", 
+      color: "#0077B5",
+      label: "LinkedIn"
+    }
   ];
 
   const features = [
     { icon: FaTruck, title: "Fast Delivery", description: "Across Dubai" },
     { icon: FaHeadset, title: "24/7 Support", description: "Always here to help" },
     { icon: FaShieldAlt, title: "Quality Guaranteed", description: "Premium products" }
+  ];
+
+  const contactInfo = [
+    { 
+      icon: '✉️', 
+      text: 'info@goldenextreme.com',
+      href: 'mailto:info@goldenextreme.com'
+    },
+    { 
+      icon: '📱', 
+      text: '+971 422 29799',
+      href: 'tel:+97142229799'
+    },
+    { 
+      icon: '💬', 
+      text: 'WhatsApp',
+      href: 'https://wa.me/971586498398'
+    }
   ];
 
   return (
@@ -155,18 +188,21 @@ const Footer = () => {
           >
             <h3 className="text-xl font-bold text-gray-900">Contact Us</h3>
             <div className="space-y-3">
-              {[
-                { icon: '📞', text: '+971 586 498 398' },
-                { icon: '📞', text: '+971 422 29799' },
-                { icon: '✉️', text: 'Info@goldenextreme.com' }
-              ].map((contact, index) => (
+              {contactInfo.map((contact, index) => (
                 <motion.div
                   key={index}
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-3"
                 >
                   <span className="text-xl">{contact.icon}</span>
-                  <p className="text-gray-600">{contact.text}</p>
+                  <a 
+                    href={contact.href}
+                    target={contact.href.startsWith('http') ? '_blank' : '_self'}
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-amber-500 transition-colors"
+                  >
+                    {contact.text}
+                  </a>
                 </motion.div>
               ))}
             </div>

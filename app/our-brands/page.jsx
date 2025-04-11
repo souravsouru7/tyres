@@ -93,7 +93,7 @@ export default function BrandsPage() {
     {
       title: "The Tyre Trail: Precision and Perception",
       content: "Falcon's journey began with a singular goal: to design and manufacture tyres that could withstand the diverse terrains and climate of the region. The company ventured into crafting PCR (Passenger Car Radial), TBR (Truck and Bus Radial), and LTR (Light Truck Radial) tyres. Each variant was a masterpiece of advanced technology and understanding of the regional demands. Customers revered Falcon tyres for their durability, reliability, and exceptional performance on both sun-scorched sands and bustling city roads.",
-      image: "/newpng/marshall.png",
+      image: "/Falcon tyre 77.png",
       icon: <FiTrendingUp className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Tyre Types", value: "15+", icon: <FiStar /> },

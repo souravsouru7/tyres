@@ -115,26 +115,26 @@ const ContactUs = () => {
         </div>
 
         {/* Hero Section */}
-        <div className="relative pt-32 pb-16 z-10">
+        <div className="relative pt-20 md:pt-32 pb-12 md:pb-16 z-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              className="text-center mb-12 md:mb-16"
             >
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200/20 text-amber-700 text-sm font-medium mb-8"
+                className="inline-block px-4 md:px-6 py-2 md:py-3 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200/20 text-amber-700 text-xs md:text-sm font-medium mb-6 md:mb-8"
               >
                 Get in Touch
               </motion.div>
-              <h1 className="text-7xl md:text-8xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500">
                 Contact Us
               </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
                 We're here to help transform your automotive experience
               </p>
             </motion.div>
@@ -142,29 +142,29 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Cards Section */}
-        <div className="relative py-16 z-10">
+        <div className="relative py-12 md:py-16 z-10">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
               {[
                 {
-                  icon: <FaPhone className="w-6 h-6" />,
+                  icon: <FaPhone className="w-5 h-5 md:w-6 md:h-6" />,
                   title: "Phone",
                   content: "+971 586 498 398",
                   link: "tel:+971586498398"
                 },
                 {
-                  icon: <FaEnvelope className="w-6 h-6" />,
+                  icon: <FaEnvelope className="w-5 h-5 md:w-6 md:h-6" />,
                   title: "Email",
                   content: "info@goldenextreme.com",
                   link: "mailto:info@goldenextreme.com"
                 },
                 {
-                  icon: <FaMapMarkerAlt className="w-6 h-6" />,
+                  icon: <FaMapMarkerAlt className="w-5 h-5 md:w-6 md:h-6" />,
                   title: "Location",
                   content: "Dubai, UAE"
                 },
                 {
-                  icon: <FaClock className="w-6 h-6" />,
+                  icon: <FaClock className="w-5 h-5 md:w-6 md:h-6" />,
                   title: "Hours",
                   content: "Mon - Fri: 9:00 AM - 6:00 PM"
                 }
@@ -174,20 +174,20 @@ const ContactUs = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 p-8"
+                  className="group relative bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10">
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center mb-6 text-white transform group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 text-white transform group-hover:scale-110 transition-transform duration-300">
                       {item.icon}
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-4">{item.title}</h3>
                     {item.link ? (
-                      <a href={item.link} className="text-gray-600 hover:text-amber-500 transition-colors">
+                      <a href={item.link} className="text-sm md:text-base text-gray-600 hover:text-amber-500 transition-colors">
                         {item.content}
                       </a>
                     ) : (
-                      <p className="text-gray-600">{item.content}</p>
+                      <p className="text-sm md:text-base text-gray-600">{item.content}</p>
                     )}
                   </div>
                 </motion.div>
@@ -197,27 +197,27 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Form Section */}
-        <div className="relative py-16 z-10">
+        <div className="relative py-12 md:py-16 z-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12"
+              className="max-w-4xl mx-auto bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-6 md:p-12"
             >
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              <div className="text-center mb-8 md:mb-12">
+                <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">
                   Send us a <span className="text-amber-500">Message</span>
                 </h2>
-                <p className="text-gray-600">We'd love to hear from you</p>
+                <p className="text-sm md:text-base text-gray-600">We'd love to hear from you</p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                 {formError && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center text-red-600 font-medium bg-red-50 p-4 rounded-xl mb-6"
+                    className="text-center text-red-600 font-medium bg-red-50 p-3 md:p-4 rounded-lg md:rounded-xl mb-4 md:mb-6"
                   >
                     {formError}
                   </motion.div>
@@ -227,13 +227,13 @@ const ContactUs = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center text-green-600 font-medium bg-green-50 p-4 rounded-xl mb-6"
+                    className="text-center text-green-600 font-medium bg-green-50 p-3 md:p-4 rounded-lg md:rounded-xl mb-4 md:mb-6"
                   >
                     {formStatus}
                   </motion.div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                   {[
                     { label: "First Name", name: "firstName", required: true },
                     { label: "Last Name", name: "lastName", required: false }
@@ -244,7 +244,7 @@ const ContactUs = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                     >
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-1 md:mb-2">
                         {field.label} {field.required && <span className="text-amber-500">*</span>}
                       </label>
                       <input
@@ -252,9 +252,8 @@ const ContactUs = () => {
                         name={field.name}
                         value={formData[field.name]}
                         onChange={handleChange}
+                        className="w-full px-4 py-2 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300"
                         required={field.required}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
-                        placeholder={`Your ${field.label.toLowerCase()}`}
                       />
                     </motion.div>
                   ))}
@@ -265,7 +264,7 @@ const ContactUs = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 md:mb-2">
                     Email <span className="text-amber-500">*</span>
                   </label>
                   <input
@@ -273,9 +272,8 @@ const ContactUs = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    className="w-full px-4 py-2 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300"
                     required
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
-                    placeholder="Your email address"
                   />
                 </motion.div>
 
@@ -284,7 +282,7 @@ const ContactUs = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 md:mb-2">
                     Mobile Number <span className="text-amber-500">*</span>
                   </label>
                   <input
@@ -292,9 +290,8 @@ const ContactUs = () => {
                     name="mobileNumber"
                     value={formData.mobileNumber}
                     onChange={handleChange}
+                    className="w-full px-4 py-2 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300"
                     required
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300"
-                    placeholder="Your mobile number"
                   />
                 </motion.div>
 
@@ -303,32 +300,43 @@ const ContactUs = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1 md:mb-2">
                     Message <span className="text-amber-500">*</span>
                   </label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    rows="4"
+                    className="w-full px-4 py-2 md:py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300"
                     required
-                    rows="6"
-                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-6 py-4 text-gray-900 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 resize-none"
-                    placeholder="Your message"
                   />
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  className="text-center"
                 >
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 flex items-center justify-center group"
+                    className="inline-flex items-center justify-center px-6 py-3 md:py-4 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium hover:from-amber-600 hover:to-orange-600 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                    <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    {isSubmitting ? (
+                      <span className="flex items-center">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </span>
+                    ) : (
+                      <span className="flex items-center">
+                        Send Message <FaArrowRight className="ml-2" />
+                      </span>
+                    )}
                   </button>
                 </motion.div>
               </form>

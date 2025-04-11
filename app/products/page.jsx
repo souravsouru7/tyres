@@ -203,7 +203,7 @@ export default function ProductsPage() {
           />
         </div>
 
-        <div className="relative mb-10">
+        <div className="relative mb-32 md:mb-48">
           <div className="w-full relative">
             <div className="absolute inset-0 bg-black/20 mix-blend-multiply z-10 rounded-3xl mx-auto max-w-7xl" />
             <img 
@@ -213,10 +213,10 @@ export default function ProductsPage() {
               style={{ objectPosition: 'center center' }}
             />
             
-            <div className="absolute bottom-[-80px] right-[10%] z-20 hidden md:block">
+            <div className="absolute bottom-[-120px] right-[10%] z-20 hidden md:block">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[300px] w-[400px]">
                 <img 
-                  src="/new/ADM_4616.JPG" 
+                  src="/sportswheel.webp" 
                   alt="Featured Product" 
                   className="w-full h-full object-cover"
                 />
@@ -258,7 +258,7 @@ export default function ProductsPage() {
         </div>
 
         <motion.div 
-          className="relative z-20 container mx-auto px-4 mb-4 sm:mb-8"
+          className="relative z-30 container mx-auto px-4 mb-16 sm:mb-24"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -301,7 +301,7 @@ export default function ProductsPage() {
         </motion.div>
 
         <motion.div 
-          className="py-12 px-4 mb-10 relative overflow-hidden"
+          className="py-16 md:py-24 px-4 mb-16 md:mb-24 relative overflow-hidden z-20"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -314,7 +314,7 @@ export default function ProductsPage() {
           
           <div className="container mx-auto relative z-10">
             <motion.div
-              className="absolute right-0 top-0 md:w-1/3 w-full h-full opacity-20 md:opacity-100"
+              className="absolute right-0 top-0 md:w-1/3 w-full h-full opacity-20 md:opacity-100 hidden md:block"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -329,7 +329,7 @@ export default function ProductsPage() {
             
             <div className="md:max-w-2/3 relative">
               <motion.h2 
-                className="text-5xl md:text-7xl font-bold mb-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800"
+                className="text-4xl md:text-6xl font-bold mb-6 md:mb-10 bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
@@ -337,9 +337,9 @@ export default function ProductsPage() {
               >
                 FALCON BATTERIES
               </motion.h2>
-              <div className="max-w-4xl">
+              <div className="max-w-xl md:max-w-2xl">
                 <motion.p 
-                  className="text-gray-600 text-lg md:text-xl leading-relaxed mb-10"
+                  className="text-gray-600 text-base md:text-xl leading-relaxed mb-6 md:mb-10"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -355,7 +355,7 @@ export default function ProductsPage() {
                 </motion.p>
                 
                 <motion.div 
-                  className="flex flex-col md:flex-row justify-start items-center space-y-4 md:space-y-0 md:space-x-8"
+                  className="flex flex-col md:flex-row justify-start items-stretch space-y-4 md:space-y-0 md:space-x-8"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -363,21 +363,36 @@ export default function ProductsPage() {
                 >
                   <Link 
                     href="/products?category=batteries&type=bike"
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 rounded-xl text-white text-xl font-bold flex items-center shadow-lg hover:shadow-xl transition-all duration-300 group"
+                    className="w-full md:w-auto bg-gradient-to-r from-amber-600 to-orange-600 px-6 md:px-8 py-4 rounded-xl text-white text-lg md:text-xl font-bold flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group"
                   >
-                    <span className="text-blue-200 mr-3 text-2xl group-hover:mr-4 transition-all duration-300">•</span>
+                    <span className="text-amber-200 mr-3 text-2xl group-hover:mr-4 transition-all duration-300">•</span>
                     BIKE BATTERIES
                   </Link>
                   <Link 
                     href="/products?category=batteries&type=ups"
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 rounded-xl text-white text-xl font-bold flex items-center shadow-lg hover:shadow-xl transition-all duration-300 group"
+                    className="w-full md:w-auto bg-gradient-to-r from-amber-600 to-orange-600 px-6 md:px-8 py-4 rounded-xl text-white text-lg md:text-xl font-bold flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group"
                   >
-                    <span className="text-blue-200 mr-3 text-2xl group-hover:mr-4 transition-all duration-300">•</span>
+                    <span className="text-amber-200 mr-3 text-2xl group-hover:mr-4 transition-all duration-300">•</span>
                     UPS BATTERIES
                   </Link>
                 </motion.div>
               </div>
             </div>
+
+            {/* Mobile Image */}
+            <motion.div
+              className="mt-8 md:hidden w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <img 
+                src="/new/DSC00923.jpg" 
+                alt="Battery 3D" 
+                className="w-full h-auto object-contain rounded-2xl shadow-lg"
+              />
+            </motion.div>
           </div>
         </motion.div>
 

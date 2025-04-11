@@ -297,31 +297,6 @@ const HeroBanner = () => {
                 >
                   {slides[currentSlide].subtitle}
                 </motion.p>
-                
-                {/* CTA Buttons */}
-                <motion.div 
-                  className="flex items-center justify-center space-x-4"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleButtonClick}
-                    className="group relative px-8 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold rounded-full overflow-hidden shadow-lg hover:shadow-yellow-500/30 transition-all duration-300"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      {slides[currentSlide].cta}
-                      <FiArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-                    </span>
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "0%" }}
-                    />
-                  </motion.button>
-                </motion.div>
               </div>
             </div>
           </div>

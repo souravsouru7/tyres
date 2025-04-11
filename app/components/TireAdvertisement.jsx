@@ -54,8 +54,8 @@ const TireAdvertisement = () => {
       logoAlt: 'Apollo logo',
       imageSrc: '/newpng/appolo.png',
       imageAlt: 'Apollo Tyre',
-      description: 'High-performance summer tire',
-      subcategory: 'Summer Tire',
+      
+      
       color: 'from-purple-600 to-indigo-600'
     },
     {
@@ -64,8 +64,7 @@ const TireAdvertisement = () => {
       logoAlt: 'BF Goodrich logo',
       imageSrc: '/newpng/bf.png',
       imageAlt: 'BF Goodrich Tire',
-      description: 'Winter tire for extreme conditions',
-      subcategory: 'Winter Tire',
+      logoClass: 'h-20 w-auto object-contain',
       color: 'from-blue-600 to-blue-800'
     },
     {
@@ -74,8 +73,8 @@ const TireAdvertisement = () => {
       logoAlt: 'Michelin logo',
       imageSrc: '/newpng/marshall.png',
       imageAlt: 'Marshall Tire',
-      description: 'Energy-efficient all-season tire',
-      subcategory: 'All-Season Tire',
+     
+  
       color: 'from-blue-500 to-blue-700'
     },
     {
@@ -84,8 +83,8 @@ const TireAdvertisement = () => {
       logoAlt: 'Yokohama logo',
       imageSrc: '/newpng/yo.png',
       imageAlt: 'Yokohama Tire',
-      description: 'Ultra-high performance tire',
-      subcategory: 'Performance Tire',
+    
+  
       color: 'from-red-600 to-red-800'
     }
   ];
@@ -330,7 +329,7 @@ const TireAdvertisement = () => {
           {staticProducts.map((product, index) => (
             <motion.div
               key={product.id}
-              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 overflow-hidden"
+              className="bg-white rounded-lg transition-shadow duration-300 overflow-hidden"
               onClick={() => handleProductClick(product)}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -356,7 +355,7 @@ const TireAdvertisement = () => {
                   <img 
                     src={product.logoSrc} 
                     alt={product.logoAlt} 
-                    className="h-8 w-auto object-contain"
+                    className={product.logoClass || 'h-16 w-auto object-contain'}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">Logo</text></svg>';

@@ -64,21 +64,15 @@ const Navbar = ({ isScrolled }) => {
             <Image
               src="/logo.png"
               alt="Golden Extreme Logo"
-              width={220}
-              height={160}
-              className="h-16 md:h-20 w-auto"
+              width={180}
+              height={130}
+              className="h-12 md:h-20 w-auto"
               priority
             />
           </Link>
 
           {/* Mobile Menu Button */}
-          <div className="absolute right-4 top-6 md:top-8 flex items-center gap-4 md:hidden">
-            <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2 text-gray-600 hover:text-amber-600 transition-colors duration-300"
-            >
-              <FiSearch size={20} />
-            </button>
+          <div className="absolute right-4 top-4 md:top-8 flex items-center gap-4 md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 text-gray-600 hover:text-amber-600 transition-colors duration-300"
@@ -128,6 +122,11 @@ const Navbar = ({ isScrolled }) => {
             </form>
           </div>
         </div>
+
+        {/* Mobile Search Bar - Always visible below logo */}
+        <div className="md:hidden w-full py-2">
+         
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -137,94 +136,137 @@ const Navbar = ({ isScrolled }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 w-full h-screen bg-white z-[100]"
+            className="fixed inset-0 w-full h-screen bg-gradient-to-b from-white via-gray-50 to-white z-[100]"
           >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#f0f0f0_2px,transparent_0)] bg-[size:40px_40px]" />
+            </div>
+
+            {/* Floating Elements */}
+            <div className="absolute inset-0 z-0 overflow-hidden">
+              <motion.div
+                className="absolute w-[600px] h-[600px] rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(251,191,36,0.03) 0%, rgba(245,158,11,0.02) 100%)',
+                  top: '10%',
+                  left: '20%',
+                  filter: 'blur(60px)',
+                }}
+                animate={{
+                  x: [0, 50, 0],
+                  y: [0, 30, 0],
+                }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              />
+            </div>
+
             <div className="relative w-full h-full flex flex-col items-center px-4">
               {/* Close button */}
-              <button
+              <motion.button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-6 right-4 p-2 text-gray-600 hover:text-amber-600"
+                className="absolute top-4 right-4 p-2 text-gray-600 hover:text-amber-600 bg-white/80 backdrop-blur-sm rounded-full shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FiX size={28} />
-              </button>
+                <FiX size={24} />
+              </motion.button>
 
               {/* Content Container */}
-              <div className="flex flex-col items-center justify-between h-full w-full py-12">
-                {/* Large Centered Logo */}
-                <div className="mt-8">
+              <div className="flex flex-col items-center justify-between h-full w-full py-8">
+                {/* Logo Section */}
+                <motion.div 
+                  className="mt-4"
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Image
                     src="/logo.png"
                     alt="Golden Extreme Logo"
-                    width={300}
-                    height={220}
-                    className="w-auto h-auto"
+                    width={160}
+                    height={120}
+                    className="w-auto h-24"
                     priority
                   />
-                </div>
-
-                {/* Menu Items */}
-                <div className="flex flex-col items-center justify-center space-y-6">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center space-x-3 text-xl font-medium transition-all duration-300 ${
-                        isActive(item.href)
-                          ? 'text-amber-600'
-                          : 'text-gray-700 hover:text-amber-600'
-                      }`}
-                    >
-                      <span className="text-amber-500">{item.icon}</span>
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
-                </div>
+                </motion.div>
 
                 {/* Search Bar */}
-                <div className="w-full px-4">
-                  <div className="relative">
+                <motion.div 
+                  className="w-full px-4 mt-6"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <form onSubmit={handleSearch} className="relative">
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search products..."
-                      className="w-full px-6 py-4 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
+                      className="w-full px-5 py-3.5 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all duration-300 shadow-lg"
                     />
-                    <FiSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    <button 
+                      type="submit" 
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-amber-500 hover:text-amber-600 transition-colors duration-300"
+                    >
+                      <FiSearch size={20} />
+                    </button>
+                  </form>
+                </motion.div>
 
-      {/* Mobile Search Bar - Only show when search is open and menu is closed */}
-      <AnimatePresence>
-        {isSearchOpen && !isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-100"
-          >
-            <div className="container mx-auto px-4 py-3">
-              <form onSubmit={handleSearch} className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search products..."
-                  className="w-full px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
-                />
-                <button 
-                  type="submit" 
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors duration-300"
+                {/* Menu Items */}
+                <div className="flex flex-col items-center justify-center flex-1 space-y-5 mt-8 w-full px-4">
+                  {navItems.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                      className="w-full"
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between w-full p-4 rounded-xl transition-all duration-300 ${
+                          isActive(item.href)
+                            ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20'
+                            : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-amber-500/10 hover:text-amber-600 shadow-md'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className={isActive(item.href) ? 'text-white' : 'text-amber-500'}>
+                            {item.icon}
+                          </span>
+                          <span className="font-medium">{item.label}</span>
+                        </div>
+                        <motion.span
+                          animate={{ x: isActive(item.href) ? 5 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          →
+                        </motion.span>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Footer Text */}
+                <motion.div
+                  className="w-full text-center mt-6 px-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
                 >
-                  <FiSearch />
-                </button>
-              </form>
+                  <p className="text-xs text-gray-500">
+                    Driven by Golden Extreme Auto Spare Parts LLC
+                  </p>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         )}
