@@ -203,12 +203,7 @@ export default function ProductsPage() {
           />
         </div>
 
-        <motion.div 
-          className="relative mb-20"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="relative mb-10">
           <div className="w-full relative">
             <div className="absolute inset-0 bg-black/20 mix-blend-multiply z-10 rounded-3xl mx-auto max-w-7xl" />
             <img 
@@ -218,54 +213,29 @@ export default function ProductsPage() {
               style={{ objectPosition: 'center center' }}
             />
             
-            <motion.div 
-              className="absolute bottom-[-80px] right-[10%] z-20 hidden md:block"
-              initial={{ opacity: 0, y: 100, rotate: -20 }}
-              animate={{ opacity: 1, y: 0, rotate: 0 }}
-              transition={{ duration: 1, delay: 0.5, type: "spring" }}
-            >
+            <div className="absolute bottom-[-80px] right-[10%] z-20 hidden md:block">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[300px] w-[400px]">
                 <img 
                   src="/new/ADM_4616.JPG" 
                   alt="Featured Product" 
-                  className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-            </motion.div>
+            </div>
           </div>
           
           <div className="absolute inset-0 flex flex-col justify-center items-start text-white px-4 sm:px-8 md:px-16 rounded-3xl mx-auto max-w-7xl z-20">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="max-w-xl w-full"
-            >
+            <div className="max-w-xl w-full">
               <div className="bg-black/40 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl border border-white/20 shadow-xl">
-                <motion.h1 
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-white"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 text-white">
                   Premium Collection
-                </motion.h1>
-                <motion.p 
-                  className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-white/90 font-medium"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
+                </h1>
+                <p className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-white/90 font-medium">
                   Discover Our Range of High-Quality Automotive Products
-                </motion.p>
+                </p>
                 
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="mt-8 flex flex-wrap gap-4"
-                >
+                <div className="mt-8 flex flex-wrap gap-4">
                   <Link 
                     href="#products" 
                     className="bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg inline-flex items-center group"
@@ -281,14 +251,14 @@ export default function ProductsPage() {
                   >
                     Contact Us
                   </Link>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         <motion.div 
-          className="relative z-20 container mx-auto px-4 mb-8 sm:mb-16"
+          className="relative z-20 container mx-auto px-4 mb-4 sm:mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -331,7 +301,7 @@ export default function ProductsPage() {
         </motion.div>
 
         <motion.div 
-          className="py-24 px-4 mb-20 relative overflow-hidden"
+          className="py-12 px-4 mb-10 relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -412,111 +382,7 @@ export default function ProductsPage() {
         </motion.div>
 
         <motion.div 
-          className="py-24 px-4 mb-24 relative overflow-hidden"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white z-0" />
-          
-          <div className="container mx-auto relative z-10">
-            <div className="max-w-6xl mx-auto">
-              <motion.div 
-                className="relative overflow-hidden rounded-3xl bg-white shadow-2xl mb-20"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50/20"></div>
-                <div className="relative z-10 grid md:grid-cols-2 gap-12 p-12">
-                  <div className="space-y-8">
-                    <div>
-                      <span className="inline-block px-4 py-2 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium mb-4">
-                        ADVANCED ENGINEERING
-                      </span>
-                      <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 leading-tight mb-6">
-                        Premium Wheels Collection
-                      </h2>
-                      <p className="text-gray-600 text-lg leading-relaxed">
-                        At Golden Extreme Trading, we offer a curated collection of premium wheels 
-                        engineered for exceptional performance, crafted from aerospace-grade alloys 
-                        that combine lightweight durability with stunning design aesthetics.
-                      </p>
-                    </div>
-
-                    <div className="grid gap-8">
-                      <div className="flex items-start gap-6 group hover:transform hover:translate-x-2 transition-transform duration-300">
-                        <div className="shrink-0 w-16 h-16 rounded-xl bg-gradient-to-tr from-amber-500/10 to-orange-500/10 flex items-center justify-center">
-                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">⚡</span>
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-amber-600 mb-2">Superior Performance</h3>
-                          <p className="text-gray-600">Enhanced handling and vehicle response</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-6 group hover:transform hover:translate-x-2 transition-transform duration-300">
-                        <div className="shrink-0 w-16 h-16 rounded-xl bg-gradient-to-tr from-amber-500/10 to-orange-500/10 flex items-center justify-center">
-                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">🛠️</span>
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-amber-600 mb-2">Quality Craftsmanship</h3>
-                          <p className="text-gray-600">Precision engineered with premium materials</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-6 group hover:transform hover:translate-x-2 transition-transform duration-300">
-                        <div className="shrink-0 w-16 h-16 rounded-xl bg-gradient-to-tr from-amber-500/10 to-orange-500/10 flex items-center justify-center">
-                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">✨</span>
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold text-amber-600 mb-2">Designer Aesthetics</h3>
-                          <p className="text-gray-600">Elevate your vehicle's style and presence</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pt-4">
-                      <Link 
-                        href="/products?category=wheels"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group hover:translate-y-[-2px]"
-                      >
-                        Explore Wheel Collection
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <motion.div
-                    className="relative h-[500px] rounded-2xl overflow-hidden"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/30 to-orange-500/30 mix-blend-multiply rounded-2xl"></div>
-                    <img
-                      src="/whiteallow.jpg"
-                      alt="Premium Wheels Collection"
-                      className="w-full h-full object-cover transform transition-all duration-700 hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-8">
-                      <h3 className="text-3xl font-bold text-white mb-2">Experience Excellence</h3>
-                      <p className="text-white/90">Discover our premium wheel designs</p>
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div 
-          className="py-24 px-4 relative overflow-hidden"
+          className="py-12 px-4 relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -526,7 +392,7 @@ export default function ProductsPage() {
           
           <div className="container mx-auto relative z-10">
             <motion.h2 
-              className="text-3xl sm:text-5xl md:text-6xl font-bold mb-8 sm:mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 px-4"
+              className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 px-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -536,7 +402,7 @@ export default function ProductsPage() {
             </motion.h2>
             
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-16 px-4 sm:px-6 md:px-8"
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-10 px-4 sm:px-6 md:px-8"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, staggerChildren: 0.1 }}
@@ -801,7 +667,7 @@ export default function ProductsPage() {
         </motion.div>
         
         <motion.div 
-          className="relative py-24"
+          className="relative py-12"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -851,13 +717,13 @@ export default function ProductsPage() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 viewport={{ once: true }}
               >
-                <Link href="/products?category=tyres" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg">
+                <Link href="/products/tyres" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-600">
                   Explore Tyres
                 </Link>
-                <Link href="/products?category=wheels" className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-6 py-3 rounded-xl font-medium hover:bg-white/20 transition-all duration-300">
+                <Link href="/products/wheels" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-600">
                   Discover Wheels
                 </Link>
-                <Link href="/products?category=batteries" className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-6 py-3 rounded-xl font-medium hover:bg-white/20 transition-all duration-300">
+                <Link href="/products/batteries" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:bg-gradient-to-r hover:from-amber-600 hover:to-orange-600">
                   View Batteries
                 </Link>
               </motion.div>
@@ -874,7 +740,7 @@ export default function ProductsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="mb-16 sm:mb-32"
+                className="mb-16"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
                   <div className="relative group">
@@ -1003,7 +869,7 @@ export default function ProductsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="mb-32"
+                className="mb-16"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   <div className="order-2 lg:order-1">
@@ -1149,7 +1015,7 @@ export default function ProductsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="mb-32"
+                className="mb-16"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   <div className="relative group">
@@ -1201,7 +1067,7 @@ export default function ProductsPage() {
                       transition={{ duration: 0.8 }}
                       className="p-8 bg-gradient-to-br from-white to-amber-50 rounded-[2rem] shadow-xl border border-amber-100/50"
                     >
-                      <div className="relative mb-8">
+                      <div className="relative mb-6">
                         <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600">
                           FALCON BATTERIES
                         </h2>
@@ -1210,10 +1076,10 @@ export default function ProductsPage() {
                         </span>
                         <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mt-4" />
                       </div>
-                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-8">
+                      <p className="text-base sm:text-lg leading-relaxed text-gray-600 mb-6">
                         Falcon Batteries are engineered for excellence, delivering superior performance and unwavering reliability. Our comprehensive range includes specialized solutions for both automotive and backup power needs.
                       </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                         <motion.div 
                           className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50"
                           whileHover={{ scale: 1.02 }}

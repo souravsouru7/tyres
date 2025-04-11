@@ -181,8 +181,9 @@ const Footer = () => {
           className="mt-16 pt-8 border-t border-gray-200"
         >
           <div className="text-center">
-            <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} GOLDENEXTREME. All rights reserved.
+          
+            <p className="text-sm text-gray-500 mt-2">
+              Driven by Golden Extreme Auto Spare Parts LLC. Powered by Dimark Marketing Management LLC.
             </p>
           </div>
         </motion.div>

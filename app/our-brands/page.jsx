@@ -319,7 +319,7 @@ export default function BrandsPage() {
         </div>
 
         {/* Enhanced Story Section */}
-        <div id="story-section" className="relative py-24 z-10">
+        <div id="story-section" className="relative py-16 z-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -429,7 +429,7 @@ export default function BrandsPage() {
         </div>
 
         {/* Enhanced Video Showcase Section */}
-        <div className="relative py-32 z-10 overflow-hidden bg-gray-50">
+        <div className="relative py-20 z-10 overflow-hidden bg-gray-50">
           <div className="container mx-auto px-4 relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -529,18 +529,18 @@ export default function BrandsPage() {
         </div>
 
         {/* Enhanced Brands Showcase Section */}
-        <div id="brands-section" className="relative py-24 z-10">
+        <div id="brands-section" className="relative py-16 z-10">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              className="text-center mb-8"
             >
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-[#FF6B00]">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-[#FF6B00]">
                 Premium Collections
               </h2>
-              <div className="w-24 h-1 bg-[#FF6B00] rounded-full mx-auto mb-8" />
+              <div className="w-24 h-1 bg-[#FF6B00] rounded-full mx-auto mb-4" />
               <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
                 Explore our exclusive range of premium wheels, designed for performance and crafted for excellence
               </p>
@@ -602,7 +602,7 @@ export default function BrandsPage() {
         </div>
 
         {/* Enhanced Final CTA Section */}
-        <div className="relative py-32 z-10 bg-gray-50">
+        <div className="relative py-20 z-10 bg-gray-50">
           {/* Background Elements */}
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,#00000005_1px,transparent_0)] bg-[size:20px_20px]" />

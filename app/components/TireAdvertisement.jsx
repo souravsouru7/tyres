@@ -210,6 +210,89 @@ const TireAdvertisement = () => {
           0% { left: -50%; opacity: 1; }
           100% { left: 100%; opacity: 0; }
         }
+
+        /* New enhanced card animations */
+        .card-3d {
+          transform-style: preserve-3d;
+          transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-3d:hover {
+          transform: rotateX(5deg) rotateY(5deg) scale(1.05);
+        }
+        
+        .card-3d:hover .card-content {
+          transform: translateZ(20px);
+        }
+        
+        .card-content {
+          transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes tireRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        .tire-rotate {
+          transition: all 0.5s ease;
+        }
+        
+        .tire-rotate:hover {
+          animation: tireRotate 10s linear infinite;
+        }
+        
+        .card-shadow {
+          box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+          transition: box-shadow 0.5s;
+        }
+        
+        .card-shadow:hover {
+          box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .neon-border {
+          position: relative;
+        }
+        
+        .neon-border::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          padding: 2px;
+          background: linear-gradient(45deg, #ff8a00, #e52e71, #ff8a00);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          opacity: 0;
+          transition: opacity 0.5s;
+        }
+        
+        .neon-border:hover::after {
+          opacity: 1;
+          animation: borderRotate 4s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        .bg-morph {
+          background-size: 200% 200%;
+          background-position: 0% 0%;
+          transition: background-position 0.8s ease;
+        }
+        
+        .bg-morph:hover {
+          background-position: 100% 100%;
+        }
       `}</style>
 
       <div className="container mx-auto px-4 lg:px-6">
@@ -247,85 +330,59 @@ const TireAdvertisement = () => {
           {staticProducts.map((product, index) => (
             <motion.div
               key={product.id}
-              className="relative h-[420px] bg-white shine-effect flare-effect overflow-hidden rounded-xl shadow-lg group cursor-pointer border border-gray-100"
+              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 overflow-hidden"
               onClick={() => handleProductClick(product)}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -8, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
             >
-              {/* Card Content with improved layout */}
-              <div className="relative flex flex-col h-full justify-between">
-                {/* Logo area */}
-                <motion.div 
-                  className="h-24 flex items-center justify-center p-4 border-b border-gray-100 z-10 bg-white rounded-t-xl"
-                  whileHover={{ y: -3 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
+              {/* Product Image */}
+              <div className="relative h-48 bg-gray-50 flex items-center justify-center p-4">
+                <img 
+                  src={product.imageSrc} 
+                  alt={product.imageAlt} 
+                  className="h-full w-auto object-contain"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">No Image</text></svg>';
+                  }}
+                />
+              </div>
+
+              {/* Product Info */}
+              <div className="p-4">
+                {/* Brand Logo */}
+                <div className="mb-3 flex justify-center">
                   <img 
                     src={product.logoSrc} 
                     alt={product.logoAlt} 
-                    className="h-16 w-auto object-contain max-w-[80%]"
+                    className="h-8 w-auto object-contain"
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">Logo</text></svg>';
                     }}
                   />
-                </motion.div>
+                </div>
 
-                {/* Tire image with transparent background */}
-                <motion.div 
-                  className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-gray-50 to-white overflow-hidden"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <motion.img 
-                    src={product.imageSrc} 
-                    alt={product.imageAlt} 
-                    className="h-[180px] w-auto object-contain drop-shadow-xl tire-spin mix-blend-multiply"
-                    initial={{ rotateY: 0 }}
-                    whileHover={{ rotateY: 360 }}
-                    transition={{ duration: 1.5 }}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23666" text-anchor="middle" dominant-baseline="middle">No Image</text></svg>';
-                    }}
-                  />
-                </motion.div>
+                {/* Product Description */}
+                <p className="text-gray-600 text-sm text-center mb-3">
+                  {product.description}
+                </p>
 
-                {/* Description area */}
-                <motion.div 
-                  className="p-4 bg-white border-t border-gray-100 rounded-b-xl"
-                  initial={{ y: 20 }}
-                  whileHover={{ y: 0 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                {/* Category Badge */}
+                <div className="flex justify-center mb-4">
+                  <span className="inline-block px-3 py-1 bg-amber-50 text-amber-800 rounded-full text-xs font-medium">
+                    {product.subcategory}
+                  </span>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  onClick={(e) => handleEnquire(e, product)}
+                  className="w-full py-2 bg-amber-500 text-white hover:bg-amber-600 rounded-md text-sm font-medium transition-colors duration-300"
                 >
-                  <motion.p 
-                    className="text-center text-gray-800 font-medium text-lg mb-4"
-                    whileHover={{ scale: 1.03 }}
-                  >
-                    {product.description}
-                  </motion.p>
-                  
-                  {/* Buttons with improved layout and distinction */}
-                  <div className="flex flex-col justify-center space-y-3">
-                    <motion.span 
-                      className="inline-block text-center px-3 py-1.5 border border-amber-200 text-amber-800 bg-amber-50 rounded-full text-sm font-medium badge-pop"
-                      whileHover={{ scale: 1.05, backgroundColor: '#fef3c7' }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {product.subcategory}
-                    </motion.span>
-                    <motion.button
-                      onClick={(e) => handleEnquire(e, product)}
-                      className="px-5 py-2 bg-amber-500 text-white hover:bg-amber-600 rounded-full text-sm font-semibold shadow-sm hover:shadow transition-all"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Enquire Now
-                    </motion.button>
-                  </div>
-                </motion.div>
+                  Enquire Now
+                </button>
               </div>
             </motion.div>
           ))}
