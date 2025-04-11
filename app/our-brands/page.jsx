@@ -11,7 +11,6 @@ export default function BrandsPage() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const videoRef = useRef(null);
   const { scrollY } = useScroll();
   const y = useSpring(useTransform(scrollY, [0, 300], [0, -50]), { stiffness: 100, damping: 30 });
@@ -31,16 +30,10 @@ export default function BrandsPage() {
       });
     };
 
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -55,10 +48,6 @@ export default function BrandsPage() {
     }
     return () => cancelAnimationFrame(animationFrame);
   }, [isWheelSpinning]);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const toggleVideoPlayback = () => {
     if (videoRef.current) {
@@ -115,7 +104,7 @@ export default function BrandsPage() {
     {
       title: "Wheels of Steel: A Revolution in Motion",
       content: "As roads interlinked distant lands and connected people, Falcon expanded its horizons to encompass specialized wheels, including both PCR and TBR. These wheels, crafted with the same precision and passion, became synonymous with strength and stability. Falcon wheels were not just components; they became the backbone of vehicles, offering the steadfastness needed in both urban environments and across desert voyages.",
-      image: "/new iamges/iwill2.JPG",
+      image: "/team/Falcon Wheel.jpg",
       icon: <FiTruck className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Wheel Types", value: "20+", icon: <FiPackage /> },
@@ -126,7 +115,7 @@ export default function BrandsPage() {
     {
       title: "Power Unleashed: The Battery Breakthrough",
       content: "Not content with conquering roads, Falcon took a groundbreaking leap into the energy sector, innovating UPS batteries and Bike Batteries. Here, Falcon's ingenuity shined yet again, offering unmatched energy solutions that powered everything from emergency backup systems in towering skyscrapers to motorbike adventures under the open sky. Every Falcon battery was a testament to safety, longevity, and consistent power supply, illuminating and energizing lives across the region.",
-      image: "/new iamges/iwill.JPG",
+      image: "/team/Falcon Battery.jpg",
       icon: <FiBattery className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Battery Types", value: "10+", icon: <FiBattery /> },
@@ -734,21 +723,6 @@ export default function BrandsPage() {
             </motion.div>
           </div>
         </div>
-
-        {/* Scroll to Top Button */}
-        <AnimatePresence>
-          {showScrollTop && (
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-[#FF6B00] text-white rounded-full shadow-lg flex items-center justify-center hover:bg-[#FF8533] transition-colors duration-300"
-            >
-              <FiChevronUp className="w-6 h-6" />
-            </motion.button>
-          )}
-        </AnimatePresence>
       </div>
     </Layout>
   );

@@ -9,7 +9,6 @@ export default function AboutUs() {
   const [isMounted, setIsMounted] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(true);
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const videoRef = useRef(null);
   const videoContainerRef = useRef(null);
   const isVideoInView = useInView(videoContainerRef, { once: false });
@@ -20,13 +19,6 @@ export default function AboutUs() {
 
   useEffect(() => {
     setIsMounted(true);
-    
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -276,13 +268,6 @@ export default function AboutUs() {
               </motion.div>
             </motion.div>
           </div>
-          <motion.div 
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            <FiChevronDown className="w-8 h-8 text-white" />
-          </motion.div>
         </motion.div>
 
         {/* Stats Section */}
@@ -599,21 +584,6 @@ export default function AboutUs() {
             </div>
           </div>
         </section>
-
-        {/* Scroll to Top Button */}
-        <AnimatePresence>
-          {showScrollTop && (
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-amber-500 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-amber-600 transition-colors duration-300"
-            >
-              <FiChevronUp className="w-6 h-6" />
-            </motion.button>
-          )}
-        </AnimatePresence>
       </div>
     </Layout>
   );
