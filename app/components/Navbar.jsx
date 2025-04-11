@@ -58,29 +58,56 @@ const Navbar = ({ isScrolled }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="w-full px-6 md:px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between h-24 md:h-24">
-          {/* Logo Section */}
-          <div className="flex items-center justify-between w-full md:w-auto">
-            <Link href="/" className="flex items-center justify-center py-2">
+        <div className="flex flex-col md:flex-row items-center justify-between h-20 md:h-20">
+          {/* Mobile Navigation */}
+          <div className="relative flex items-center justify-between w-full md:hidden pt-1">
+            {/* Mobile Menu Button - Left */}
+            <div className="flex items-center">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-gray-600 hover:text-amber-600 transition-colors duration-300"
+              >
+                {isMobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+              </button>
+            </div>
+
+            {/* Logo Section - Center for Mobile */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <Link href="/" className="flex items-center justify-center py-1">
+                <Image
+                  src="/logo.png"
+                  alt="Golden Extreme Logo"
+                  width={180}
+                  height={130}
+                  className="h-14 w-auto"
+                  priority
+                />
+              </Link>
+            </div>
+
+            {/* Mobile Search Button - Right */}
+            <div className="flex items-center">
+              <button
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="p-2 text-gray-600 hover:text-amber-600 transition-colors duration-300"
+              >
+                <FiSearch size={22} />
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center pt-1">
+            <Link href="/" className="flex items-center justify-center py-1">
               <Image
                 src="/logo.png"
                 alt="Golden Extreme Logo"
                 width={180}
                 height={130}
-                className="h-16 md:h-20 w-auto"
+                className="h-16 w-auto"
                 priority
               />
             </Link>
-
-            {/* Mobile Menu Button */}
-            <div className="flex items-center gap-4 md:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-3 text-gray-600 hover:text-amber-600 transition-colors duration-300"
-              >
-                {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-              </button>
-            </div>
           </div>
 
           {/* Main Navigation - Desktop */}
@@ -125,9 +152,23 @@ const Navbar = ({ isScrolled }) => {
           </div>
         </div>
 
-        {/* Mobile Search Bar - Always visible below logo */}
-        <div className="md:hidden w-full py-2">
-         
+        {/* Mobile Search Bar - Show when search is open */}
+        <div className={`md:hidden w-full py-2 ${isSearchOpen ? 'block' : 'hidden'}`}>
+          <form onSubmit={handleSearch} className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search products..."
+              className="w-full px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all duration-300 shadow-lg"
+            />
+            <button 
+              type="submit" 
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-amber-500 hover:text-amber-600 transition-colors duration-300"
+            >
+              <FiSearch size={20} />
+            </button>
+          </form>
         </div>
       </div>
 
@@ -265,7 +306,15 @@ const Navbar = ({ isScrolled }) => {
                   transition={{ duration: 0.5, delay: 0.8 }}
                 >
                   <p className="text-xs text-gray-500">
-                  Driven by Golden Extreme Auto Spare Parts LLC. Powered by Dimark Marketing Management LLC.
+                    Driven by Golden Extreme Auto Spare Parts LLC. Powered by{' '}
+                    <a 
+                      href="https://dimark.ae/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-amber-600 hover:text-amber-700 transition-colors duration-200"
+                    >
+                      Dimark
+                    </a>
                   </p>
                 </motion.div>
               </div>
