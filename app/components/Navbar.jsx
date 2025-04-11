@@ -60,25 +60,27 @@ const Navbar = ({ isScrolled }) => {
       <div className="w-full px-4">
         <div className="flex flex-col md:flex-row items-center justify-between h-20 md:h-24">
           {/* Logo Section */}
-          <Link href="/" className="flex items-center justify-center w-full md:w-auto py-2">
-            <Image
-              src="/logo.png"
-              alt="Golden Extreme Logo"
-              width={180}
-              height={130}
-              className="h-12 md:h-20 w-auto"
-              priority
-            />
-          </Link>
+          <div className="flex items-center justify-between w-full md:w-auto">
+            <Link href="/" className="flex items-center justify-center py-2">
+              <Image
+                src="/logo.png"
+                alt="Golden Extreme Logo"
+                width={180}
+                height={130}
+                className="h-12 md:h-20 w-auto"
+                priority
+              />
+            </Link>
 
-          {/* Mobile Menu Button */}
-          <div className="absolute right-4 top-4 md:top-8 flex items-center gap-4 md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-gray-600 hover:text-amber-600 transition-colors duration-300"
-            >
-              {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
-            </button>
+            {/* Mobile Menu Button */}
+            <div className="flex items-center gap-4 md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-gray-600 hover:text-amber-600 transition-colors duration-300"
+              >
+                {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+              </button>
+            </div>
           </div>
 
           {/* Main Navigation - Desktop */}
