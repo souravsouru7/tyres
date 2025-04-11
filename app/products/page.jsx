@@ -14,9 +14,10 @@ export default function ProductsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryParam = searchParams?.get('category') || 'all';
+  const searchQueryParam = searchParams?.get('search') || '';
   
   const [activeCategory, setActiveCategory] = useState(categoryParam);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(searchQueryParam);
   const [refreshKey, setRefreshKey] = useState(0);
   const [expandedCard, setExpandedCard] = useState(null);
   const { scrollY } = useScroll();
@@ -70,6 +71,11 @@ export default function ProductsPage() {
     const handleRouteChange = () => {
       console.log("Route changed - refreshing products");
       setRefreshKey(prevKey => prevKey + 1);
+      
+      // Update the search query from URL params when route changes
+      const newSearchParams = new URLSearchParams(window.location.search);
+      const newSearchQuery = newSearchParams.get('search') || '';
+      setSearchQuery(newSearchQuery);
     };
     
     window.addEventListener('popstate', handleRouteChange);
@@ -81,9 +87,12 @@ export default function ProductsPage() {
 
   useEffect(() => {
     setActiveCategory(categoryParam);
+    setSearchQuery(searchQueryParam);
     console.log("Category param updated:", categoryParam);
+    console.log("Search query param updated:", searchQueryParam);
     
-    if (categoryParam !== 'all') {
+    // If there's a search query, scroll to the products section
+    if (searchQueryParam) {
       setTimeout(() => {
         const productsSection = document.getElementById('products');
         if (productsSection) {
@@ -91,7 +100,16 @@ export default function ProductsPage() {
         }
       }, 200);
     }
-  }, [categoryParam]);
+    // Existing code for category scrolling
+    else if (categoryParam !== 'all') {
+      setTimeout(() => {
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 200);
+    }
+  }, [categoryParam, searchQueryParam]);
 
   const handleCategoryClick = (category) => {
     // Redirect to dedicated category pages instead of filtering on the same page
@@ -118,6 +136,25 @@ export default function ProductsPage() {
     };
     
     return activeCategory === categoryMapping[displayCategory];
+  };
+
+  // Update the search input in the products page
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    
+    // Update URL with search parameter without page reload
+    const params = new URLSearchParams(searchParams);
+    if (searchQuery.trim()) {
+      params.set('search', searchQuery.trim());
+    } else {
+      params.delete('search');
+    }
+    
+    router.push(`/products?${params.toString()}`);
   };
 
   return (
@@ -383,183 +420,98 @@ export default function ProductsPage() {
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white z-0" />
           
-          <motion.div
-            className="absolute -right-20 top-0 w-full md:w-1/2 h-full z-10"
-            initial={{ opacity: 0, scale: 0.8, x: 50 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="relative h-full flex items-center justify-center group">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent blur-3xl"></div>
-              <div className="relative w-full h-full overflow-hidden rounded-l-3xl shadow-2xl transform transition-transform duration-300 group-hover:scale-105">
-                <video 
-                  src="/cutvideo.mp4"
-                  alt="Premium Wheel" 
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-xl font-bold mb-2">Premium Wheels Collection</h3>
-                  <p className="text-sm">Experience the excellence of our premium wheel designs</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-          
-          <div className="container mx-auto relative z-20">
-            <div className="md:max-w-1/2 md:pr-0 lg:pr-96">
-              <motion.div
-                className="mb-12"
-                initial={{ opacity: 0, y: 30 }}
+          <div className="container mx-auto relative z-10">
+            <div className="max-w-6xl mx-auto">
+              <motion.div 
+                className="relative overflow-hidden rounded-3xl bg-white shadow-2xl mb-20"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <span className="inline-block px-4 py-2 bg-amber-500/20 text-amber-700 rounded-full text-sm font-medium mb-4">ADVANCED ENGINEERING</span>
-                <h2 
-                  className="text-5xl md:text-7xl font-bold text-left text-gray-800"
-                >
-                  PREMIUM <span className="text-amber-600">WHEELS</span>
-                </h2>
-              </motion.div>
-              
-              <motion.div 
-                className="max-w-lg bg-white p-10 rounded-3xl shadow-xl border border-amber-100"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <div className="space-y-6">
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    At Golden Extreme Trading, we offer a curated collection of premium wheels 
-                    engineered for exceptional performance, crafted from aerospace-grade alloys 
-                    that combine lightweight durability with stunning design aesthetics.
-                  </p>
-                  
-                  <div className="flex flex-col space-y-4">
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                        </svg>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50/20"></div>
+                <div className="relative z-10 grid md:grid-cols-2 gap-12 p-12">
+                  <div className="space-y-8">
+                    <div>
+                      <span className="inline-block px-4 py-2 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium mb-4">
+                        ADVANCED ENGINEERING
+                      </span>
+                      <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 leading-tight mb-6">
+                        Premium Wheels Collection
+                      </h2>
+                      <p className="text-gray-600 text-lg leading-relaxed">
+                        At Golden Extreme Trading, we offer a curated collection of premium wheels 
+                        engineered for exceptional performance, crafted from aerospace-grade alloys 
+                        that combine lightweight durability with stunning design aesthetics.
+                      </p>
+                    </div>
+
+                    <div className="grid gap-8">
+                      <div className="flex items-start gap-6 group hover:transform hover:translate-x-2 transition-transform duration-300">
+                        <div className="shrink-0 w-16 h-16 rounded-xl bg-gradient-to-tr from-amber-500/10 to-orange-500/10 flex items-center justify-center">
+                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">⚡</span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-amber-600 mb-2">Superior Performance</h3>
+                          <p className="text-gray-600">Enhanced handling and vehicle response</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-amber-700 font-bold">Superior Performance</h3>
-                        <p className="text-gray-600 text-sm">Enhanced handling and vehicle response</p>
+
+                      <div className="flex items-start gap-6 group hover:transform hover:translate-x-2 transition-transform duration-300">
+                        <div className="shrink-0 w-16 h-16 rounded-xl bg-gradient-to-tr from-amber-500/10 to-orange-500/10 flex items-center justify-center">
+                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">🛠️</span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-amber-600 mb-2">Quality Craftsmanship</h3>
+                          <p className="text-gray-600">Precision engineered with premium materials</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-6 group hover:transform hover:translate-x-2 transition-transform duration-300">
+                        <div className="shrink-0 w-16 h-16 rounded-xl bg-gradient-to-tr from-amber-500/10 to-orange-500/10 flex items-center justify-center">
+                          <span className="text-2xl group-hover:scale-125 transition-transform duration-300">✨</span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-amber-600 mb-2">Designer Aesthetics</h3>
+                          <p className="text-gray-600">Elevate your vehicle's style and presence</p>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+
+                    <div className="pt-4">
+                      <Link 
+                        href="/products?category=wheels"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group hover:translate-y-[-2px]"
+                      >
+                        Explore Wheel Collection
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-amber-700 font-bold">Quality Craftsmanship</h3>
-                        <p className="text-gray-600 text-sm">Precision engineered with premium materials</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-600" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-amber-700 font-bold">Designer Aesthetics</h3>
-                        <p className="text-gray-600 text-sm">Elevate your vehicle's style and presence</p>
-                      </div>
+                      </Link>
                     </div>
                   </div>
-                  
+
                   <motion.div
-                    className="mt-8"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                    viewport={{ once: true }}
+                    className="relative h-[500px] rounded-2xl overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
                   >
-                    <Link 
-                      href="/products?category=wheels"
-                      className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg inline-flex items-center group"
-                    >
-                      Explore Wheels Collection
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </Link>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/30 to-orange-500/30 mix-blend-multiply rounded-2xl"></div>
+                    <img
+                      src="/whiteallow.jpg"
+                      alt="Premium Wheels Collection"
+                      className="w-full h-full object-cover transform transition-all duration-700 hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-8">
+                      <h3 className="text-3xl font-bold text-white mb-2">Experience Excellence</h3>
+                      <p className="text-white/90">Discover our premium wheel designs</p>
+                    </div>
                   </motion.div>
                 </div>
               </motion.div>
             </div>
-
-            <motion.div 
-              className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, staggerChildren: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <motion.div 
-                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300"
-                whileHover={{ translateY: -10, transition: { duration: 0.3 } }}
-              >
-                <div className="h-56 overflow-hidden">
-                  <img 
-                    src="/allowwheel.jpg" 
-                    alt="Luxury Wheel" 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800">Luxury Series</h3>
-                  <p className="text-gray-600 mt-2">Premium alloy wheels designed for luxury vehicles, offering elegant styling with superior performance.</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300"
-                whileHover={{ translateY: -10, transition: { duration: 0.3 } }}
-              >
-                <div className="h-56 overflow-hidden">
-                  <img 
-                    src="/sportswheel.webp" 
-                    alt="Performance Wheel" 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800">Sport Series</h3>
-                  <p className="text-gray-600 mt-2">Racing-inspired wheels built for high-performance vehicles, combining lightweight design with maximum durability.</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300"
-                whileHover={{ translateY: -10, transition: { duration: 0.3 } }}
-              >
-                <div className="h-56 overflow-hidden">
-                  <img 
-                    src="https://images.pexels.com/photos/21694/pexels-photo.jpg" 
-                    alt="SUV Wheel" 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800">Off-Road Series</h3>
-                  <p className="text-gray-600 mt-2">Rugged wheels engineered for SUVs and trucks, built to withstand tough terrain while enhancing vehicle appearance.</p>
-                </div>
-              </motion.div>
-            </motion.div>
           </div>
         </motion.div>
 
@@ -1359,20 +1311,23 @@ export default function ProductsPage() {
 
           <div className="mb-8">
             <div className="max-w-md mx-auto">
-              <div className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={handleSearchInputChange}
                   className="w-full px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent shadow-sm text-gray-900"
                 />
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <button 
+                  type="submit" 
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors duration-300"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                </div>
-              </div>
+                </button>
+              </form>
             </div>
           </div>
 

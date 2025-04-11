@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiMenu, FiX, FiHome, FiInfo, FiPackage, FiCalendar, FiMail, FiStar } from 'react-icons/fi';
 
@@ -13,6 +13,7 @@ const Navbar = ({ isScrolled }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const navItems = [
     { id: 'home', label: 'HOME', href: '/', icon: <FiHome className="w-5 h-5" /> },
@@ -35,6 +36,15 @@ const Navbar = ({ isScrolled }) => {
     setIsMobileMenuOpen(false);
     setIsSearchOpen(false);
   }, [pathname]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+      setIsSearchOpen(false);
+    }
+  };
 
   return (
     <motion.nav 
@@ -101,7 +111,7 @@ const Navbar = ({ isScrolled }) => {
 
           {/* Right Side Actions - Desktop */}
           <div className="hidden md:flex items-center">
-            <div className="relative">
+            <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
                 value={searchQuery}
@@ -109,8 +119,13 @@ const Navbar = ({ isScrolled }) => {
                 placeholder="Search..."
                 className="w-48 px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
               />
-              <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
+              <button 
+                type="submit" 
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors duration-300"
+              >
+                <FiSearch />
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -195,7 +210,7 @@ const Navbar = ({ isScrolled }) => {
             className="md:hidden bg-white border-t border-gray-100"
           >
             <div className="container mx-auto px-4 py-3">
-              <div className="relative">
+              <form onSubmit={handleSearch} className="relative">
                 <input
                   type="text"
                   value={searchQuery}
@@ -203,8 +218,13 @@ const Navbar = ({ isScrolled }) => {
                   placeholder="Search products..."
                   className="w-full px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
                 />
-                <FiSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              </div>
+                <button 
+                  type="submit" 
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-amber-500 transition-colors duration-300"
+                >
+                  <FiSearch />
+                </button>
+              </form>
             </div>
           </motion.div>
         )}

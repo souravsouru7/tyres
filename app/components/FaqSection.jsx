@@ -248,7 +248,7 @@ const FaqSection = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => router.push('/ContactUs')}
+            onClick={() => router.push('/ConductUs')}
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold inline-flex items-center group"
           >
             <span>Contact Support</span>

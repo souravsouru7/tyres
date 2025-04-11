@@ -5,8 +5,10 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { FiArrowRight, FiPlay } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
 
 const HeroBanner = () => {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const [direction, setDirection] = useState(1);
@@ -29,6 +31,7 @@ const HeroBanner = () => {
       title: 'ENGINEERED FOR\nPERFORMANCE',
       subtitle: 'Discover our range of high-performance tires for ultimate road grip and control',
       cta: 'Shop Now',
+      link: '/products',
       color: 'from-blue-600/20 to-purple-600/20'
     },
     {
@@ -38,6 +41,7 @@ const HeroBanner = () => {
       title: 'ALL-SEASON\nRELIABILITY',
       subtitle: 'Drive confidently in any weather condition with our versatile tire collection',
       cta: 'Learn More',
+      link: '/about-us',
       color: 'from-emerald-600/20 to-teal-600/20'
     },
     {
@@ -47,6 +51,7 @@ const HeroBanner = () => {
       title: 'CONQUER ANY\nTERRAIN',
       subtitle: 'Built tough for your off-road adventures with superior traction and durability',
       cta: 'Explore Series',
+      link: '/products/off-road-tires',
       color: 'from-orange-600/20 to-red-600/20'
     }
   ];
@@ -209,6 +214,11 @@ const HeroBanner = () => {
     { x: 50, y: 50, delay: 0.9, duration: 2.8 }
   ]).current;
 
+  // Handle button click navigation
+  const handleButtonClick = () => {
+    router.push(slides[currentSlide].link);
+  };
+
   return (
     <motion.div 
       ref={containerRef}
@@ -298,6 +308,7 @@ const HeroBanner = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={handleButtonClick}
                     className="group relative px-8 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold rounded-full overflow-hidden shadow-lg hover:shadow-yellow-500/30 transition-all duration-300"
                   >
                     <span className="relative z-10 flex items-center">

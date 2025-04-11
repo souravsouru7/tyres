@@ -82,7 +82,7 @@ export default function BrandsPage() {
     {
       title: "Wings of Innovation: The Falcon Legacy",
       content: "In the vast, ever-evolving landscape of the Middle East and North Africa, where the scorching sun meets endless highways and the urban sprawls transition into vast deserts, a brand soared high, leaving a trail of innovation and expertise behind. This is the story of Falcon, a beacon of superior quality and specialized engineering, crafted meticulously to cater to the distinct needs of its domain.",
-      video: "/cutvideo.mp4",
+      video: "/team/fal.mp4",
       icon: <FiAward className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Years of Excellence", value: "25+", icon: <FiStar /> },
@@ -115,7 +115,7 @@ export default function BrandsPage() {
     {
       title: "Wheels of Steel: A Revolution in Motion",
       content: "As roads interlinked distant lands and connected people, Falcon expanded its horizons to encompass specialized wheels, including both PCR and TBR. These wheels, crafted with the same precision and passion, became synonymous with strength and stability. Falcon wheels were not just components; they became the backbone of vehicles, offering the steadfastness needed in both urban environments and across desert voyages.",
-      image: "/newpng/yo.png",
+      image: "/new iamges/iwill2.JPG",
       icon: <FiTruck className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Wheel Types", value: "20+", icon: <FiPackage /> },
@@ -126,7 +126,7 @@ export default function BrandsPage() {
     {
       title: "Power Unleashed: The Battery Breakthrough",
       content: "Not content with conquering roads, Falcon took a groundbreaking leap into the energy sector, innovating UPS batteries and Bike Batteries. Here, Falcon's ingenuity shined yet again, offering unmatched energy solutions that powered everything from emergency backup systems in towering skyscrapers to motorbike adventures under the open sky. Every Falcon battery was a testament to safety, longevity, and consistent power supply, illuminating and energizing lives across the region.",
-      image: "/new iamges/5Y8A1228.JPG",
+      image: "/new iamges/iwill.JPG",
       icon: <FiBattery className="w-8 h-8 text-amber-500" />,
       stats: [
         { label: "Battery Types", value: "10+", icon: <FiBattery /> },
@@ -151,7 +151,7 @@ export default function BrandsPage() {
     {
       title: "Premium Wheels",
       description: "Experience unmatched quality and performance",
-      image: "/new iamges/golden-4.jpg",
+      image: "/team/CruiserAlloy-918MB-1.jpg",
       icon: <FiTruck className="w-8 h-8" />,
       features: [
         "Forged Alloy Wheels",
@@ -168,7 +168,7 @@ export default function BrandsPage() {
     {
       title: "Commercial Wheels",
       description: "Built for heavy-duty performance",
-      image: "/newpng/yo.png",
+      image: "/team/OIP (1).jpeg",
       icon: <FiPackage className="w-8 h-8" />,
       features: [
         "Steel Wheels",
@@ -185,7 +185,7 @@ export default function BrandsPage() {
     {
       title: "Custom Series",
       description: "Personalized to your style",
-      image: "/new iamges/golden-6.jpg",
+      image: "/team/OIP.jpeg",
       icon: <FiStar className="w-8 h-8" />,
       features: [
         "Custom Designs",

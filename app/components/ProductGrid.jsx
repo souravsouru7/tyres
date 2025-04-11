@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { getProducts } from '../../src/utils/api';
+import { getProducts, getMockProducts } from '../../src/utils/api';
 import ProductCard from './ProductCard';
 import Image from 'next/image';
 import SubcategoryFilter from './SubcategoryFilter';
@@ -13,16 +13,19 @@ const ProductGrid = ({ activeCategory, searchQuery }) => {
   const [error, setError] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState('');
   const [subcategories, setSubcategories] = useState([]);
+  const [usingMockData, setUsingMockData] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        console.log("Fetching products...");
         const response = await getProducts();
         console.log("API Response:", response);
         
         if (response && response.success) {
           console.log("Products loaded:", response.data);
           setProducts(response.data || []);
+          setUsingMockData(false);
           
           // Extract unique subcategories for the current category
           const categoryMapping = {
@@ -47,10 +50,68 @@ const ProductGrid = ({ activeCategory, searchQuery }) => {
           setSubcategories(uniqueSubcategories);
         } else {
           console.error("API Error:", response.error || 'Unknown error');
+          
+          // If backend API fails, use mock data
+          console.log("Falling back to mock data");
+          const mockResponse = getMockProducts();
+          setProducts(mockResponse.data || []);
+          setUsingMockData(true);
+          
+          // Also set subcategories from mock data
+          const categoryMapping = {
+            'all': 'all',
+            'tyres': 'tyre',
+            'wheels': 'wheel', 
+            'batteries': 'battery'
+          };
+          
+          const mappedCategory = categoryMapping[activeCategory?.toLowerCase()] || activeCategory?.toLowerCase();
+          
+          const uniqueSubcategories = [...new Set(
+            mockResponse.data
+              .filter(p => mappedCategory === 'all' || p.category === mappedCategory)
+              .map(p => p.subcategory)
+          )].map(sub => ({
+            _id: sub,
+            name: sub,
+            category: mappedCategory
+          }));
+          
+          setSubcategories(uniqueSubcategories);
+          
+          // Still set the error for debugging purposes
           setError(response.error || 'Failed to fetch products');
         }
       } catch (err) {
         console.error("Error fetching products:", err);
+        
+        // If error occurs, use mock data
+        console.log("Falling back to mock data due to error");
+        const mockResponse = getMockProducts();
+        setProducts(mockResponse.data || []);
+        setUsingMockData(true);
+        
+        const categoryMapping = {
+          'all': 'all',
+          'tyres': 'tyre',
+          'wheels': 'wheel', 
+          'batteries': 'battery'
+        };
+        
+        const mappedCategory = categoryMapping[activeCategory?.toLowerCase()] || activeCategory?.toLowerCase();
+        
+        const uniqueSubcategories = [...new Set(
+          mockResponse.data
+            .filter(p => mappedCategory === 'all' || p.category === mappedCategory)
+            .map(p => p.subcategory)
+        )].map(sub => ({
+          _id: sub,
+          name: sub,
+          category: mappedCategory
+        }));
+        
+        setSubcategories(uniqueSubcategories);
+        
         setError(err.message);
       } finally {
         setLoading(false);
@@ -140,7 +201,7 @@ const ProductGrid = ({ activeCategory, searchQuery }) => {
     );
   }
 
-  if (error) {
+  if (error && !usingMockData) {
     return (
       <motion.div 
         className="flex items-center justify-center min-h-[400px]"
