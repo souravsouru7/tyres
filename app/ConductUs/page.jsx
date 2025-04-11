@@ -142,9 +142,9 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Cards Section */}
-        <div className="relative py-12 md:py-16 z-10">
+        <div className="relative py-8 md:py-16 z-10">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 max-w-7xl mx-auto">
               {[
                 {
                   icon: <FaPhone className="w-5 h-5 md:w-6 md:h-6" />,
@@ -174,20 +174,20 @@ const ContactUs = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group relative bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8"
+                  className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative z-10">
-                    <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 text-white transform group-hover:scale-110 transition-transform duration-300">
+                  <div className="relative z-10 p-4 md:p-6 flex flex-col items-start">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-3 md:mb-4 text-white transform group-hover:scale-110 transition-transform duration-300">
                       {item.icon}
                     </div>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-4">{item.title}</h3>
+                    <h3 className="text-base md:text-lg font-bold text-gray-900 mb-1 md:mb-2">{item.title}</h3>
                     {item.link ? (
-                      <a href={item.link} className="text-sm md:text-base text-gray-600 hover:text-amber-500 transition-colors">
+                      <a href={item.link} className="text-sm md:text-base text-gray-600 hover:text-amber-500 transition-colors break-words">
                         {item.content}
                       </a>
                     ) : (
-                      <p className="text-sm md:text-base text-gray-600">{item.content}</p>
+                      <p className="text-sm md:text-base text-gray-600 break-words">{item.content}</p>
                     )}
                   </div>
                 </motion.div>
