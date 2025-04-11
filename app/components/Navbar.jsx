@@ -263,7 +263,7 @@ const Navbar = ({ isScrolled }) => {
                   transition={{ duration: 0.5, delay: 0.8 }}
                 >
                   <p className="text-xs text-gray-500">
-                    Driven by Golden Extreme Auto Spare Parts LLC
+                  Driven by Golden Extreme Auto Spare Parts LLC. Powered by Dimark Marketing Management LLC.
                   </p>
                 </motion.div>
               </div>
