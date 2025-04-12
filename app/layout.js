@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "golden Extreme autospare parts",
+  title: "Golden Extreme Auto Spare Parts",
   description: "Your trusted partner in tire and wheel solutions",
 };
 
