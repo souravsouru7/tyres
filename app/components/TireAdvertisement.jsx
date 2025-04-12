@@ -64,7 +64,7 @@ const TireAdvertisement = () => {
       logoAlt: 'BF Goodrich logo',
       imageSrc: '/newpng/bf.png',
       imageAlt: 'BF Goodrich Tire',
-      logoClass: 'h-20 w-auto object-contain',
+      logoClass: 'h-16 w-auto object-contain',
       color: 'from-blue-600 to-blue-800'
     },
     {
