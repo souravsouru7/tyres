@@ -216,7 +216,7 @@ export default function ProductsPage() {
             <div className="absolute bottom-[-120px] right-[10%] z-20 hidden md:block">
               <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[300px] w-[400px]">
                 <img 
-                  src="/sportswheel.webp" 
+                  src="/images/img2.jpg" 
                   alt="Featured Product" 
                   className="w-full h-full object-cover"
                 />

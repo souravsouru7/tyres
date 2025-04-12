@@ -60,7 +60,7 @@ const Navbar = ({ isScrolled }) => {
       <div className="w-full px-6 md:px-4">
         <div className="flex flex-col md:flex-row items-center justify-between h-20 md:h-20">
           {/* Mobile Navigation */}
-          <div className="relative flex items-center justify-between w-full md:hidden pt-1">
+          <div className="relative flex items-center justify-between w-full md:hidden pt-3">
             {/* Mobile Menu Button - Left */}
             <div className="flex items-center">
               <button
@@ -72,7 +72,7 @@ const Navbar = ({ isScrolled }) => {
             </div>
 
             {/* Logo Section - Center for Mobile */}
-            <div className="absolute left-1/2 transform -translate-x-1/2">
+            <div className="absolute left-1/2 transform -translate-x-1/2 pt-1">
               <Link href="/" className="flex items-center justify-center py-1">
                 <Image
                   src="/logo.png"
