@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaLinkedinIn, FaTruck, FaHeadset, FaShieldAlt } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaTruck, FaHeadset, FaShieldAlt, FaWhatsapp } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
@@ -37,22 +37,25 @@ const Footer = () => {
     { 
       icon: '✉️', 
       text: 'info@goldenextreme.com',
-      href: 'mailto:info@goldenextreme.com'
+      href: 'mailto:info@goldenextreme.com',
+      isEmoji: true
     },
     { 
       icon: '📱', 
       text: '+971 422 29799',
-      href: 'tel:+97142229799'
+      href: 'tel:+97142229799',
+      isEmoji: true
     },
     { 
-      icon: '💬', 
+      icon: FaWhatsapp, 
       text: 'WhatsApp',
-      href: 'https://wa.me/971586498398'
+      href: 'https://wa.me/971586498398',
+      isEmoji: false
     }
   ];
 
   return (
-    <footer className="bg-gradient-to-b from-white to-gray-50 relative overflow-hidden py-20">
+    <footer className="bg-gradient-to-b from-white to-gray-50 relative overflow-hidden py-12">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-100 rounded-full filter blur-3xl opacity-20" />
@@ -61,7 +64,7 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Features Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -82,7 +85,7 @@ const Footer = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
           {/* Company Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -194,7 +197,11 @@ const Footer = () => {
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-3"
                 >
-                  <span className="text-xl">{contact.icon}</span>
+                  {contact.isEmoji ? (
+                    <span className="text-xl">{contact.icon}</span>
+                  ) : (
+                    <contact.icon className="text-xl text-green-500" />
+                  )}
                   <a 
                     href={contact.href}
                     target={contact.href.startsWith('http') ? '_blank' : '_self'}
@@ -214,7 +221,7 @@ const Footer = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="mt-16 pt-8 border-t border-gray-200"
+          className="mt-12 pt-6 border-t border-gray-200"
         >
           <div className="text-center">
           

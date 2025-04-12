@@ -50,7 +50,7 @@ const TireAdvertisement = () => {
   const staticProducts = [
     {
       id: 'appolo',
-      logoSrc: '/forproduct/Apollo.png',
+      logoSrc: '/newlogo/apollo - Logo.png',
       logoAlt: 'Apollo logo',
       imageSrc: '/newpng/appolo.png',
       imageAlt: 'Apollo Tyre',
@@ -60,7 +60,7 @@ const TireAdvertisement = () => {
     },
     {
       id: 'bf-goodrich',
-      logoSrc: '/forproduct/bf-goodrich-logo.png',
+      logoSrc: '/newlogo/BFGoodrich - Logo.png',
       logoAlt: 'BF Goodrich logo',
       imageSrc: '/newpng/bf.png',
       imageAlt: 'BF Goodrich Tire',
@@ -69,7 +69,7 @@ const TireAdvertisement = () => {
     },
     {
       id: 'marshall',
-      logoSrc: '/forproduct/Michelin.png',
+      logoSrc: '/newlogo/Michelin - Logo.png',
       logoAlt: 'Michelin logo',
       imageSrc: '/newpng/marshall.png',
       imageAlt: 'Marshall Tire',
@@ -79,7 +79,7 @@ const TireAdvertisement = () => {
     },
     {
       id: 'yokohama',
-      logoSrc: '/forproduct/Yokohama.png',
+      logoSrc: '/newlogo/Yokohoma - Logo.png',
       logoAlt: 'Yokohama logo',
       imageSrc: '/newpng/yo.png',
       imageAlt: 'Yokohama Tire',
