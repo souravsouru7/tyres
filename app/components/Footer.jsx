@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaInstagram, FaFacebookF, FaLinkedinIn, FaTruck, FaHeadset, FaShieldAlt, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaTruck, FaHeadset, FaShieldAlt, FaWhatsapp, FaPhone } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
@@ -41,10 +41,10 @@ const Footer = () => {
       isEmoji: true
     },
     { 
-      icon: '📱', 
+      icon: FaPhone, 
       text: '+971 422 29799',
       href: 'tel:+97142229799',
-      isEmoji: true
+      isEmoji: false
     },
     { 
       icon: FaWhatsapp, 
@@ -162,8 +162,8 @@ const Footer = () => {
                 </div>
                 {[
                   { name: 'About Us', path: '/about-us' },
-                  { name: 'Contact', path: '/contact' },
-                  { name: 'Brands', path: '/brands' }
+                  { name: 'our Brands', path: '/ our-brands' },
+                  { name: 'Contact', path: '/ConductUs' },
                 ].map((link, index) => (
                   <motion.div
                     key={index}
